@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import PackageCard from '../../components/PackageCard.astro';
+import PackageComparisonTable from '../../components/PackageComparisonTable.astro';
+import CTASection from '../../components/CTASection.astro';
+import { packages } from '../../data/packages';
+---
+<BaseLayout
+  title="Four packages, one platform"
+  description="Compare Precifarm Starter, Family, Commercial, and Commercial Plus. Same engineers, same operating discipline, same five-year service commitment."
+  canonicalPath="/products/"
+>
+  <Hero
+    eyebrow="Products"
+    headline="Four systems. One platform."
+    subhead="Same engineers, same operating discipline, same five-year service commitment. Pick the size that fits."
+    badges={[
+      'EPRA-licensed installation',
+      'Five-year service commitment',
+      'Written design before you commit',
+      'One-year workmanship warranty',
+    ]}
+  />
+
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
+        {packages.map((pkg) => (
+          <PackageCard pkg={pkg} layout="detailed" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper border-y border-hairline">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Side-by-side</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Compare every spec.</h2>
+        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+          Capacity, daily load, inverter, panels, service tier, starting price. Everything in one table.
+        </p>
+      </div>
+      <PackageComparisonTable />
+    </div>
+  </section>
+
+  <CTASection
+    variant="default"
+    headline="Tell us about the room, the home, or the building."
+    body="We will reply with a sized recommendation and a written quote within two business days. No commitment, no pressure."
+    primaryCta={{ href: '/contact/', label: 'Get a quote' }}
+    badges={['Free site assessment', 'Written design and pricing', 'Two-business-day reply']}
+  />
+</BaseLayout>
