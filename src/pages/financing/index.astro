@@ -4,6 +4,7 @@ import Hero from '../../components/Hero.astro';
 import FAQ from '../../components/FAQ.astro';
 import CTASection from '../../components/CTASection.astro';
 import Callout from '../../components/Callout.astro';
+import StructuredData from '../../components/StructuredData.astro';
 
 const financingFaqs = [
   {
@@ -41,6 +42,7 @@ const financingFaqs = [
   description="Lipa Pole Pole for Starter, partner-bank financing for Family, Commercial, and Commercial Plus. Cash and M-Pesa accepted. No financing margin from Precifarm."
   canonicalPath="/financing/"
 >
+  <StructuredData slot="head" schema="faqPage" faqs={financingFaqs} />
   <Hero
     eyebrow="Financing"
     headline="How customers pay for Precifarm."

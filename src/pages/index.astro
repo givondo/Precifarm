@@ -4,6 +4,7 @@ import Hero from '../components/Hero.astro';
 import PackageCard from '../components/PackageCard.astro';
 import ProcessStep from '../components/ProcessStep.astro';
 import CTASection from '../components/CTASection.astro';
+import StructuredData from '../components/StructuredData.astro';
 import { packages } from '../data/packages';
 import {
   audienceSegments,
@@ -17,6 +18,8 @@ import {
   description="EPRA-licensed EPC and O&M contractor. Four packages on one platform. Designed, installed, and serviced for five years by the same engineering team."
   canonicalPath="/"
 >
+  <StructuredData slot="head" schema="organization" />
+  <StructuredData slot="head" schema="localBusiness" />
   <!-- Block 1: Hero -->
   <Hero
     eyebrow="Solar built for Kenya"

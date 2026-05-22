@@ -1,0 +1,106 @@
+---
+import type { Package } from '../data/packages';
+import { company } from '../data/company';
+import { cities } from '../data/cities';
+
+export interface Props {
+  schema: 'organization' | 'localBusiness' | 'product' | 'faqPage';
+  pkg?: Package;
+  faqs?: { q: string; a: string }[];
+}
+
+const { schema, pkg, faqs } = Astro.props;
+const site = company.website;
+
+let data: Record<string, unknown> | Record<string, unknown>[] = {};
+
+if (schema === 'organization') {
+  data = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: company.name,
+    alternateName: company.shortName,
+    url: site,
+    logo: `${site}/og-default.png`,
+    description: company.oneLine,
+    foundingDate: String(company.founded),
+    foundingLocation: { '@type': 'Place', name: company.headquarters },
+    email: company.email,
+    telephone: company.phoneE164,
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'KE',
+      addressLocality: 'Nairobi',
+    },
+    sameAs: [company.socials.linkedin],
+    knowsAbout: [
+      'Solar EPC',
+      'Solar O&M',
+      'Distributed solar Kenya',
+      'EV charging infrastructure',
+      'Off-grid solar',
+      'Lithium battery storage',
+    ],
+  };
+} else if (schema === 'localBusiness') {
+  data = cities.map((c) => ({
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${site}/cities/${c.slug}/`,
+    name: `Precifarm — ${c.name}`,
+    description: c.shortNote,
+    url: `${site}/cities/${c.slug}/`,
+    image: `${site}/og-default.png`,
+    telephone: company.phoneE164,
+    email: company.email,
+    parentOrganization: { '@type': 'Organization', name: company.name },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: c.name,
+      addressRegion: c.region,
+      addressCountry: 'KE',
+    },
+    areaServed: c.region,
+  }));
+} else if (schema === 'product' && pkg) {
+  data = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: pkg.name,
+    description: `${pkg.tagline} ${pkg.targetCustomer}`,
+    brand: { '@type': 'Brand', name: company.shortName },
+    category: 'Solar PV system',
+    sku: pkg.slug,
+    url: `${site}/products/${pkg.slug}/`,
+    image: `${site}/og-default.png`,
+    offers: {
+      '@type': 'Offer',
+      url: `${site}/products/${pkg.slug}/`,
+      priceCurrency: 'KES',
+      availability: 'https://schema.org/InStock',
+      seller: { '@type': 'Organization', name: company.name },
+      description: pkg.startingPrice,
+    },
+    additionalProperty: [
+      { '@type': 'PropertyValue', name: 'Capacity', value: pkg.capacity },
+      { '@type': 'PropertyValue', name: 'Inverter', value: pkg.inverter },
+      { '@type': 'PropertyValue', name: 'Panels', value: pkg.panels },
+      { '@type': 'PropertyValue', name: 'Service tier', value: pkg.serviceTier },
+      { '@type': 'PropertyValue', name: 'Warranty', value: pkg.warranty },
+    ],
+  };
+} else if (schema === 'faqPage' && faqs && faqs.length > 0) {
+  data = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
+}
+---
+{Object.keys(data).length > 0 && (
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(data)} />
+)}

@@ -4,6 +4,7 @@ import Hero from '../../components/Hero.astro';
 import FAQ from '../../components/FAQ.astro';
 import CTASection from '../../components/CTASection.astro';
 import Callout from '../../components/Callout.astro';
+import StructuredData from '../../components/StructuredData.astro';
 import { packages, commercialPlusArchetypes } from '../../data/packages';
 import type { Package } from '../../data/packages';
 
@@ -27,6 +28,8 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
   description={`${pkg.name}: ${pkg.capacity}. ${pkg.targetCustomer.split('.')[0]}. Five-year service commitment, same engineering team.`}
   canonicalPath={`/products/${pkg.slug}/`}
 >
+  <StructuredData slot="head" schema="product" pkg={pkg} />
+  <StructuredData slot="head" schema="faqPage" faqs={pkg.faqs} />
   <!-- Block 1: Hero -->
   <Hero
     eyebrow={pkg.shortName}
