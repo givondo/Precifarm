@@ -1,5 +1,6 @@
 ---
 import Logo from './Logo.astro';
+import { company } from '../data/company';
 
 const currentPath = Astro.url.pathname;
 
@@ -15,15 +16,20 @@ const navLinks = [
   { href: '/how-we-work/', label: 'How we work' },
   { href: '/cities/', label: 'Cities' },
   { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Contact' },
 ];
 
 const isActive = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+
+const whatsappHref = `${company.whatsappLink}?text=${encodeURIComponent(company.whatsappMessage)}`;
+
+// Hide the floating WhatsApp FAB on the contact page where the same actions
+// are already prominent and the form submit button is near the same anchor.
+const showFab = !currentPath.startsWith('/contact');
 ---
-<header class="sticky top-0 z-50 border-b border-hairline bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-  <div class="container-page flex items-center justify-between gap-6 py-4">
-    <a href="/" class="flex items-center" aria-label="Precifarm home">
+<header id="site-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85 transition-shadow duration-150">
+  <div class="container-page flex items-center justify-between gap-4 py-4">
+    <a href="/" class="flex items-center shrink-0" aria-label="Precifarm home">
       <Logo />
     </a>
 
@@ -41,7 +47,7 @@ const isActive = (href: string) =>
             <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
-        <div class="invisible absolute left-0 top-full mt-1 w-56 origin-top-left rounded-card border border-hairline bg-white p-2 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+        <div class="invisible absolute left-0 top-full mt-1 w-56 origin-top-left rounded-card bg-white p-2 opacity-0 shadow-lg ring-1 ring-black/5 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
           {productLinks.map((link) => (
             <a
               href={link.href}
@@ -64,27 +70,61 @@ const isActive = (href: string) =>
       ))}
     </nav>
 
-    <div class="hidden lg:block">
-      <a href="/contact/" class="btn btn-primary text-sm" style="padding: 0.5rem 1.125rem;">
+    <!-- Action cluster: contact channels + primary CTA -->
+    <div class="flex items-center gap-1.5 md:gap-2 shrink-0">
+      <!-- Click-to-call phone, full number on lg+, icon only on smaller -->
+      <a
+        href={`tel:${company.phoneE164}`}
+        class="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-md text-sm font-semibold text-navy-dark hover:bg-paper transition-colors"
+        aria-label={`Call Precifarm at ${company.phone}`}
+      >
+        <svg aria-hidden="true" class="h-4 w-4 text-green" viewBox="0 0 20 20" fill="none">
+          <path d="M4 4.5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.46 1.16l.71 3.05a1.5 1.5 0 01-.4 1.41l-1.2 1.2a11 11 0 005.61 5.6l1.19-1.19a1.5 1.5 0 011.41-.4l3.05.71A1.5 1.5 0 0117 16v2a1.5 1.5 0 01-1.5 1.5h-1.5C8.04 19.5 2.5 13.96 2.5 7v-1.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="hidden xl:inline whitespace-nowrap">{company.phone}</span>
+        <span class="xl:hidden">Call</span>
+      </a>
+
+      <!-- WhatsApp icon button, visible at all sizes -->
+      <a
+        href={whatsappHref}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center justify-center h-10 w-10 rounded-md bg-callout-green text-green hover:bg-green hover:text-white transition-colors"
+        aria-label="Message Precifarm on WhatsApp"
+      >
+        <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </a>
+
+      <!-- Primary CTA, full label on md+, icon on small -->
+      <a
+        href="/contact/"
+        class={`hidden md:inline-flex btn btn-primary text-sm ${isActive('/contact/') ? 'ring-2 ring-amber/50' : ''}`}
+        style="padding: 0.5rem 1.125rem;"
+        aria-current={isActive('/contact/') ? 'page' : undefined}
+      >
         Get a quote
       </a>
-    </div>
 
-    <button
-      id="mobile-nav-toggle"
-      type="button"
-      class="lg:hidden inline-flex items-center justify-center rounded-md p-2 text-navy-dark hover:bg-paper"
-      aria-controls="mobile-nav"
-      aria-expanded="false"
-      aria-label="Open menu"
-    >
-      <svg aria-hidden="true" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
+      <!-- Mobile hamburger toggle -->
+      <button
+        id="mobile-nav-toggle"
+        type="button"
+        class="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-md text-navy-dark hover:bg-paper"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        aria-label="Open menu"
+      >
+        <svg aria-hidden="true" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
   </div>
 
-  <nav id="mobile-nav" aria-label="Primary mobile" class="hidden lg:hidden border-t border-hairline bg-white">
+  <nav id="mobile-nav" aria-label="Primary mobile" class="hidden lg:hidden bg-white shadow-lg">
     <div class="container-page py-4 space-y-1">
       <div class="border-b border-hairline pb-3 mb-3">
         <p class="eyebrow text-text-muted mb-2">Products</p>
@@ -99,12 +139,46 @@ const isActive = (href: string) =>
           {link.label}
         </a>
       ))}
-      <a href="/contact/" class="btn btn-primary w-full mt-4">Get a quote</a>
+      <a href="/contact/" class={`block rounded-md px-3 py-2 text-sm font-semibold ${isActive('/contact/') ? 'bg-paper text-navy-dark' : 'text-text-mid'}`} aria-current={isActive('/contact/') ? 'page' : undefined}>
+        Contact
+      </a>
+
+      <div class="grid grid-cols-2 gap-2 pt-4 mt-2 border-t border-hairline">
+        <a href={`tel:${company.phoneE164}`} class="inline-flex items-center justify-center gap-2 rounded-md bg-paper px-3 py-2.5 text-sm font-semibold text-navy-dark">
+          <svg aria-hidden="true" class="h-4 w-4 text-green" viewBox="0 0 20 20" fill="none">
+            <path d="M4 4.5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.46 1.16l.71 3.05a1.5 1.5 0 01-.4 1.41l-1.2 1.2a11 11 0 005.61 5.6l1.19-1.19a1.5 1.5 0 011.41-.4l3.05.71A1.5 1.5 0 0117 16v2a1.5 1.5 0 01-1.5 1.5h-1.5C8.04 19.5 2.5 13.96 2.5 7v-1.5z" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          Call
+        </a>
+        <a href={whatsappHref} target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-md bg-callout-green px-3 py-2.5 text-sm font-semibold text-green">
+          <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          WhatsApp
+        </a>
+      </div>
+      <a href="/contact/" class="btn btn-primary w-full mt-2">Get a quote</a>
     </div>
   </nav>
 </header>
 
+{showFab && (
+<!-- Mobile floating WhatsApp button (visible below md, persistent contact access) -->
+<a
+  href={whatsappHref}
+  target="_blank"
+  rel="noopener"
+  class="md:hidden fixed bottom-5 right-5 z-40 inline-flex items-center justify-center h-14 w-14 rounded-full bg-green text-white shadow-lg ring-4 ring-green/20 hover:bg-navy-dark transition-colors"
+  aria-label="Message Precifarm on WhatsApp"
+>
+  <svg aria-hidden="true" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+)}
+
 <script>
+  // Mobile hamburger nav
   const toggle = document.getElementById('mobile-nav-toggle');
   const nav = document.getElementById('mobile-nav');
   if (toggle && nav) {
@@ -116,8 +190,7 @@ const isActive = (href: string) =>
     });
   }
 
-  // Sync products-dropdown aria-expanded with hover/focus-within state so
-  // assistive tech matches the visual disclosure behaviour.
+  // Products dropdown aria-expanded sync
   const productsTrigger = document.querySelector<HTMLButtonElement>('[data-nav-trigger="products"]');
   const productsGroup = productsTrigger?.parentElement;
   if (productsTrigger && productsGroup) {
@@ -128,5 +201,16 @@ const isActive = (href: string) =>
     productsGroup.addEventListener('focusout', (e) => {
       if (!productsGroup.contains(e.relatedTarget as Node)) setExpanded(false);
     });
+  }
+
+  // Add subtle shadow to header on scroll, replacing the static hairline divider.
+  const header = document.getElementById('site-header');
+  if (header) {
+    const onScroll = () => {
+      if (window.scrollY > 8) header.classList.add('shadow-md');
+      else header.classList.remove('shadow-md');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
 </script>

@@ -63,7 +63,7 @@ const isHq = city.role === 'HQ';
   </section>
 
   {isHq && (
-    <section class="bg-paper border-y border-hairline">
+    <section class="bg-paper">
       <div class="container-page section">
         <Callout variant="amber" eyebrow="Headquarters">
           <p class="text-text-mid leading-relaxed">
@@ -75,7 +75,7 @@ const isHq = city.role === 'HQ';
   )}
 
   <!-- Customer segments -->
-  <section class={isHq ? 'bg-white' : 'bg-paper border-y border-hairline'}>
+  <section class={isHq ? 'bg-white' : 'bg-paper'}>
     <div class="container-page section">
       <div class="max-w-3xl mb-10">
         <p class="eyebrow mb-3">Who we install for in {city.name}</p>
@@ -97,7 +97,7 @@ const isHq = city.role === 'HQ';
   </section>
 
   <!-- Packages available -->
-  <section class={isHq ? 'bg-paper border-y border-hairline' : 'bg-white'}>
+  <section class={isHq ? 'bg-paper' : 'bg-white'}>
     <div class="container-page section">
       <div class="max-w-3xl mb-10 md:mb-12">
         <p class="eyebrow mb-3">Packages available</p>
@@ -115,7 +115,7 @@ const isHq = city.role === 'HQ';
   </section>
 
   <!-- Other cities -->
-  <section class={isHq ? 'bg-white' : 'bg-paper border-y border-hairline'}>
+  <section class={isHq ? 'bg-white' : 'bg-paper'}>
     <div class="container-page section">
       <div class="max-w-3xl mb-8 md:mb-10">
         <p class="eyebrow mb-3">Other field hubs</p>
