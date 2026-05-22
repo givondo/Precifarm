@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import PackageCard from '../../components/PackageCard.astro';
+import CTASection from '../../components/CTASection.astro';
+import Callout from '../../components/Callout.astro';
+import { cities } from '../../data/cities';
+import type { City } from '../../data/cities';
+import { packages } from '../../data/packages';
+
+export function getStaticPaths() {
+  return cities.map((city) => ({
+    params: { slug: city.slug },
+    props: { city },
+  }));
+}
+
+interface Props {
+  city: City;
+}
+
+const { city } = Astro.props;
+const otherCities = cities.filter((c) => c.slug !== city.slug);
+const isHq = city.role === 'HQ';
+---
+<BaseLayout
+  title={`Precifarm in ${city.name} — ${city.role}`}
+  description={`Precifarm ${city.role.toLowerCase()} in ${city.name}, ${city.region} region. Resident engineering team and regional spare-parts depot. All four packages available.`}
+  canonicalPath={`/cities/${city.slug}/`}
+>
+  <Hero
+    eyebrow={`${city.region} region · ${city.role}`}
+    headline={`Precifarm in ${city.name}.`}
+    subhead={city.shortNote}
+    primaryCta={{ href: '/contact/', label: 'Get a quote' }}
+    secondaryCta={{ href: '/cities/', label: 'All six cities' }}
+    badges={city.capabilities.slice(0, 3)}
+  />
+
+  <!-- Local capability -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
+        <div class="lg:col-span-2">
+          <p class="eyebrow mb-3">Local capability</p>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5">What the {city.name} team handles.</h2>
+          <p class="text-text-mid leading-relaxed text-lg">{city.localCapability}</p>
+        </div>
+
+        <aside class="rounded-card border border-hairline bg-paper p-6 md:p-7 self-start">
+          <p class="eyebrow text-text-muted mb-3">{city.name} capabilities</p>
+          <ul class="space-y-3">
+            {city.capabilities.map((cap) => (
+              <li class="flex items-start gap-2 text-sm">
+                <span aria-hidden="true" class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-green"></span>
+                <span class="text-text-mid">{cap}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  {isHq && (
+    <section class="bg-paper border-y border-hairline">
+      <div class="container-page section">
+        <Callout variant="amber" eyebrow="Headquarters">
+          <p class="text-text-mid leading-relaxed">
+            {city.name} is the Precifarm headquarters. The full engineering team, the operations centre, and the primary spare-parts depot operate from this office. Every Commercial Plus pilot deployment runs from {city.name} before sequencing into the field-hub cities.
+          </p>
+        </Callout>
+      </div>
+    </section>
+  )}
+
+  <!-- Customer segments -->
+  <section class={isHq ? 'bg-white' : 'bg-paper border-y border-hairline'}>
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10">
+        <p class="eyebrow mb-3">Who we install for in {city.name}</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Local customer segments.</h2>
+      </div>
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-3xl">
+        {city.customerSegments.map((segment) => (
+          <li class="flex items-start gap-3 rounded-card bg-white border border-hairline p-4">
+            <span aria-hidden="true" class="mt-1 h-5 w-5 shrink-0 rounded-full bg-callout-green flex items-center justify-center">
+              <svg class="h-3 w-3 text-green" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 6.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="text-text-mid">{segment}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Packages available -->
+  <section class={isHq ? 'bg-paper border-y border-hairline' : 'bg-white'}>
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Packages available</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">All four packages in {city.name}.</h2>
+        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+          Same engineering team, same operating discipline, same five-year service commitment. Pick the size that fits.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+        {packages.map((pkg) => (
+          <PackageCard pkg={pkg} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Other cities -->
+  <section class={isHq ? 'bg-white' : 'bg-paper border-y border-hairline'}>
+    <div class="container-page section">
+      <div class="max-w-3xl mb-8 md:mb-10">
+        <p class="eyebrow mb-3">Other field hubs</p>
+        <h2 class="text-h2-sm md:text-h2 text-navy-dark">Precifarm operates in five more cities.</h2>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {otherCities.map((c) => (
+          <a href={`/cities/${c.slug}/`} class="rounded-md bg-white border border-hairline px-4 py-3 text-center text-sm font-semibold text-navy hover:bg-navy hover:text-white transition-colors">
+            {c.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    variant="dark"
+    headline={`Get in touch with the ${city.name} team.`}
+    body="Tell us about the site. We will assign an engineer from the field hub responsible for your region, and you will have a written design within two business days of the assessment."
+    primaryCta={{ href: '/contact/', label: 'Get a quote' }}
+    secondaryCta={{ href: '/products/', label: 'See the packages' }}
+  />
+</BaseLayout>

@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import CityCard from '../../components/CityCard.astro';
+import CTASection from '../../components/CTASection.astro';
+import { cities } from '../../data/cities';
+---
+<BaseLayout
+  title="Six cities, one engineering team"
+  description="Precifarm operates from Nairobi HQ plus field hubs in Mombasa, Kisumu, Eldoret, Kitui, and Nakuru. Resident engineering teams and regional spare-parts depots in every city."
+  canonicalPath="/cities/"
+>
+  <Hero
+    eyebrow="Cities"
+    headline="Six cities. One engineering team."
+    subhead="Headquarters in Nairobi. Resident engineering teams and regional spare-parts depots in Mombasa, Kisumu, Eldoret, Kitui, and Nakuru."
+    primaryCta={{ href: '/contact/', label: 'Get a quote' }}
+    secondaryCta={{ href: '/how-we-work/', label: 'How we work' }}
+  />
+
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        {cities.map((city) => (
+          <CityCard city={city} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper border-y border-hairline">
+    <div class="container-page section">
+      <div class="max-w-3xl">
+        <p class="eyebrow mb-3">Coverage</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark mb-6">No customer waits for an engineer from Nairobi.</h2>
+        <div class="prose-precifarm">
+          <p>
+            Every Precifarm field hub is a resident team plus a stocked depot. Inverters, panels, Neura Pods, and consumables are held locally. Fault response, scheduled maintenance, and warranty visits all dispatch from the same hub that installed the system. Same-day drive coverage is the default, not the exception.
+          </p>
+          <p>
+            All four packages are available in every city. Whether you are sizing a Starter in Kitui or a Commercial Plus mini-grid in an industrial corridor outside Eldoret, the same engineering team, hardware platform, and service commitment apply.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    variant="dark"
+    headline="Tell us where the site is. We will route the right engineer."
+    body="Every enquiry is routed to the field hub responsible for your region. The engineer assigned to your site is the one who will service it across the next five years."
+    primaryCta={{ href: '/contact/', label: 'Get a quote' }}
+    secondaryCta={{ href: '/products/', label: 'See the packages' }}
+  />
+</BaseLayout>
