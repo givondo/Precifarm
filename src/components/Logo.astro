@@ -7,6 +7,12 @@
 //  - variant="dark" (default): navy mark + dark wordmark, for white/light bgs
 //  - variant="white": white mark + white wordmark, for navy-dark bgs
 // The orange flame stays the same in both — it is the constant accent.
+//
+// Text rendering note: we use 'Arial Black' as the primary font family because
+// it is universally installed on Windows and macOS as a distinct font (unlike
+// Helvetica Black, which most systems lack), so the heavy weight renders
+// reliably. A matching-colour stroke gives extra optical weight at small sizes
+// without depending on font-weight=900 actually resolving to a black face.
 
 export interface Props {
   variant?: 'dark' | 'white';
@@ -26,15 +32,15 @@ const flameOrange = '#E37E32';
 const flameYellow = '#F5C518';
 
 const sizeClass = {
-  sm: 'h-9 md:h-10',
-  md: 'h-11 md:h-12',
+  sm: 'h-10 md:h-11',
+  md: 'h-12 md:h-14',
   lg: 'h-16 md:h-20',
 }[size];
 
-const viewBoxH = showTagline ? 190 : 150;
+const viewBoxH = showTagline ? 145 : 105;
 ---
 <svg
-  viewBox={`0 0 360 ${viewBoxH}`}
+  viewBox={`0 0 320 ${viewBoxH}`}
   xmlns="http://www.w3.org/2000/svg"
   role="img"
   aria-label={showTagline ? 'Precifarm — Renewable Energy' : 'Precifarm'}
@@ -45,23 +51,23 @@ const viewBoxH = showTagline ? 190 : 150;
   <g>
     <!-- Main panel surface -->
     <path
-      d="M75,10 L285,10 L272,55 L88,55 Z"
+      d="M70,5 L250,5 L240,42 L80,42 Z"
       fill={panelFill}
       stroke={panelDeep}
       stroke-width="1.5"
       stroke-linejoin="round"
     />
     <!-- Vertical cell dividers (4 lines for 5 columns) -->
-    <line x1="117" y1="10" x2="109" y2="55" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
-    <line x1="159" y1="10" x2="148" y2="55" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
-    <line x1="201" y1="10" x2="187" y2="55" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
-    <line x1="243" y1="10" x2="226" y2="55" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
+    <line x1="106" y1="5" x2="100" y2="42" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
+    <line x1="142" y1="5" x2="134" y2="42" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
+    <line x1="178" y1="5" x2="168" y2="42" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
+    <line x1="214" y1="5" x2="202" y2="42" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
     <!-- Horizontal cell dividers (2 lines for 3 rows) -->
-    <line x1="82" y1="25" x2="278" y2="25" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
-    <line x1="85" y1="40" x2="275" y2="40" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
+    <line x1="76" y1="17" x2="244" y2="17" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
+    <line x1="78" y1="30" x2="242" y2="30" stroke={panelDeep} stroke-width="0.9" opacity="0.55"/>
     <!-- Subtle top highlight -->
     <path
-      d="M75,10 L285,10 L283,14 L77,14 Z"
+      d="M70,5 L250,5 L248,9 L72,9 Z"
       fill={panelHighlight}
       opacity="0.5"
     />
@@ -70,37 +76,41 @@ const viewBoxH = showTagline ? 190 : 150;
   <!-- Orange flame accent, top-right of panel -->
   <g>
     <path
-      d="M268,12 C280,-2 296,-4 300,8 C302,18 294,26 276,26 C268,24 262,18 268,12 Z"
+      d="M234,8 C246,-4 260,-6 264,4 C266,14 258,22 242,22 C234,20 228,14 234,8 Z"
       fill={flameOrange}
     />
     <path
-      d="M278,9 C285,3 292,5 290,12 C288,19 277,20 278,9 Z"
+      d="M244,6 C251,1 258,3 256,9 C254,16 244,17 244,6 Z"
       fill={flameYellow}
       opacity="0.85"
     />
   </g>
 
-  <!-- PRECIFARM wordmark, dominant -->
+  <!-- PRECIFARM wordmark — rendered with Arial Black for reliable heavy weight,
+       plus matching-colour stroke for extra optical density at small sizes -->
   <text
-    x="180"
-    y="120"
+    x="160"
+    y="88"
     text-anchor="middle"
-    font-family="Helvetica, Arial, sans-serif"
+    font-family="'Arial Black', 'Helvetica Neue', Helvetica, Arial, sans-serif"
     font-weight="900"
-    font-size="62"
+    font-size="44"
     fill={wordmarkFill}
-    letter-spacing="-2"
+    stroke={wordmarkFill}
+    stroke-width="0.6"
+    paint-order="stroke fill"
+    letter-spacing="-0.5"
   >PRECIFARM</text>
 
   {showTagline && (
     <text
-      x="180"
-      y="172"
+      x="160"
+      y="128"
       text-anchor="middle"
-      font-family="Helvetica, Arial, sans-serif"
+      font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
       font-style="italic"
-      font-weight="400"
-      font-size="22"
+      font-weight="500"
+      font-size="18"
       fill={taglineFill}
       letter-spacing="1.5"
     >Renewable Energy</text>
