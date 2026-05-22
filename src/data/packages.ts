@@ -21,6 +21,7 @@ export type Package = {
   isHighlighted?: boolean;
   whatYouGet: string[];
   faqs: { q: string; a: string }[];
+  image: { src: string; alt: string };
 };
 
 export const packages: Package[] = [
@@ -43,6 +44,10 @@ export const packages: Package[] = [
     serviceCommitment: 'Five-year service commitment, same engineering team.',
     bestFor: 'Single-room households, kibandas, renters, boda riders',
     startingPrice: 'KSh 95,000 cash, or KSh 5,472/month',
+    image: {
+      src: '/images/packages/starter-home.jpg',
+      alt: 'A wall-mounted electrical installation with cabling, controllers, and a small solar storage unit, illustrating the Precifarm Starter package on a single wall.',
+    },
     whatYouGet: [
       'One 550 W solar panel with mounting hardware',
       'Neura Pod 1 lithium storage (1.5 kWh)',
@@ -90,6 +95,10 @@ export const packages: Package[] = [
     serviceCommitment: 'Five-year service commitment, same engineering team.',
     bestFor: 'Off-grid 2 to 3 bedroom homes seeking independence from the grid',
     startingPrice: 'KSh 290,000 cash',
+    image: {
+      src: '/images/packages/family-rooftop.jpg',
+      alt: 'Rooftop solar panels in warm afternoon light, illustrating a residential Family-tier installation.',
+    },
     whatYouGet: [
       'Two 450 W solar panels, mounted on roof or ground frame',
       'Neura Pod 5 lithium storage (5 kWh, expandable)',
@@ -140,6 +149,10 @@ export const packages: Package[] = [
     serviceCommitment: 'Five-year service commitment, same engineering team.',
     bestFor: 'Schools, clinics, SMEs, cooperatives, farms with borehole irrigation',
     startingPrice: 'From KSh 520,000',
+    image: {
+      src: '/images/packages/commercial-school.jpg',
+      alt: 'Institutional-scale solar deployment illustrating a Commercial package sized for schools, clinics, and small commercial operations.',
+    },
     whatYouGet: [
       'Solar array sized 2.75 kWp to 13.2 kWp against your measured load',
       'Neura Pod 15 lithium storage (15 kWh, expandable)',
@@ -196,6 +209,10 @@ export const packages: Package[] = [
     bestFor: 'EV-ready solar mini-grids under 1 MW across five deployment archetypes',
     startingPrice: 'From KSh 4 million',
     isHighlighted: true,
+    image: {
+      src: '/images/packages/commercial-plus-array.jpg',
+      alt: 'A large solar panel array under open sky, illustrating sub-megawatt Commercial Plus deployments with on-site storage and EV-ready charging.',
+    },
     whatYouGet: [
       'Solar array sized 50 kWp to 1 MWp against site demand',
       'Lithium storage from 100 kWh to 2 MWh',

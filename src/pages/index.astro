@@ -2,57 +2,57 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import PackageCard from '../components/PackageCard.astro';
-import Callout from '../components/Callout.astro';
+import ProcessStep from '../components/ProcessStep.astro';
 import CTASection from '../components/CTASection.astro';
 import StructuredData from '../components/StructuredData.astro';
 import { packages } from '../data/packages';
-import { exampleInstallations, trustBadges } from '../data/company';
+import {
+  audienceSegments,
+  deploymentSteps,
+  exampleInstallations,
+  trustBadges,
+} from '../data/company';
 ---
 <BaseLayout
   title="Reliable solar power for every Kenyan home and business"
-  description="EPRA-licensed EPC and O&M contractor. Four packages on one platform, designed, installed, and serviced for five years by the same engineering team. Across six Kenyan cities."
+  description="EPRA-licensed EPC and O&M contractor. Four packages on one platform. Designed, installed, and serviced for five years by the same engineering team."
   canonicalPath="/"
 >
   <StructuredData slot="head" schema="organization" />
   <StructuredData slot="head" schema="localBusiness" />
-
-  <!-- 01 — Hero -->
+  <!-- Block 1: Hero -->
   <Hero
     eyebrow="Solar built for Kenya"
     headline="Reliable solar power for every Kenyan home and business."
-    subhead="Precifarm is Kenya's first EPRA-licensed EPC and O&M contractor delivering distributed solar and EV-ready charging on a single platform. Four packages, six operating cities, and a five-year service commitment from the same engineering team that designs and builds your system."
+    subhead="EPRA-licensed EPC and O&M contractor. Four packages on one platform. Designed, installed, and serviced for five years by the same engineering team."
     primaryCta={{ href: '/products/', label: 'See the packages' }}
     secondaryCta={{ href: '/contact/', label: 'Talk to us' }}
     badges={[...trustBadges]}
     showIllustration={true}
   />
 
-  <!-- 02 — Introductory narrative -->
+  <!-- Block 2: Who we install for -->
   <section class="bg-white">
-    <div class="container-page section">
-      <div class="max-w-3xl">
-        <p class="eyebrow mb-4">What we do</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark mb-6">From a single-room household to a one-megawatt industrial mini-grid.</h2>
-        <div class="prose-precifarm space-y-5 text-lg">
-          <p>
-            We design, install, and service distributed solar systems across Kenya. Our customers include households and renters in every region, schools and clinics in semi-arid catchments, small businesses powering daily operations, cooperatives running borehole irrigation, hospitality and fuel retailers adding EV charging, and the motorbike-fleet operators reshaping urban transport.
-          </p>
-          <p>
-            Different sizes, different loads, different sites. The engineering discipline underneath them is identical. Every Precifarm system, from a 1.5 kilowatt-hour Starter pack on a single wall to a one-megawatt mini-grid serving an industrial tenant, is designed and built to the same EPRA-licensed standard, then carried forward by the same regional engineering team for the next five years.
-          </p>
-        </div>
-      </div>
+    <div class="container-page py-10 md:py-14">
+      <p class="eyebrow text-text-muted mb-4">Who we install for</p>
+      <ul class="flex flex-wrap gap-2.5" aria-label="Customer segments we serve">
+        {audienceSegments.map((segment) => (
+          <li class="inline-flex items-center px-3.5 py-1.5 rounded-full bg-paper border border-hairline text-sm font-medium text-text-mid">
+            {segment}
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  <!-- 03 — The four packages -->
+  <!-- Block 3: Four packages, one platform -->
   <section class="bg-paper">
     <div class="container-page section">
-      <div class="max-w-3xl mb-12">
-        <p class="eyebrow mb-4">The packages</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark mb-6">Four systems on one Neura Pod platform.</h2>
-        <p class="text-lg text-text-mid leading-relaxed">
-          Each package is sized against a different load profile, from independence-from-blackouts at the smallest tier to sub-megawatt charging mini-grids at the largest. The hardware platform, the engineering team, and the five-year service commitment are the same across all four.
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Products</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Four packages. One Neura Pod platform.</h2>
+        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+          Pick the size that fits. The engineering team underneath is the same.
         </p>
       </div>
 
@@ -62,82 +62,135 @@ import { exampleInstallations, trustBadges } from '../data/company';
         ))}
       </div>
 
-      <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3">
+      <div class="mt-10 flex flex-wrap items-center gap-4">
         <a href="/products/" class="btn btn-primary">Compare the four packages</a>
-        <p class="text-sm text-text-muted max-w-prose">
-          Capacity, hardware, daily load, inverter, panels, service tier, and starting price laid out side by side.
-        </p>
+        <p class="text-sm text-text-muted">Capacity, hardware, price, service tier, side-by-side.</p>
       </div>
     </div>
   </section>
 
-  <!-- 04 — Why Precifarm: operating principle as flowing prose -->
+  <!-- Block 4: How we work (operating principle) -->
   <section class="bg-white">
     <div class="container-page section">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-        <div class="lg:col-span-5">
-          <p class="eyebrow mb-4">How we work</p>
-          <h2 class="text-h2-sm md:text-h1 text-navy-dark mb-6">We stay after the install.</h2>
-          <Callout variant="navy" eyebrow="The operating principle" asQuote={true}>
-            Critical energy infrastructure demands lifelong accountability.
-          </Callout>
-        </div>
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">How we work</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">We stay after the install.</h2>
+      </div>
 
-        <div class="lg:col-span-7 prose-precifarm space-y-5 text-lg">
-          <p>
-            Most Kenyan solar is sold as a transactional product. A crew arrives, panels go on a roof, the relationship effectively ends. When an inverter throws an error two years later, the customer is left chasing a contractor who has moved on. The system that was supposed to be a long-term piece of energy infrastructure is treated like an appliance with a one-month warranty.
-          </p>
-          <p>
-            Precifarm is structured against that pattern. The engineering crew that designs your system is the crew that installs it, and the same crew returns to service it across the next five years. We hold engineering, procurement, construction, operations, and maintenance inside the same team: no subcontractors, no handoffs, and no contractor who disappears once the installation is complete.
-          </p>
-          <p>
-            That commitment is regional, not theoretical. Resident engineering teams operate from six city hubs (Nairobi headquarters plus Mombasa, Kisumu, Eldoret, Kitui, and Nakuru), each with its own spare-parts depot. No installed system sits more than a same-day drive from an engineer who has worked on it before.
-          </p>
-          <p>
-            <a href="/how-we-work/" class="inline-flex items-center gap-1.5 font-semibold text-navy hover:underline">
-              Read how we deliver EPC and O&amp;M as one obligation
-              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 16 16" fill="none">
-                <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <article class="rounded-card border border-hairline bg-white p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <span aria-hidden="true" class="h-10 w-10 rounded-full bg-callout-green flex items-center justify-center">
+              <svg class="h-5 w-5 text-green" viewBox="0 0 20 20" fill="none">
+                <path d="M3 10a7 7 0 1014 0 7 7 0 00-14 0z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-            </a>
+            </span>
+            <h3 class="text-h3 text-navy-dark">One team, end to end</h3>
+          </div>
+          <p class="text-text-mid leading-relaxed">
+            The crew that designs your system installs it, then services it for the next five years. No subcontractors, no handoffs.
           </p>
-        </div>
+        </article>
+
+        <article class="rounded-card border border-hairline bg-white p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <span aria-hidden="true" class="h-10 w-10 rounded-full bg-callout-green flex items-center justify-center">
+              <svg class="h-5 w-5 text-green" viewBox="0 0 20 20" fill="none">
+                <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <h3 class="text-h3 text-navy-dark">EPC and O&amp;M as one obligation</h3>
+          </div>
+          <p class="text-text-mid leading-relaxed">
+            Engineering, procurement, construction, operations, and maintenance live in the same team. Most Kenyan installers sell EPC and walk away from O&amp;M. We do not.
+          </p>
+        </article>
+
+        <article class="rounded-card border border-hairline bg-white p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <span aria-hidden="true" class="h-10 w-10 rounded-full bg-callout-green flex items-center justify-center">
+              <svg class="h-5 w-5 text-green" viewBox="0 0 20 20" fill="none">
+                <path d="M10 2C6 2 4 5 4 8c0 4.5 6 10 6 10s6-5.5 6-10c0-3-2-6-6-6z" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="10" cy="8" r="2" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+            <h3 class="text-h3 text-navy-dark">Six cities, regional depots</h3>
+          </div>
+          <p class="text-text-mid leading-relaxed">
+            Resident engineering teams in Nairobi, Mombasa, Kisumu, Eldoret, Kitui, and Nakuru. No customer is more than a same-day drive from an engineer who has worked on their system before.
+          </p>
+        </article>
+      </div>
+
+      <div class="mt-10">
+        <a href="/how-we-work/" class="inline-flex items-center gap-1.5 text-navy font-semibold hover:underline">
+          How we work
+          <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 16 16" fill="none">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- 05 — In the wild: customer-type illustrations as an editorial section -->
+  <!-- Block 5: Deployment process -->
   <section class="bg-paper">
     <div class="container-page section">
-      <div class="max-w-3xl mb-12">
-        <p class="eyebrow mb-4">In the field</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark mb-6">Already running, today.</h2>
-        <p class="text-lg text-text-mid leading-relaxed">
-          A small sample of the customer types we design, build, and operate for across the country. Each illustrates what a single Precifarm package looks like in daily use.
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Deployment</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Four steps from quote to commissioning.</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        {deploymentSteps.map((step) => (
+          <ProcessStep number={step.number} title={step.title} body={step.body} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Block 6: Selected installations -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Installations</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Already running, today.</h2>
+        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+          A small sample of systems we have designed, built, and now operate across the country.
         </p>
       </div>
-
-      <div class="space-y-12 md:space-y-16 max-w-4xl">
-        {exampleInstallations.map((ex, i) => (
-          <article class={`grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 ${i % 2 === 1 ? 'md:[direction:rtl]' : ''}`}>
-            <div class="md:col-span-4 md:[direction:ltr]">
-              <p class="eyebrow text-text-muted mb-3">{ex.package} package</p>
-              <h3 class="text-h3 md:text-h2-sm text-navy-dark">{ex.customer}.</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {exampleInstallations.map((ex) => (
+          <article class="rounded-card border border-hairline bg-white overflow-hidden flex flex-col">
+            <div class="relative aspect-[16/10] overflow-hidden bg-paper">
+              <img
+                src={ex.image}
+                alt={ex.alt}
+                width="1600"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+              <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-navy-dark/10 to-transparent"></div>
+              <div class="absolute inset-x-0 bottom-0 p-4 flex items-baseline justify-between gap-3">
+                <p class="text-white font-semibold drop-shadow">{ex.customer}</p>
+                <span class="badge badge-amber text-xs shrink-0">{ex.package}</span>
+              </div>
             </div>
-            <div class="md:col-span-8 md:[direction:ltr]">
-              <p class="text-lg text-text-mid leading-relaxed">{ex.description}</p>
-            </div>
+            <p class="p-5 md:p-6 text-text-mid leading-relaxed flex-1">
+              {ex.description}
+            </p>
           </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- 06 — Closing CTA -->
+  <!-- Block 7: Closing CTA -->
   <CTASection
     variant="dark"
     headline="Reliable solar, supported by a team that answers."
-    body="Send us your site and we will reply with a written design and a firm quote within two business days of the assessment. No commitment, no pressure, no subcontractors."
     primaryCta={{ href: '/contact/', label: 'Get a quote' }}
     secondaryCta={{ href: '/products/', label: 'Compare packages' }}
   />

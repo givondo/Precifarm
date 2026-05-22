@@ -1,124 +1,25 @@
 ---
-// Brand-coherent SVG illustration of a Kenyan home with rooftop solar, hybrid
-// inverter, Neura Pod storage, and warm-afternoon lighting. Used in the homepage
-// hero. Real photography lands in v1.1 — drop assets in /public/images/hero/
-// and swap this for an <Image> component.
+// Hero photograph slot. Used in the homepage hero next to the headline.
+// Real Unsplash photo replacing the earlier SVG illustration.
+// To swap to a different photo, drop a 1600x900-ish JPG into /public/images/hero/
+// and update the src below.
 //
-// Decorative when paired with a textual hero, so the parent should mark this
-// aria-hidden=true via the wrapper.
+// Photo: Unsplash, Solar engineer at panel array, golden-hour light.
+// Source: https://unsplash.com/photos/2e959784a276
+// Used under the Unsplash License (no attribution required, but the source URL
+// is preserved here for provenance).
 ---
-<svg
-  viewBox="0 0 800 520"
-  xmlns="http://www.w3.org/2000/svg"
-  role="img"
-  aria-label="A Kenyan home with rooftop solar panels and a wall-mounted inverter, in warm afternoon light."
-  class="w-full h-auto"
->
-  <defs>
-    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#F5C518" stop-opacity="0.15"/>
-      <stop offset="40%" stop-color="#C99800" stop-opacity="0.10"/>
-      <stop offset="100%" stop-color="#FAFAF7" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#1F4E5F"/>
-      <stop offset="100%" stop-color="#0F2832"/>
-    </linearGradient>
-    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#F7F7F4"/>
-      <stop offset="100%" stop-color="#E5E7EB"/>
-    </linearGradient>
-  </defs>
-
-  <!-- Sky/background -->
-  <rect width="800" height="380" fill="url(#sky)"/>
-  <!-- Ground -->
-  <rect y="380" width="800" height="140" fill="url(#ground)"/>
-
-  <!-- Sun -->
-  <circle cx="660" cy="100" r="42" fill="#C99800" opacity="0.85"/>
-  <circle cx="660" cy="100" r="62" fill="#F5C518" opacity="0.18"/>
-
-  <!-- Distant acacia silhouette -->
-  <g opacity="0.4" fill="#1F6F4A">
-    <path d="M50 380 L50 320 Q40 305 50 295 Q35 290 40 280 Q55 275 70 285 Q80 270 90 280 Q105 275 105 290 Q120 295 110 310 Q105 320 105 380 Z"/>
-    <path d="M120 380 L120 340 Q110 330 115 320 Q105 315 110 305 Q125 305 135 315 Q145 305 155 315 Q165 315 160 325 Q170 330 160 340 L160 380 Z"/>
-  </g>
-
-  <!-- Far hill -->
-  <path d="M0 380 Q200 350 400 365 T800 360 L800 380 Z" fill="#1F6F4A" opacity="0.25"/>
-
-  <!-- House body -->
-  <g>
-    <!-- Walls -->
-    <rect x="240" y="280" width="320" height="140" fill="#FAFAF7" stroke="#374151" stroke-width="2"/>
-    <!-- Foundation strip -->
-    <rect x="232" y="416" width="336" height="8" fill="#374151"/>
-    <!-- Roof -->
-    <polygon points="220,280 580,280 530,220 270,220" fill="#0F2832" stroke="#0F2832" stroke-width="2"/>
-    <!-- Roof eave shadow -->
-    <line x1="232" y1="284" x2="568" y2="284" stroke="#1F4E5F" stroke-width="2" opacity="0.5"/>
-
-    <!-- Solar panel array (on roof, foreshortened) -->
-    <g transform="translate(285, 232)">
-      <polygon points="0,0 220,0 200,38 -20,38" fill="url(#panel)" stroke="#C99800" stroke-width="1.5"/>
-      <!-- Cell grid lines -->
-      <line x1="55" y1="0" x2="35" y2="38" stroke="#C99800" stroke-width="0.7" opacity="0.6"/>
-      <line x1="110" y1="0" x2="90" y2="38" stroke="#C99800" stroke-width="0.7" opacity="0.6"/>
-      <line x1="165" y1="0" x2="145" y2="38" stroke="#C99800" stroke-width="0.7" opacity="0.6"/>
-      <line x1="-10" y1="19" x2="210" y2="19" stroke="#C99800" stroke-width="0.7" opacity="0.6"/>
-    </g>
-
-    <!-- Door -->
-    <rect x="370" y="340" width="50" height="80" fill="#1F4E5F" stroke="#374151" stroke-width="2"/>
-    <circle cx="412" cy="380" r="2" fill="#C99800"/>
-
-    <!-- Windows -->
-    <rect x="270" y="320" width="50" height="40" fill="#C99800" opacity="0.4" stroke="#374151" stroke-width="2"/>
-    <line x1="295" y1="320" x2="295" y2="360" stroke="#374151" stroke-width="1.2"/>
-    <line x1="270" y1="340" x2="320" y2="340" stroke="#374151" stroke-width="1.2"/>
-
-    <rect x="480" y="320" width="50" height="40" fill="#C99800" opacity="0.4" stroke="#374151" stroke-width="2"/>
-    <line x1="505" y1="320" x2="505" y2="360" stroke="#374151" stroke-width="1.2"/>
-    <line x1="480" y1="340" x2="530" y2="340" stroke="#374151" stroke-width="1.2"/>
-
-    <!-- Inverter on outside wall -->
-    <g transform="translate(440, 348)">
-      <rect width="30" height="42" rx="2" fill="#FFFFFF" stroke="#1F4E5F" stroke-width="1.5"/>
-      <rect x="3" y="3" width="24" height="10" fill="#0F2832"/>
-      <circle cx="9" cy="22" r="2" fill="#1F6F4A"/>
-      <rect x="13" y="20" width="14" height="4" fill="#C99800"/>
-      <rect x="3" y="30" width="24" height="3" fill="#E5E7EB"/>
-      <rect x="3" y="35" width="24" height="3" fill="#E5E7EB"/>
-    </g>
-
-    <!-- Cabling from panel to inverter -->
-    <path d="M408 270 Q420 300 455 350" stroke="#0F2832" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity="0.6"/>
-  </g>
-
-  <!-- Neura Pod outside on stand -->
-  <g transform="translate(600, 350)">
-    <rect width="60" height="70" rx="3" fill="#FFFFFF" stroke="#1F4E5F" stroke-width="2"/>
-    <rect x="5" y="5" width="50" height="12" fill="#0F2832"/>
-    <text x="30" y="14" font-family="Helvetica, sans-serif" font-size="6" font-weight="700" fill="#C99800" text-anchor="middle">NEURA POD</text>
-    <rect x="8" y="24" width="44" height="6" rx="1" fill="#1F6F4A" opacity="0.7"/>
-    <rect x="8" y="34" width="44" height="6" rx="1" fill="#1F6F4A" opacity="0.7"/>
-    <rect x="8" y="44" width="44" height="6" rx="1" fill="#1F6F4A" opacity="0.4"/>
-    <rect x="8" y="54" width="44" height="6" rx="1" fill="#E5E7EB"/>
-    <!-- Stand legs -->
-    <line x1="10" y1="70" x2="10" y2="78" stroke="#374151" stroke-width="2"/>
-    <line x1="50" y1="70" x2="50" y2="78" stroke="#374151" stroke-width="2"/>
-  </g>
-
-  <!-- Foreground grass tufts -->
-  <g fill="#1F6F4A" opacity="0.5">
-    <path d="M40 420 Q42 410 44 420 Q46 412 48 420 Z"/>
-    <path d="M100 425 Q102 415 104 425 Q106 417 108 425 Z"/>
-    <path d="M170 422 Q172 414 174 422 Q176 416 178 422 Z"/>
-    <path d="M700 425 Q702 415 704 425 Q706 417 708 425 Z"/>
-    <path d="M740 422 Q742 414 744 422 Q746 416 748 422 Z"/>
-  </g>
-
-  <!-- Soft path leading to house -->
-  <path d="M380 420 Q400 460 420 510" stroke="#C99800" stroke-width="3" stroke-linecap="round" opacity="0.3" fill="none"/>
-</svg>
+<div class="relative overflow-hidden rounded-card shadow-xl ring-1 ring-black/5">
+  <img
+    src="/images/hero/hero-solar-engineer.jpg"
+    alt="An engineer working alongside an array of rooftop solar panels in warm afternoon light, illustrating the kind of EPRA-licensed installation Precifarm delivers."
+    width="1600"
+    height="1067"
+    loading="eager"
+    decoding="async"
+    fetchpriority="high"
+    class="w-full h-full object-cover aspect-[4/3]"
+  />
+  <!-- Subtle navy gradient overlay at the bottom for legibility if text ever overlays it -->
+  <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy-dark/30 to-transparent pointer-events-none"></div>
+</div>
