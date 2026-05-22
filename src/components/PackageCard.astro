@@ -1,0 +1,70 @@
+---
+import type { Package } from '../data/packages';
+
+export interface Props {
+  pkg: Package;
+  layout?: 'compact' | 'detailed';
+}
+
+const { pkg, layout = 'compact' } = Astro.props;
+const href = `/products/${pkg.slug}/`;
+
+const highlight = pkg.isHighlighted;
+const borderClass = highlight
+  ? 'border-amber border-2 shadow-sm'
+  : 'border-hairline border';
+---
+<article class={`relative flex flex-col rounded-card bg-white ${borderClass} overflow-hidden transition-shadow hover:shadow-md`}>
+  {highlight && (
+    <div class="absolute top-0 right-0 bg-amber text-navy-dark text-xs font-semibold px-3 py-1.5 rounded-bl-card uppercase tracking-wider">
+      EV-ready
+    </div>
+  )}
+  <div class="p-6 md:p-7 flex flex-col flex-1">
+    <p class="eyebrow text-navy mb-2">{pkg.shortName}</p>
+    <h3 class="text-h3 text-navy-dark">{pkg.name}</h3>
+    <p class="mt-2 text-text-mid text-sm leading-relaxed italic">{pkg.tagline}</p>
+
+    <dl class="mt-5 space-y-3 text-sm border-t border-hairline pt-4">
+      <div>
+        <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Capacity</dt>
+        <dd class="mt-1 text-ink font-medium">{pkg.capacity}</dd>
+      </div>
+      <div>
+        <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Best for</dt>
+        <dd class="mt-1 text-text-mid">{pkg.bestFor}</dd>
+      </div>
+      <div>
+        <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Starting</dt>
+        <dd class="mt-1 text-ink font-semibold">{pkg.startingPrice}</dd>
+      </div>
+    </dl>
+
+    {layout === 'detailed' && (
+      <div class="mt-5 border-t border-hairline pt-4">
+        <p class="text-text-muted text-xs uppercase tracking-wider font-semibold mb-3">What you get</p>
+        <ul class="space-y-2 text-sm text-text-mid">
+          {pkg.whatYouGet.slice(0, 5).map((item) => (
+            <li class="flex gap-2">
+              <span aria-hidden="true" class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-green"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <div class="mt-auto pt-5">
+      <a
+        href={href}
+        class={`inline-flex items-center gap-1.5 font-semibold text-sm ${highlight ? 'text-amber' : 'text-navy'} hover:underline`}
+        aria-label={`See ${pkg.name} details`}
+      >
+        See {pkg.shortName} details
+        <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 16 16" fill="none">
+          <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</article>

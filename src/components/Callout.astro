@@ -1,0 +1,31 @@
+---
+export interface Props {
+  variant?: 'green' | 'amber' | 'navy';
+  eyebrow?: string;
+  asQuote?: boolean;
+}
+
+const { variant = 'green', eyebrow, asQuote = false } = Astro.props;
+
+const styles = {
+  green: 'bg-callout-green border-l-4 border-green text-text-mid',
+  amber: 'bg-callout-amber border-l-4 border-amber text-text-mid',
+  navy: 'bg-navy-dark border-l-4 border-amber text-white',
+}[variant];
+---
+<aside class={`${styles} rounded-r-card p-6 md:p-8`} role={asQuote ? 'note' : undefined}>
+  {eyebrow && (
+    <p class={`text-xs uppercase tracking-wider font-semibold mb-3 ${variant === 'navy' ? 'text-amber' : 'text-navy'}`}>
+      {eyebrow}
+    </p>
+  )}
+  {asQuote ? (
+    <blockquote class={`text-xl md:text-2xl font-semibold leading-snug ${variant === 'navy' ? 'text-white' : 'text-navy-dark'}`}>
+      <slot />
+    </blockquote>
+  ) : (
+    <div class={variant === 'navy' ? 'text-white/90' : 'text-text-mid'}>
+      <slot />
+    </div>
+  )}
+</aside>

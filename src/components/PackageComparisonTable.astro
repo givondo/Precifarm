@@ -1,0 +1,54 @@
+---
+import { packages } from '../data/packages';
+
+const rows: { label: string; key: keyof (typeof packages)[number] }[] = [
+  { label: 'Capacity (PV + storage)', key: 'capacity' },
+  { label: 'Best for', key: 'bestFor' },
+  { label: 'Daily load', key: 'dailyLoad' },
+  { label: 'Inverter', key: 'inverter' },
+  { label: 'Panels', key: 'panels' },
+  { label: 'Service tier', key: 'serviceTier' },
+  { label: 'Starting price', key: 'startingPrice' },
+];
+---
+<div class="overflow-x-auto -mx-5 md:mx-0 px-5 md:px-0">
+  <table class="w-full min-w-[720px] border-collapse text-sm">
+    <caption class="sr-only">Side-by-side comparison of the four Precifarm packages</caption>
+    <thead>
+      <tr class="border-b-2 border-navy">
+        <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider align-bottom">Spec</th>
+        {packages.map((pkg) => (
+          <th scope="col" class={`text-left p-4 align-bottom ${pkg.isHighlighted ? 'bg-callout-amber' : ''}`}>
+            <p class="eyebrow text-navy">{pkg.shortName}</p>
+            <p class="mt-1 text-h3 text-navy-dark">{pkg.shortName}</p>
+            {pkg.isHighlighted && <span class="mt-2 inline-block badge badge-amber text-xs">EV-ready</span>}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row, i) => (
+        <tr class={i % 2 === 0 ? 'bg-row-alt' : 'bg-white'}>
+          <th scope="row" class="text-left p-4 font-semibold text-text-mid align-top whitespace-nowrap">{row.label}</th>
+          {packages.map((pkg) => (
+            <td class={`p-4 align-top text-text-mid ${pkg.isHighlighted ? 'bg-callout-amber/50' : ''}`}>
+              {pkg[row.key] as string}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+    <tfoot>
+      <tr class="border-t-2 border-navy">
+        <td class="p-4"></td>
+        {packages.map((pkg) => (
+          <td class={`p-4 ${pkg.isHighlighted ? 'bg-callout-amber' : ''}`}>
+            <a href={`/products/${pkg.slug}/`} class="btn btn-secondary text-sm" style="padding: 0.5rem 1rem;">
+              {pkg.shortName} details
+            </a>
+          </td>
+        ))}
+      </tr>
+    </tfoot>
+  </table>
+</div>

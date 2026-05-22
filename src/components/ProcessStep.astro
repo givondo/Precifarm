@@ -1,0 +1,22 @@
+---
+export interface Props {
+  number: number;
+  title: string;
+  body: string;
+}
+
+const { number, title, body } = Astro.props;
+---
+<article class="flex flex-col">
+  <div class="flex items-center gap-3 mb-3">
+    <span
+      aria-hidden="true"
+      class="h-9 w-9 shrink-0 rounded-full bg-navy text-white flex items-center justify-center font-bold text-sm"
+    >
+      {number}
+    </span>
+    <span class="h-px flex-1 bg-hairline"></span>
+  </div>
+  <h3 class="text-h3 text-navy-dark">{title}</h3>
+  <p class="mt-2 text-sm text-text-mid leading-relaxed">{body}</p>
+</article>

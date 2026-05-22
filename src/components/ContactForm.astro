@@ -1,0 +1,139 @@
+---
+import { cities } from '../data/cities';
+
+const cityOptions = cities.map((c) => c.name);
+---
+<form
+  name="contact"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="company-website"
+  action="/contact/?success=true"
+  class="space-y-5"
+>
+  <input type="hidden" name="form-name" value="contact" />
+  <p class="hidden">
+    <label>
+      Leave this field blank if you are human:
+      <input name="company-website" tabindex="-1" autocomplete="off" />
+    </label>
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div>
+      <label for="name" class="block text-sm font-semibold text-text-mid mb-1.5">
+        Your name <span aria-hidden="true" class="text-amber">*</span>
+      </label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        autocomplete="name"
+        class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+      />
+    </div>
+
+    <div>
+      <label for="email" class="block text-sm font-semibold text-text-mid mb-1.5">
+        Email <span aria-hidden="true" class="text-amber">*</span>
+      </label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        autocomplete="email"
+        class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+      />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div>
+      <label for="phone" class="block text-sm font-semibold text-text-mid mb-1.5">
+        Phone <span aria-hidden="true" class="text-amber">*</span>
+      </label>
+      <div class="flex">
+        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-hairline bg-paper text-text-mid text-sm font-medium">+254</span>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          required
+          autocomplete="tel-national"
+          inputmode="numeric"
+          pattern="[0-9 ]{9,12}"
+          placeholder="794 702 768"
+          class="flex-1 px-4 py-3 rounded-r-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label for="city" class="block text-sm font-semibold text-text-mid mb-1.5">
+        Site location <span aria-hidden="true" class="text-amber">*</span>
+      </label>
+      <select
+        id="city"
+        name="city"
+        required
+        class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+      >
+        <option value="">Select a city or region</option>
+        {cityOptions.map((c) => (
+          <option value={c}>{c}</option>
+        ))}
+        <option value="Other">Elsewhere in Kenya</option>
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <label for="locationDetail" class="block text-sm font-semibold text-text-mid mb-1.5">
+      Specific area or town <span class="text-text-muted font-normal">(optional)</span>
+    </label>
+    <input
+      type="text"
+      id="locationDetail"
+      name="locationDetail"
+      autocomplete="address-level2"
+      placeholder="e.g. Karen, Nyali, Kakamega"
+      class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+    />
+  </div>
+
+  <fieldset>
+    <legend class="block text-sm font-semibold text-text-mid mb-2">
+      Package interest <span aria-hidden="true" class="text-amber">*</span>
+    </legend>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+      {['Starter', 'Family', 'Commercial', 'Commercial Plus', 'Not sure'].map((label) => (
+        <label class="inline-flex items-center gap-2 px-3 py-2.5 rounded-md border border-hairline bg-white cursor-pointer hover:border-navy has-[:checked]:border-navy has-[:checked]:bg-paper text-sm">
+          <input type="radio" name="package" value={label} class="accent-navy" required />
+          <span>{label}</span>
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <div>
+    <label for="message" class="block text-sm font-semibold text-text-mid mb-1.5">
+      Tell us about the room, the home, or the building
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      rows="5"
+      placeholder="Loads you want to power, current grid situation, anything specific to your site."
+      class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40 resize-y"
+    ></textarea>
+  </div>
+
+  <div class="pt-2 flex flex-col sm:flex-row sm:items-center gap-4">
+    <button type="submit" class="btn btn-primary">Send enquiry</button>
+    <p class="text-sm text-text-muted">
+      We reply within one business day. No commitment.
+    </p>
+  </div>
+</form>

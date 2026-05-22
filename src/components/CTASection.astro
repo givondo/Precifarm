@@ -1,0 +1,54 @@
+---
+export interface Props {
+  headline: string;
+  body?: string;
+  primaryCta: { href: string; label: string };
+  secondaryCta?: { href: string; label: string };
+  badges?: string[];
+  variant?: 'default' | 'dark';
+}
+
+const {
+  headline,
+  body,
+  primaryCta,
+  secondaryCta,
+  badges = [],
+  variant = 'default',
+} = Astro.props;
+
+const bg = variant === 'dark' ? 'bg-navy-dark text-white' : 'bg-paper';
+const headlineColor = variant === 'dark' ? 'text-white' : 'text-navy-dark';
+const bodyColor = variant === 'dark' ? 'text-white/80' : 'text-text-mid';
+const secondaryBtn = variant === 'dark' ? 'btn-accent' : 'btn-secondary';
+---
+<section class={`${bg} ${variant === 'default' ? 'border-y border-hairline' : ''}`}>
+  <div class="container-page section">
+    <div class="max-w-3xl">
+      <h2 class={`text-h2-sm md:text-h1 ${headlineColor}`}>{headline}</h2>
+      {body && (
+        <p class={`mt-4 text-lg ${bodyColor} max-w-prose leading-relaxed`}>{body}</p>
+      )}
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href={primaryCta.href} class={`btn ${variant === 'dark' ? 'btn-accent' : 'btn-primary'}`}>
+          {primaryCta.label}
+        </a>
+        {secondaryCta && (
+          <a href={secondaryCta.href} class={`btn ${secondaryBtn}`}>
+            {secondaryCta.label}
+          </a>
+        )}
+      </div>
+      {badges.length > 0 && (
+        <ul class="mt-7 flex flex-wrap gap-2" aria-label="What is included">
+          {badges.map((badge) => (
+            <li class={`badge ${variant === 'dark' ? 'bg-white/10 text-white border-white/20' : ''}`}>
+              <span aria-hidden="true" class={`h-1.5 w-1.5 rounded-full ${variant === 'dark' ? 'bg-amber' : 'bg-green'}`}></span>
+              {badge}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
+</section>
