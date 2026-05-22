@@ -170,6 +170,52 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
           </a>
         </div>
       </div>
+
+      <!-- What your price covers -->
+      <div class="mt-12 md:mt-16">
+        <p class="eyebrow mb-3">What your price covers</p>
+        <h3 class="text-h3 md:text-h2-sm text-navy-dark mb-6">More than the box on the wall.</h3>
+        <p class="text-text-mid leading-relaxed max-w-prose mb-8">
+          A {pkg.shortName} quote from a hardware-only installer will look cheaper on paper. It buys you the box. Our price buys you the box plus the team that designed it, installed it, and will service it for the next five years.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="rounded-card bg-white border border-hairline p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">01</span>
+              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">Hardware</span>
+            </div>
+            <p class="text-navy-dark font-semibold text-sm">Tier-1 panels, hybrid inverter, lithium storage</p>
+            <p class="mt-2 text-xs text-text-mid leading-relaxed">Sized to your site. Sourced through our regional supply chain.</p>
+          </div>
+          <div class="rounded-card bg-white border border-hairline p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">02</span>
+              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">EPRA-licensed install</span>
+            </div>
+            <p class="text-navy-dark font-semibold text-sm">Engineering, procurement, construction</p>
+            <p class="mt-2 text-xs text-text-mid leading-relaxed">Site survey, written design, bill of quantities, commissioning records.</p>
+          </div>
+          <div class="rounded-card bg-white border border-hairline p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">03</span>
+              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">Workmanship warranty</span>
+            </div>
+            <p class="text-navy-dark font-semibold text-sm">One-year cover on our install</p>
+            <p class="mt-2 text-xs text-text-mid leading-relaxed">Any fault arising from how we built it is on us, free of charge.</p>
+          </div>
+          <div class="rounded-card bg-callout-green border border-green p-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs uppercase tracking-wider text-green font-semibold">04</span>
+              <span class="text-xs uppercase tracking-wider text-green font-semibold">Five-year service</span>
+            </div>
+            <p class="text-navy-dark font-semibold text-sm">{pkg.serviceTier} tier across five years</p>
+            <p class="mt-2 text-xs text-text-mid leading-relaxed">Scheduled maintenance, fault response, warranty management. Same engineering team.</p>
+          </div>
+        </div>
+        <p class="mt-6 text-sm text-text-muted max-w-prose">
+          Hardware-only quotes typically come in below ours at the install. Most fail to recover that saving past year four, because there is no service to call when something fails. We price the five years up front so the cost of owning the system is the price you saw.
+        </p>
+      </div>
     </div>
   </section>
 
