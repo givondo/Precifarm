@@ -5,7 +5,8 @@ export const company = {
   oneLine:
     'EPRA-licensed EPC and O&M contractor delivering distributed solar and EV-ready charging across Kenya.',
   operatingPrinciple: 'Critical energy infrastructure demands lifelong accountability.',
-  founded: 2024,
+  founded: 2025,
+  incorporated: 'August 2025',
   headquarters: 'Nairobi, Kenya',
   email: 'sales@precifarm.com',
   phone: '+254 794 702 768',
@@ -25,20 +26,20 @@ export const team = [
   {
     name: 'Sayia David Givondo',
     role: 'Lead Engineer and Co-Founder',
-    bio: 'Registered Graduate Engineer (EBK B25264). B.Eng Agricultural and Biosystems Engineering, University of Eldoret. Field Engineer at SunCulture Kenya 2023 to 2026. YALI Fellow. Designer of Precifarm\'s engineering operating model.',
+    bio: 'Registered Graduate Engineer (EBK B25264). B.Eng Agricultural and Biosystems Engineering, University of Eldoret (2021). Field Engineer at SunCulture Kenya 2023 to 2026, leading deployments across Kenya\'s arid and semi-arid lands. YALI Fellow. Designer of Precifarm\'s engineering operating model.',
     verified: true,
   },
   {
     name: 'Wycliffe Wabaye',
     role: 'CTO and Co-Founder',
-    bio: 'Embedded firmware lead. Owns Neura Pod control firmware and the over-the-air update infrastructure that keeps the installed fleet maintainable across the six operating cities.',
-    verified: false, // [VERIFY] full bio pending from David.
+    bio: 'Embedded firmware lead. Architect of Neura Pod control firmware and the over-the-air (OTA) update infrastructure operating across the six-city fleet, ensuring every installed system remains maintainable on a single firmware track.',
+    verified: true,
   },
   {
     name: 'Amon Kipchirchir',
     role: 'Head of Operations and Co-Founder',
-    bio: 'Water infrastructure lead. Owns borehole assessment, hydraulic system design for Commercial, and field-team coordination. With Commercial Plus now active, remit extends to site coordination across all five archetypes.',
-    verified: false, // [VERIFY] full bio pending from David.
+    bio: 'Water and civil infrastructure engineer. Leads borehole assessment, hydraulic system design, and the coordination of city-resident technical crews across all six operating hubs and the five Commercial Plus deployment archetypes.',
+    verified: true,
   },
 ] as const;
 

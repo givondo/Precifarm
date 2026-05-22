@@ -26,7 +26,7 @@ import { cities } from '../../data/cities';
   <section class="bg-paper">
     <div class="container-page py-10 md:py-14">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
-        <Stat value="2024" label="Founded" />
+        <Stat value="2025" label="Incorporated" />
         <Stat value="6" label="Cities" />
         <Stat value="100%" label="Built in Kenya" />
         <Stat value="0" label="Outside investors" />
@@ -53,6 +53,105 @@ import { cities } from '../../data/cities';
             </div>
           </article>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why now: three structural curves -->
+  <section class="bg-paper">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Why now</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Three structural curves crossed in 2024.</h2>
+        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+          Precifarm exists at this moment because three independent shifts converged. Any one of them would matter on its own. All three together is why we launched.
+        </p>
+      </div>
+      <div class="space-y-4">
+        <article class="rounded-card bg-white p-6 md:p-7">
+          <div class="flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-6">
+            <p class="text-3xl font-bold text-navy shrink-0 w-24">2024</p>
+            <div class="flex-1">
+              <h3 class="text-h3 text-navy-dark">EV vehicles deployed at scale</h3>
+              <p class="mt-2 text-text-mid leading-relaxed">
+                BasiGo electric buses on Nairobi routes. Roam and Spiro electric motorbikes in fleet service. Ampersand swap stations live. ARC Ride scaling rapidly. The vehicles exist on Kenyan roads today. Distributed high-capacity charging infrastructure does not. Commercial Plus is built directly into that gap.
+              </p>
+            </div>
+          </div>
+        </article>
+        <article class="rounded-card bg-white p-6 md:p-7">
+          <div class="flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-6">
+            <p class="text-3xl font-bold text-navy shrink-0 w-24">2024</p>
+            <div class="flex-1">
+              <h3 class="text-h3 text-navy-dark">LFP battery price crossed $100 per kWh</h3>
+              <p class="mt-2 text-text-mid leading-relaxed">
+                Lithium iron phosphate pack prices crossed below the $100/kWh threshold. A 1.5 kWh Starter Pod becomes financeable at KSh 5,472 per month on Lipa Pole Pole. A 1 MWh Commercial Plus block becomes commercially mortgageable. The economics that used to require a grant now run on customer revenue.
+              </p>
+            </div>
+          </div>
+        </article>
+        <article class="rounded-card bg-white p-6 md:p-7">
+          <div class="flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-6">
+            <p class="text-3xl font-bold text-navy shrink-0 w-24">2024</p>
+            <div class="flex-1">
+              <h3 class="text-h3 text-navy-dark">Kenya Net Metering Regulations gazetted</h3>
+              <p class="mt-2 text-text-mid leading-relaxed">
+                Together with the National Energy Compact targeting 1.8 GW of wind and solar by 2030, this is the most enabling regulatory environment Kenya's distributed energy sector has seen. EPRA licensing, net-metering rules, and the policy framework around grid interconnection are all aligned at the same moment.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who we serve (market context) -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Who we serve</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Every Kenyan household, SME, institution, and EV fleet.</h2>
+        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+          Four packages mapped to four market segments. KNBS data sets the bottom-up scale; our operating footprint sets the path.
+        </p>
+      </div>
+      <div class="overflow-x-auto -mx-5 md:mx-0 px-5 md:px-0">
+        <table class="w-full min-w-[640px] border-collapse text-sm">
+          <thead>
+            <tr>
+              <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider border-b-2 border-navy">Segment</th>
+              <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider border-b-2 border-navy">Scale</th>
+              <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider border-b-2 border-navy">Precifarm package</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-row-alt">
+              <th scope="row" class="text-left p-4 font-semibold text-navy-dark align-top">Off-grid and grid-unreliable households</th>
+              <td class="p-4 text-text-mid align-top">12.1 million households<br /><span class="text-xs text-text-muted">KNBS</span></td>
+              <td class="p-4 text-text-mid align-top">Starter and Family</td>
+            </tr>
+            <tr class="bg-white">
+              <th scope="row" class="text-left p-4 font-semibold text-navy-dark align-top">Kenyan MSMEs</th>
+              <td class="p-4 text-text-mid align-top">1.56 million enterprises<br /><span class="text-xs text-text-muted">KNBS</span></td>
+              <td class="p-4 text-text-mid align-top">Family and Commercial</td>
+            </tr>
+            <tr class="bg-row-alt">
+              <th scope="row" class="text-left p-4 font-semibold text-navy-dark align-top">Schools, clinics, agricultural cooperatives</th>
+              <td class="p-4 text-text-mid align-top">Tens of thousands of sites</td>
+              <td class="p-4 text-text-mid align-top">Commercial and Commercial Plus</td>
+            </tr>
+            <tr class="bg-white">
+              <th scope="row" class="text-left p-4 font-semibold text-navy-dark align-top">Hospitality and fuel retail</th>
+              <td class="p-4 text-text-mid align-top">Hundreds of EV-ready sites</td>
+              <td class="p-4 text-text-mid align-top">Commercial Plus</td>
+            </tr>
+            <tr class="bg-row-alt">
+              <th scope="row" class="text-left p-4 font-semibold text-navy-dark align-top">EV fleet operators and charging hubs</th>
+              <td class="p-4 text-text-mid align-top">Rapidly expanding fleets</td>
+              <td class="p-4 text-text-mid align-top">Commercial Plus</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>

@@ -254,7 +254,7 @@ export const commercialPlusArchetypes: DeploymentArchetype[] = [
   },
   {
     title: 'Boda-boda and motorbike-fleet charging hubs',
-    description: 'Dedicated charging infrastructure for electric motorbike fleets, with DC fast-charge or battery-swap bays. Often run as a paid-charging revenue line.',
+    description: 'Dedicated charging infrastructure for electric motorbike fleets and battery-swap operators such as Roam, Spiro, Ampersand, and ARC Ride. DC fast-charge or battery-swap bays sized to fleet rotation. Often run as a paid-charging revenue line.',
     solar: '100 to 300 kWp solar',
     storage: '200 to 600 kWh storage',
     charging: '20 to 50 DC fast-charge or battery-swap bays',
@@ -268,7 +268,7 @@ export const commercialPlusArchetypes: DeploymentArchetype[] = [
   },
   {
     title: 'Industrial and SEZ tenant sites',
-    description: 'Manufacturing, logistics, and special economic zone tenants charging delivery trucks, staff EVs, and forklifts on site. Larger storage smooths peak draw against grid limits.',
+    description: 'Manufacturing, logistics, and special economic zone tenants charging delivery trucks, staff EVs, and forklifts on site. Logistics-fleet operators such as BasiGo electric-bus depots and SEZ tenants fit this profile. Larger storage smooths peak draw against grid limits.',
     solar: '300 kWp to 1 MWp solar',
     storage: '600 kWh to 2 MWh storage',
     charging: 'Fleet charging for delivery trucks, staff EVs, forklifts',
