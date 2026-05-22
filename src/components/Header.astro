@@ -115,4 +115,18 @@ const isActive = (href: string) =>
       nav.classList.toggle('hidden');
     });
   }
+
+  // Sync products-dropdown aria-expanded with hover/focus-within state so
+  // assistive tech matches the visual disclosure behaviour.
+  const productsTrigger = document.querySelector<HTMLButtonElement>('[data-nav-trigger="products"]');
+  const productsGroup = productsTrigger?.parentElement;
+  if (productsTrigger && productsGroup) {
+    const setExpanded = (state: boolean) => productsTrigger.setAttribute('aria-expanded', String(state));
+    productsGroup.addEventListener('mouseenter', () => setExpanded(true));
+    productsGroup.addEventListener('mouseleave', () => setExpanded(false));
+    productsGroup.addEventListener('focusin', () => setExpanded(true));
+    productsGroup.addEventListener('focusout', (e) => {
+      if (!productsGroup.contains(e.relatedTarget as Node)) setExpanded(false);
+    });
+  }
 </script>
