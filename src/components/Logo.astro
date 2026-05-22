@@ -1,0 +1,18 @@
+---
+// Text-logo placeholder. Replace with the real Precifarm wordmark/svg in Milestone 11
+// once the brand asset is exported from the live site.
+// TODO(Milestone 11): swap to <img src="/images/brand/precifarm-logo.svg" alt="Precifarm" />.
+
+export interface Props {
+  variant?: 'navy' | 'white';
+  size?: 'sm' | 'md';
+}
+
+const { variant = 'navy', size = 'md' } = Astro.props;
+const colorClass = variant === 'white' ? 'text-white' : 'text-navy-dark';
+const sizeClass = size === 'sm' ? 'text-base' : 'text-lg md:text-xl';
+---
+<span class={`inline-flex items-baseline font-sans font-bold tracking-tight ${colorClass} ${sizeClass}`}>
+  <span aria-hidden="true" class="mr-1.5 inline-block h-2.5 w-2.5 translate-y-[-1px] rounded-sm bg-amber"></span>
+  <span>PRECIFARM</span>
+</span>

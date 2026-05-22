@@ -1,17 +1,15 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<!doctype html>
-<html lang="en-KE">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Precifarm — Milestone 1 scaffold</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </head>
-  <body>
-    <main class="container-page section">
-      <h1 class="text-h1 md:text-display text-navy">Precifarm scaffold up.</h1>
-      <p class="mt-4 text-text-mid">Milestone 1 complete. Replaced in Milestone 5.</p>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title="Reliable solar power for every Kenyan home and business"
+  description="EPRA-licensed EPC and O&M contractor. Four packages on one platform. Designed, installed, and serviced for five years by the same engineering team."
+>
+  <section class="container-page section">
+    <p class="eyebrow">Milestone 2 scaffold</p>
+    <h1 class="text-h1-sm md:text-display text-navy-dark mt-3">Layout, header, footer in place.</h1>
+    <p class="mt-4 text-text-mid max-w-prose">
+      Real homepage content lands in Milestone 5. This page exists so the build stays green while the rest of the site comes together.
+    </p>
+  </section>
+</BaseLayout>

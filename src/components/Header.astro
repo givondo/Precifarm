@@ -1,0 +1,118 @@
+---
+import Logo from './Logo.astro';
+
+const currentPath = Astro.url.pathname;
+
+const productLinks = [
+  { href: '/products/', label: 'All packages' },
+  { href: '/products/starter/', label: 'Starter' },
+  { href: '/products/family/', label: 'Family' },
+  { href: '/products/commercial/', label: 'Commercial' },
+  { href: '/products/commercial-plus/', label: 'Commercial Plus' },
+];
+
+const navLinks = [
+  { href: '/how-we-work/', label: 'How we work' },
+  { href: '/cities/', label: 'Cities' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
+];
+
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+<header class="sticky top-0 z-50 border-b border-hairline bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+  <div class="container-page flex items-center justify-between gap-6 py-4">
+    <a href="/" class="flex items-center" aria-label="Precifarm home">
+      <Logo />
+    </a>
+
+    <nav aria-label="Primary" class="hidden lg:flex items-center gap-1">
+      <div class="relative group">
+        <button
+          type="button"
+          class={`flex items-center gap-1 px-3 py-2 rounded-md text-sm font-semibold transition-colors ${currentPath.startsWith('/products') ? 'text-navy-dark bg-paper' : 'text-text-mid hover:text-navy-dark hover:bg-paper'}`}
+          aria-haspopup="true"
+          aria-expanded="false"
+          data-nav-trigger="products"
+        >
+          Products
+          <svg aria-hidden="true" class="h-3.5 w-3.5" viewBox="0 0 12 12" fill="none">
+            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="invisible absolute left-0 top-full mt-1 w-56 origin-top-left rounded-card border border-hairline bg-white p-2 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+          {productLinks.map((link) => (
+            <a
+              href={link.href}
+              class={`block rounded-md px-3 py-2 text-sm font-medium transition-colors ${isActive(link.href) && link.href !== '/products/' ? 'bg-paper text-navy-dark' : 'text-text-mid hover:bg-paper hover:text-navy-dark'}`}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class={`px-3 py-2 rounded-md text-sm font-semibold transition-colors ${isActive(link.href) ? 'text-navy-dark bg-paper' : 'text-text-mid hover:text-navy-dark hover:bg-paper'}`}
+          aria-current={isActive(link.href) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden lg:block">
+      <a href="/contact/" class="btn btn-primary text-sm" style="padding: 0.5rem 1.125rem;">
+        Get a quote
+      </a>
+    </div>
+
+    <button
+      id="mobile-nav-toggle"
+      type="button"
+      class="lg:hidden inline-flex items-center justify-center rounded-md p-2 text-navy-dark hover:bg-paper"
+      aria-controls="mobile-nav"
+      aria-expanded="false"
+      aria-label="Open menu"
+    >
+      <svg aria-hidden="true" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <nav id="mobile-nav" aria-label="Primary mobile" class="hidden lg:hidden border-t border-hairline bg-white">
+    <div class="container-page py-4 space-y-1">
+      <div class="border-b border-hairline pb-3 mb-3">
+        <p class="eyebrow text-text-muted mb-2">Products</p>
+        {productLinks.map((link) => (
+          <a href={link.href} class={`block rounded-md px-3 py-2 text-sm font-medium ${isActive(link.href) && link.href !== '/products/' ? 'bg-paper text-navy-dark' : 'text-text-mid'}`}>
+            {link.label}
+          </a>
+        ))}
+      </div>
+      {navLinks.map((link) => (
+        <a href={link.href} class={`block rounded-md px-3 py-2 text-sm font-semibold ${isActive(link.href) ? 'bg-paper text-navy-dark' : 'text-text-mid'}`} aria-current={isActive(link.href) ? 'page' : undefined}>
+          {link.label}
+        </a>
+      ))}
+      <a href="/contact/" class="btn btn-primary w-full mt-4">Get a quote</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-nav-toggle');
+  const nav = document.getElementById('mobile-nav');
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      toggle.setAttribute('aria-label', expanded ? 'Open menu' : 'Close menu');
+      nav.classList.toggle('hidden');
+    });
+  }
+</script>
