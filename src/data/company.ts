@@ -100,7 +100,7 @@ export const exampleInstallations = [
     package: 'Commercial',
     description:
       'A canopy array overhead, classrooms running below. Tablet charging through the morning, lights that hold for night classes, and two pumps keeping the school garden alive.',
-    image: '/images/packages/commercial-school.jpg',
+    image: '/images/installations/school-kitui.jpg',
     alt: 'A solar-panel canopy mounted above an institutional building, illustrating the kind of Commercial deployment a Kenyan school would commission.',
   },
   {
@@ -108,7 +108,7 @@ export const exampleInstallations = [
     package: 'Family',
     description:
       'Panels above, business below. Clippers, driers, and a drinks fridge running on stable power, every day, while the rest of the strip waits out the next blackout.',
-    image: '/images/packages/family-rooftop.jpg',
+    image: '/images/installations/salon-eldoret.jpg',
     alt: 'Rooftop solar panels on a small commercial building in warm afternoon light, illustrating the Family-tier system powering a small business.',
   },
   {
@@ -116,7 +116,7 @@ export const exampleInstallations = [
     package: 'Starter',
     description:
       'A Starter package on the wall. Phone charged for every shift, lights on for the family at night, and the monthly KPLC bill is gone.',
-    image: '/images/packages/starter-home.jpg',
+    image: '/images/installations/boda-mombasa.jpg',
     alt: 'A small wall-mounted electrical installation with cabling and controllers, illustrating a Starter system on the wall of a single-room dwelling.',
   },
 ] as const;

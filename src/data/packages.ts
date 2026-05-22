@@ -46,7 +46,7 @@ export const packages: Package[] = [
     startingPrice: 'KSh 95,000 cash, or KSh 5,472/month',
     image: {
       src: '/images/packages/starter-home.jpg',
-      alt: 'A wall-mounted electrical installation with cabling, controllers, and a small solar storage unit, illustrating the Precifarm Starter package on a single wall.',
+      alt: 'A single solar panel alongside a compact Vestwoods lithium power station and PV cabling, illustrating the Precifarm Starter package: 550 W solar with 1.5 kWh of storage.',
     },
     whatYouGet: [
       'One 550 W solar panel with mounting hardware',
@@ -97,7 +97,7 @@ export const packages: Package[] = [
     startingPrice: 'KSh 290,000 cash',
     image: {
       src: '/images/packages/family-rooftop.jpg',
-      alt: 'Rooftop solar panels in warm afternoon light, illustrating a residential Family-tier installation.',
+      alt: 'A solar panel, a Premier-branded lithium storage unit, a MUST-branded hybrid solar inverter, and PV cabling, illustrating the Precifarm Family-tier kit with 5 kWh of storage and a 5 kW inverter.',
     },
     whatYouGet: [
       'Two 450 W solar panels, mounted on roof or ground frame',
@@ -151,7 +151,7 @@ export const packages: Package[] = [
     startingPrice: 'From KSh 520,000',
     image: {
       src: '/images/packages/commercial-school.jpg',
-      alt: 'Institutional-scale solar deployment illustrating a Commercial package sized for schools, clinics, and small commercial operations.',
+      alt: 'Four solar panels, a hybrid solar inverter, and a stack of six lithium battery units with cabling, illustrating the multi-component hardware specified in a Precifarm Commercial-tier deployment.',
     },
     whatYouGet: [
       'Solar array sized 2.75 kWp to 13.2 kWp against your measured load',
@@ -211,7 +211,7 @@ export const packages: Package[] = [
     isHighlighted: true,
     image: {
       src: '/images/packages/commercial-plus-array.jpg',
-      alt: 'A large solar panel array under open sky, illustrating sub-megawatt Commercial Plus deployments with on-site storage and EV-ready charging.',
+      alt: 'A wooden-framed solar carport mounted with PV panels, an EV charging station alongside, and an electric vehicle plugged in beneath — illustrating the EV-ready Commercial Plus archetype combining on-site solar generation with vehicle charging.',
     },
     whatYouGet: [
       'Solar array sized 50 kWp to 1 MWp against site demand',

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"C:/Users/DAVID/AppData/Local/Temp/claude\" -type f \\\\\\( -iname \"*.jpg\" -o -iname \"*.jpeg\" -o -iname \"*.png\" \\\\\\) -mtime -1 2>/dev/null | head -20 ; ls \"C:/Users/DAVID/AppData/Local/Temp/\" 2>&1 | grep -iE \"claude|image\" | head -10)",
+      "Read(//c/Users/DAVID/AppData/Local/Temp/claude/**)",
+      "Read(//c/Users/DAVID/AppData/Local/Temp/**)"
+    ]
+  }
+}
