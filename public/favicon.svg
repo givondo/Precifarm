@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Precifarm">
+  <rect width="64" height="64" rx="12" fill="#0F2832"/>
+  <rect x="12" y="14" width="40" height="22" rx="2" fill="#1F4E5F" stroke="#C99800" stroke-width="2"/>
+  <line x1="22" y1="14" x2="22" y2="36" stroke="#C99800" stroke-width="1.2"/>
+  <line x1="32" y1="14" x2="32" y2="36" stroke="#C99800" stroke-width="1.2"/>
+  <line x1="42" y1="14" x2="42" y2="36" stroke="#C99800" stroke-width="1.2"/>
+  <line x1="12" y1="25" x2="52" y2="25" stroke="#C99800" stroke-width="1.2"/>
+  <circle cx="32" cy="48" r="6" fill="#C99800"/>
+  <path d="M32 42 L32 39 M32 57 L32 54 M38 48 L41 48 M23 48 L26 48 M36.2 43.8 L38.3 41.7 M25.7 54.3 L27.8 52.2 M36.2 52.2 L38.3 54.3 M25.7 41.7 L27.8 43.8" stroke="#C99800" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
