@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import Callout from '../../components/Callout.astro';
+import { company } from '../../data/company';
+
+const success = Astro.url.searchParams.get('success') === 'true';
+const whatsappHref = `${company.whatsappLink}?text=${encodeURIComponent(company.whatsappMessage)}`;
+---
+<BaseLayout
+  title="Contact Precifarm"
+  description="Get a sized recommendation and a written quote within two business days. Email, phone, WhatsApp, or contact form. Anywhere in Kenya, HQ in Nairobi."
+  canonicalPath="/contact/"
+>
+  <Hero
+    eyebrow="Contact"
+    headline="Get a quote, or just say hello."
+    subhead="A written design and quote within two business days of your site assessment. No commitment, no pressure."
+  />
+
+  <!-- Direct contact -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
+        <a href={`mailto:${company.email}`} class="rounded-card border border-hairline bg-paper p-6 hover:bg-callout-green/40 transition-colors">
+          <p class="eyebrow text-text-muted mb-3">Email</p>
+          <p class="text-navy-dark font-semibold text-lg break-words">{company.email}</p>
+          <p class="mt-2 text-sm text-text-mid">Reply within one business day.</p>
+        </a>
+        <a href={`tel:${company.phoneE164}`} class="rounded-card border border-hairline bg-paper p-6 hover:bg-callout-green/40 transition-colors">
+          <p class="eyebrow text-text-muted mb-3">Phone</p>
+          <p class="text-navy-dark font-semibold text-lg">{company.phone}</p>
+          <p class="mt-2 text-sm text-text-mid">Mon to Sat, business hours EAT.</p>
+        </a>
+        <a href={whatsappHref} target="_blank" rel="noopener" class="rounded-card border border-amber bg-callout-amber p-6 hover:bg-amber/20 transition-colors">
+          <p class="eyebrow text-navy-dark mb-3 flex items-center gap-1.5">
+            <svg aria-hidden="true" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+            </svg>
+            WhatsApp
+          </p>
+          <p class="text-navy-dark font-semibold text-lg">Message us</p>
+          <p class="mt-2 text-sm text-text-mid">Fastest channel for quick questions.</p>
+        </a>
+      </div>
+
+      <p class="text-sm text-text-muted">
+        Anywhere in Kenya. HQ in Nairobi. Resident engineering teams in Mombasa, Kisumu, Eldoret, Kitui, and Nakuru.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact form -->
+  <section class="bg-paper border-y border-hairline">
+    <div class="container-page section">
+      <div class="max-w-4xl">
+        <p class="eyebrow mb-3">Quote enquiry</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark mb-3">Tell us about the site.</h2>
+        <p class="text-lg text-text-mid leading-relaxed mb-8">
+          Loads, location, current grid situation, anything specific. We will reply with a sized recommendation and a written quote within two business days.
+        </p>
+
+        {success ? (
+          <Callout variant="green" eyebrow="Enquiry received">
+            <p class="text-navy-dark font-semibold">Thanks. We will be in touch within one business day to acknowledge your enquiry and schedule the site assessment.</p>
+          </Callout>
+        ) : (
+          <div class="rounded-card bg-white border border-hairline p-6 md:p-8">
+            <ContactForm />
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- What happens next -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">What happens next</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">From enquiry to commissioning.</h2>
+      </div>
+      <ol class="space-y-5 max-w-4xl">
+        {[
+          { title: 'We acknowledge within one business day', body: 'Either by email or phone. Your enquiry is logged against the field hub responsible for your region.' },
+          { title: 'An engineer is assigned by city', body: 'The engineer from the relevant regional team takes ownership of the project and will be your point of contact through to commissioning.' },
+          { title: 'A free site assessment is scheduled', body: 'Your assigned engineer visits the site. They map every load, every operating hour, and any structural or grid-connection details that affect design.' },
+          { title: 'Written design and quote within two business days', body: 'You receive a sized recommendation, a bill of quantities, and a firm quote. From there, decide on payment path and we book the install.' },
+        ].map((step, i) => (
+          <li class="flex gap-5 rounded-card bg-paper border border-hairline p-5 md:p-6">
+            <span class="h-10 w-10 shrink-0 rounded-full bg-navy text-white flex items-center justify-center font-bold">{i + 1}</span>
+            <div>
+              <h3 class="text-h3 text-navy-dark">{step.title}</h3>
+              <p class="mt-2 text-text-mid leading-relaxed">{step.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</BaseLayout>

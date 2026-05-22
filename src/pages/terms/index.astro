@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import CTASection from '../../components/CTASection.astro';
+import { company } from '../../data/company';
+
+// [VERIFY] legal review pending. Placeholder copy for v1 launch — replace
+// before any meaningful customer contracts. Substantive customer agreements
+// are governed by separate signed contracts, not by these website terms.
+const lastUpdated = '2026-05-22';
+---
+<BaseLayout
+  title="Terms of service"
+  description="Terms governing the use of the precifarm.com website. Substantive customer agreements are governed by separate signed contracts."
+  canonicalPath="/terms/"
+>
+  <Hero
+    eyebrow="Terms"
+    headline="Terms of service."
+    subhead={`Last updated ${lastUpdated}. Governs use of this website. Customer installations are governed by separate signed contracts.`}
+  />
+
+  <section class="bg-white">
+    <div class="container-page section max-w-3xl">
+      <div class="prose-precifarm space-y-6">
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">1. About these terms</h2>
+          <p>
+            These terms govern your use of the {company.website} website (the "site"), operated by {company.name}. By using the site, you agree to these terms.
+          </p>
+          <p>
+            Substantive commercial relationships, including site assessments, installations, financing, and the five-year service commitment, are governed by separate signed agreements between you and {company.name}, not by these website terms.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">2. Use of the site</h2>
+          <p>You may use the site for personal and business research about Precifarm products and services. You may not:</p>
+          <ul class="list-disc pl-6 space-y-1.5">
+            <li>Use the site for any unlawful purpose.</li>
+            <li>Attempt to disrupt, scrape, or reverse-engineer the site.</li>
+            <li>Misrepresent your affiliation with Precifarm.</li>
+            <li>Use the site's contact channels for unsolicited marketing or spam.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">3. Content and accuracy</h2>
+          <p>
+            We work to keep the information on this site accurate and current. Product specifications, pricing, and financing terms are indicative; the binding figures for any specific installation are those in the written design and quote we issue after a site assessment. Where the site and a written quote conflict, the written quote applies.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">4. Intellectual property</h2>
+          <p>
+            All content on the site, including text, graphics, logos, and code, is owned by {company.name} or its licensors. You may not reproduce or redistribute content without written permission.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">5. Third-party links</h2>
+          <p>
+            The site may link to third-party websites, including partner banks and resource pages. We are not responsible for the content or practices of those sites.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">6. Limitation of liability</h2>
+          <p>
+            The site is provided on an "as is" basis. To the extent permitted by Kenyan law, {company.name} is not liable for any indirect, incidental, or consequential damages arising from your use of the site.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">7. Governing law</h2>
+          <p>
+            These terms are governed by the laws of Kenya. Any dispute arising from the use of the site is subject to the exclusive jurisdiction of the courts of Kenya.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">8. Contact</h2>
+          <p>Questions about these terms: <a href={`mailto:${company.email}`}>{company.email}</a>.</p>
+        </div>
+
+        <div class="rounded-card border border-amber bg-callout-amber p-5 mt-8">
+          <p class="text-sm text-text-mid">
+            <strong class="text-navy-dark">Note:</strong> these terms are provided as a working baseline for v1 launch. A full legal review by qualified Kenyan counsel is pending.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    variant="default"
+    headline="Questions about these terms?"
+    primaryCta={{ href: `mailto:${company.email}`, label: 'Email us' }}
+    secondaryCta={{ href: '/contact/', label: 'Contact page' }}
+  />
+</BaseLayout>

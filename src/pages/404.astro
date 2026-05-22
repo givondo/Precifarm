@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Page not found"
+  description="That page does not exist. Head back to the homepage or get in touch — we are happy to point you to what you were looking for."
+  canonicalPath="/404/"
+  noindex={true}
+>
+  <section class="bg-paper">
+    <div class="container-page py-20 md:py-28">
+      <div class="max-w-2xl">
+        <p class="text-8xl md:text-9xl font-bold text-amber leading-none tracking-tight">404</p>
+        <h1 class="mt-6 text-h1-sm md:text-display text-navy-dark">Page not found.</h1>
+        <p class="mt-5 text-lg text-text-mid leading-relaxed max-w-prose">
+          That page does not exist on precifarm.com. It may have moved, or the link that brought you here may be out of date. Head back to the homepage, or get in touch — we are happy to point you to what you were looking for.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/" class="btn btn-primary">Go to homepage</a>
+          <a href="/contact/" class="btn btn-secondary">Get in touch</a>
+        </div>
+
+        <div class="mt-12 rounded-card border border-hairline bg-white p-6">
+          <p class="eyebrow text-text-muted mb-3">Quick links</p>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <li><a href="/products/" class="text-navy font-semibold hover:underline">All packages</a></li>
+            <li><a href="/products/starter/" class="text-navy font-semibold hover:underline">Starter package</a></li>
+            <li><a href="/products/family/" class="text-navy font-semibold hover:underline">Family package</a></li>
+            <li><a href="/products/commercial/" class="text-navy font-semibold hover:underline">Commercial package</a></li>
+            <li><a href="/products/commercial-plus/" class="text-navy font-semibold hover:underline">Commercial Plus</a></li>
+            <li><a href="/how-we-work/" class="text-navy font-semibold hover:underline">How we work</a></li>
+            <li><a href="/cities/" class="text-navy font-semibold hover:underline">Cities we operate in</a></li>
+            <li><a href="/financing/" class="text-navy font-semibold hover:underline">Financing options</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

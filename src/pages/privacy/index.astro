@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import CTASection from '../../components/CTASection.astro';
+import { company } from '../../data/company';
+
+// [VERIFY] legal review pending. Placeholder copy for v1 launch — replace before
+// any meaningful customer-data handling. Aligned to Kenya Data Protection Act 2019.
+const lastUpdated = '2026-05-22';
+---
+<BaseLayout
+  title="Privacy policy"
+  description="How Precifarm AI Ltd collects, uses, and protects the personal information of customers and enquirers, under the Kenya Data Protection Act 2019."
+  canonicalPath="/privacy/"
+  noindex={false}
+>
+  <Hero
+    eyebrow="Privacy"
+    headline="Privacy policy."
+    subhead={`Last updated ${lastUpdated}. Aligned to the Kenya Data Protection Act 2019.`}
+  />
+
+  <section class="bg-white">
+    <div class="container-page section max-w-3xl">
+      <div class="prose-precifarm space-y-6">
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">1. Who we are</h2>
+          <p>
+            {company.name} ({company.shortName}) is a Kenyan company registered in Nairobi. We design, install, and service distributed solar systems across Kenya. References to "we", "us", and "our" in this policy mean {company.name}.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">2. What we collect</h2>
+          <p>We collect personal information you provide directly when you:</p>
+          <ul class="list-disc pl-6 space-y-1.5">
+            <li>Submit an enquiry through our contact form, by email, by phone, or by WhatsApp.</li>
+            <li>Engage us for a site assessment or installation.</li>
+            <li>Pay for a system, in cash, by M-Pesa, or by bank transfer.</li>
+          </ul>
+          <p>This typically includes your name, contact details, site location, and any load or design information you share for the site assessment.</p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">3. How we use it</h2>
+          <p>We use your personal information to:</p>
+          <ul class="list-disc pl-6 space-y-1.5">
+            <li>Respond to your enquiry and schedule a site assessment.</li>
+            <li>Design, install, and service the system you commission.</li>
+            <li>Manage payments and financing where applicable.</li>
+            <li>Deliver the five-year service commitment that comes with every Precifarm install.</li>
+            <li>Communicate with you about your installed system.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">4. Who we share it with</h2>
+          <p>We share personal information only where necessary for the work you have engaged us to do, including:</p>
+          <ul class="list-disc pl-6 space-y-1.5">
+            <li>Partner banks, where you have asked us to share your design and quote for financing.</li>
+            <li>Regulators such as EPRA, where required for licensing and compliance.</li>
+            <li>Service providers we use to operate (analytics, hosting, communication tools).</li>
+          </ul>
+          <p>We do not sell personal information. We do not share it for marketing purposes outside of our own communications with you about your installed system.</p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">5. How we protect it</h2>
+          <p>We hold personal information securely and apply reasonable safeguards consistent with the Kenya Data Protection Act 2019. Access is restricted to the team members who need it to design, install, or service your system.</p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">6. Your rights</h2>
+          <p>Under the Kenya Data Protection Act 2019, you have the right to access, correct, or request deletion of the personal information we hold about you. To exercise these rights, email us at <a href={`mailto:${company.email}`}>{company.email}</a>.</p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">7. Analytics</h2>
+          <p>We use Plausible Analytics to understand how visitors use this website. Plausible does not use cookies, does not collect personal information, and is GDPR and Kenya Data Protection Act compliant by design.</p>
+        </div>
+
+        <div>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">8. Contact</h2>
+          <p>Questions about this policy or about how we handle your data: <a href={`mailto:${company.email}`}>{company.email}</a> or {company.phone}.</p>
+        </div>
+
+        <div class="rounded-card border border-amber bg-callout-amber p-5 mt-8">
+          <p class="text-sm text-text-mid">
+            <strong class="text-navy-dark">Note:</strong> this policy is provided as a working baseline for v1 launch. A full legal review by qualified Kenyan counsel is pending before any substantive customer-data programme.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    variant="default"
+    headline="Questions about how we handle your data?"
+    primaryCta={{ href: `mailto:${company.email}`, label: 'Email us' }}
+    secondaryCta={{ href: '/contact/', label: 'Contact page' }}
+  />
+</BaseLayout>

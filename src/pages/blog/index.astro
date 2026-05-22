@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import CTASection from '../../components/CTASection.astro';
+
+// TODO(content): blog posts land as .mdx files in src/content/blog/. The
+// index will switch to listing those entries once Astro content collections
+// are wired in. For v1, this is an empty index — no posts yet.
+const posts: { slug: string; title: string; excerpt: string; date: string }[] = [];
+---
+<BaseLayout
+  title="Blog — notes from the field"
+  description="Notes from the field. Engineering write-ups, project debriefs, and operating-discipline thinking from the Precifarm team."
+  canonicalPath="/blog/"
+>
+  <Hero
+    eyebrow="Blog"
+    headline="Notes from the field."
+    subhead="Engineering write-ups, project debriefs, and operating-discipline thinking from the Precifarm team. Coming soon."
+  />
+
+  <section class="bg-white">
+    <div class="container-page section">
+      {posts.length === 0 ? (
+        <div class="max-w-3xl rounded-card border border-hairline bg-paper p-8 md:p-10 text-center">
+          <p class="eyebrow text-text-muted mb-3">Coming soon</p>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-3">No posts yet.</h2>
+          <p class="text-text-mid leading-relaxed max-w-prose mx-auto">
+            We are writing the first batch of field notes now. Expect posts on borehole sizing for Commercial, the Lipa Pole Pole maths from a customer's perspective, and the operating discipline behind the five-year service commitment.
+          </p>
+          <a href="/contact/" class="mt-6 inline-flex btn btn-primary">Talk to us in the meantime</a>
+        </div>
+      ) : (
+        <ul class="space-y-5 max-w-4xl">
+          {posts.map((post) => (
+            <li>
+              <a href={`/blog/${post.slug}/`} class="block rounded-card border border-hairline bg-white p-6 hover:shadow-md transition-shadow">
+                <p class="text-xs text-text-muted">{post.date}</p>
+                <h2 class="mt-1 text-h3 text-navy-dark">{post.title}</h2>
+                <p class="mt-2 text-text-mid">{post.excerpt}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+
+  <CTASection
+    variant="default"
+    headline="Want to read something specific?"
+    body="If there is a topic you want us to write about, send it over. We are choosing the early posts against what customers actually ask us."
+    primaryCta={{ href: '/contact/', label: 'Suggest a topic' }}
+  />
+</BaseLayout>
