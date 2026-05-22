@@ -24,7 +24,7 @@ const otherPackages = packages.filter((p) => p.slug !== pkg.slug);
 const isCommercialPlus = pkg.slug === 'commercial-plus';
 ---
 <BaseLayout
-  title={`${pkg.name} — ${pkg.tagline}`}
+  title={`${pkg.name}: ${pkg.tagline}`}
   description={`${pkg.name}: ${pkg.capacity}. ${pkg.targetCustomer.split('.')[0]}. Five-year service commitment, same engineering team.`}
   canonicalPath={`/products/${pkg.slug}/`}
 >
