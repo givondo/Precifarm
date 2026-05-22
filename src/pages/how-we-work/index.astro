@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Callout from '../../components/Callout.astro';
+import ProcessStep from '../../components/ProcessStep.astro';
+import CTASection from '../../components/CTASection.astro';
+import { cities } from '../../data/cities';
+import { deploymentSteps, company } from '../../data/company';
+---
+<BaseLayout
+  title="How we work — EPC and O&M as one obligation"
+  description="EPRA-licensed EPC and O&M discipline applied to every package. The team that designs your system installs it and services it for the next five years."
+  canonicalPath="/how-we-work/"
+>
+  <Hero
+    eyebrow="How we work"
+    headline="EPC and O&M discipline, applied to every package."
+    subhead="EPRA-licensed throughout. Same engineering team across design, installation, and five years of service."
+    primaryCta={{ href: '/contact/', label: 'Get a quote' }}
+    secondaryCta={{ href: '/products/', label: 'See the packages' }}
+  />
+
+  <!-- Operating principle -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
+        <div class="lg:col-span-1">
+          <Callout variant="navy" eyebrow="The operating principle" asQuote={true}>
+            {company.operatingPrinciple}
+          </Callout>
+        </div>
+        <div class="lg:col-span-2 prose-precifarm">
+          <p>
+            Distributed solar in Kenya tends to be sold as a one-time transaction. A crew shows up, an array goes onto a roof, and the relationship effectively ends. Twelve months later, when an inverter throws an error or a panel loses output, the customer is left chasing a contractor who has already moved on.
+          </p>
+          <p>
+            That is not how critical electrical infrastructure should work. A solar system is the spine of a building's energy supply for the next decade or two. The right operating frame is lifelong accountability: the team that designed and built the system stays present and answerable for as long as the system runs.
+          </p>
+          <p>
+            Precifarm is structured around that frame. Every package, from a single-room Starter to a 1 MWp Commercial Plus deployment, comes with a five-year service commitment delivered by the same engineering team. We carry the design choices and the maintenance record forward together, in the same hands.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EPRA licensing -->
+  <section class="bg-paper border-y border-hairline">
+    <div class="container-page section">
+      <div class="max-w-3xl">
+        <p class="eyebrow mb-3">Licensing</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark mb-6">EPRA-licensed throughout.</h2>
+        <div class="prose-precifarm">
+          <p>
+            The Energy and Petroleum Regulatory Authority (EPRA) governs the design, installation, and operation of solar PV systems in Kenya. EPRA licensing is the regulatory floor for any installer working on grid-tied or off-grid solar at the scales Precifarm builds.
+          </p>
+          <p>
+            Every Precifarm crew that touches your site is EPRA-licensed. Every design we issue is signed off by a licensed engineer. Every commissioning record meets the safety, electrical-installation, mounting, and protection standards EPRA sets. This is not a marketing line. It is the baseline our customers, our insurers, and our partner banks all require, and it is the reason we can hold a five-year service commitment with confidence.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EPC and O&M model -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">The model</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">EPC and O&M, in one team.</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <article class="rounded-card border border-hairline bg-paper p-6 md:p-7">
+          <p class="eyebrow text-green mb-3">EPC</p>
+          <h3 class="text-h3 text-navy-dark mb-3">Engineering, procurement, construction.</h3>
+          <p class="text-text-mid leading-relaxed">
+            We design the system against your measured load. We procure the hardware against the design. We construct on site with our own EPRA-licensed crews. This is the chain most contractors stop at.
+          </p>
+        </article>
+        <article class="rounded-card border border-hairline bg-paper p-6 md:p-7">
+          <p class="eyebrow text-amber mb-3">O&amp;M</p>
+          <h3 class="text-h3 text-navy-dark mb-3">Operations and maintenance.</h3>
+          <p class="text-text-mid leading-relaxed">
+            We service the system across the next five years, with priority response on Commercial and Commercial Plus tiers. The same engineering team carries the system forward. The same regional depot stocks the spares. The same record of your install informs every visit.
+          </p>
+        </article>
+      </div>
+      <Callout variant="amber" eyebrow="Why one team, not two">
+        <p>
+          When EPC and O&amp;M sit in different organisations, the customer becomes the integrator. They mediate between the team that designed the system and the team supposed to service it. Subtle design choices, like a particular cable run or a derated inverter setting, get lost in handover. Five years later, that is a fault-response problem the customer is paying to solve. Precifarm refuses that handover; we keep both halves in the same team.
+        </p>
+      </Callout>
+    </div>
+  </section>
+
+  <!-- Engineer accountability -->
+  <section class="bg-paper border-y border-hairline">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">In practice</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Engineer accountability, made concrete.</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="rounded-card bg-white border border-hairline p-6">
+          <p class="text-text-muted text-xs uppercase tracking-wider font-semibold mb-2">City-resident teams</p>
+          <p class="text-navy-dark font-semibold text-lg">Six cities</p>
+          <p class="mt-2 text-sm text-text-mid leading-relaxed">
+            Nairobi HQ, plus field hubs in Mombasa, Kisumu, Eldoret, Kitui, and Nakuru. Engineers live in the regions they serve.
+          </p>
+        </div>
+        <div class="rounded-card bg-white border border-hairline p-6">
+          <p class="text-text-muted text-xs uppercase tracking-wider font-semibold mb-2">Regional depots</p>
+          <p class="text-navy-dark font-semibold text-lg">Six spare-parts caches</p>
+          <p class="mt-2 text-sm text-text-mid leading-relaxed">
+            Inverters, panels, Neura Pods, and consumables held locally. No customer waits weeks for a part to clear Nairobi traffic.
+          </p>
+        </div>
+        <div class="rounded-card bg-white border border-hairline p-6">
+          <p class="text-text-muted text-xs uppercase tracking-wider font-semibold mb-2">Same-day coverage</p>
+          <p class="text-navy-dark font-semibold text-lg">Drive-time radius</p>
+          <p class="mt-2 text-sm text-text-mid leading-relaxed">
+            Every installed site sits within a same-day drive of its regional depot. Fault response does not require a road trip from Nairobi.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+        {cities.map((city) => (
+          <a href={`/cities/${city.slug}/`} class="rounded-md bg-white border border-hairline px-4 py-3 text-center text-sm font-semibold text-navy hover:bg-navy hover:text-white transition-colors">
+            {city.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- No subcontractors -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="max-w-3xl">
+        <p class="eyebrow mb-3">No handoffs</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark mb-6">What "no subcontractors" actually means.</h2>
+        <div class="prose-precifarm">
+          <p>
+            We do not subcontract the install, the wiring, or the service visits. The engineer who scopes your site is on the crew that installs your system. The crew that installs your system is the team that returns for the five-year service cycle.
+          </p>
+          <p>
+            This is not because subcontracting is impossible to manage; it is because for a five-year service commitment to mean anything, the people on the hook for the outcome have to be the people in the design and install record. The accountability stays in one team, not split across three.
+          </p>
+          <p>
+            For Commercial Plus deployments where specialised civil works or grid interconnection requires a regulated partner (utility engagement, structural civils on a 1 MWp ground-mount), those partners work to a Precifarm design and a Precifarm-led commissioning. The accountability never leaves us.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process recap -->
+  <section class="bg-paper border-y border-hairline">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">From quote to commissioning</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Four steps, every project.</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        {deploymentSteps.map((step) => (
+          <ProcessStep number={step.number} title={step.title} body={step.body} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    variant="dark"
+    headline="Lifelong accountability, in writing."
+    body="Every Precifarm install is backed by a five-year service commitment. Tell us about your site and we will reply with a written design within two business days."
+    primaryCta={{ href: '/contact/', label: 'Get a quote' }}
+    secondaryCta={{ href: '/products/', label: 'Compare packages' }}
+  />
+</BaseLayout>

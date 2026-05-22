@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Stat from '../../components/Stat.astro';
+import TeamCard from '../../components/TeamCard.astro';
+import CityCard from '../../components/CityCard.astro';
+import CTASection from '../../components/CTASection.astro';
+import Callout from '../../components/Callout.astro';
+import { team, beliefs, company } from '../../data/company';
+import { cities } from '../../data/cities';
+---
+<BaseLayout
+  title="About Precifarm — built and run by a Kenyan team"
+  description="Founded 2024 in Kenya. EPRA-licensed EPC and O&M contractor. No outside investors, six operating cities, one engineering team across the country."
+  canonicalPath="/about/"
+>
+  <Hero
+    eyebrow="About"
+    headline="Built and run by a Kenyan team that answers when you call."
+    subhead="EPRA-licensed EPC and O&M contractor. Headquartered in Nairobi, with resident engineering teams in five more cities."
+    primaryCta={{ href: '/contact/', label: 'Talk to us' }}
+    secondaryCta={{ href: '/how-we-work/', label: 'How we work' }}
+  />
+
+  <!-- Key facts -->
+  <section class="bg-paper border-b border-hairline">
+    <div class="container-page py-10 md:py-14">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+        <Stat value="2024" label="Founded" />
+        <Stat value="6" label="Cities" />
+        <Stat value="100%" label="Built in Kenya" />
+        <Stat value="0" label="Outside investors" />
+      </div>
+    </div>
+  </section>
+
+  <!-- What we believe -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">What we believe</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Three things we will not compromise on.</h2>
+      </div>
+      <div class="space-y-5">
+        {beliefs.map((belief, i) => (
+          <article class="rounded-card border border-hairline bg-white p-6 md:p-8">
+            <div class="flex items-start gap-5">
+              <span class="text-amber font-bold text-2xl shrink-0 w-10">{String(i + 1).padStart(2, '0')}</span>
+              <div class="flex-1">
+                <h3 class="text-h3 text-navy-dark">{belief.title}</h3>
+                <p class="mt-3 text-text-mid leading-relaxed">{belief.body}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Founding team -->
+  <section class="bg-paper border-y border-hairline">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">The founding team</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Three co-founders. Same workshop.</h2>
+        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+          Precifarm was built by three Kenyan engineers who agreed that a solar installer that stays after the install needs to be designed that way from day one.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {team.map((member) => (
+          <TeamCard
+            name={member.name}
+            role={member.role}
+            bio={member.bio}
+            verified={member.verified}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Six cities -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Six cities, one team</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Resident engineering, regional depots.</h2>
+        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+          Nairobi headquarters plus five regional field hubs. Every installed system sits within a same-day drive of its regional depot.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {cities.map((city) => (
+          <CityCard city={city} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Operating principle prose -->
+  <section class="bg-paper border-y border-hairline">
+    <div class="container-page section">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
+        <div class="lg:col-span-1">
+          <Callout variant="navy" eyebrow="The operating principle" asQuote={true}>
+            {company.operatingPrinciple}
+          </Callout>
+        </div>
+        <div class="lg:col-span-2 prose-precifarm">
+          <p>
+            Kenya's electrical infrastructure is becoming distributed. Households are stepping out from under unreliable grid supply. Schools and clinics are adopting solar because the grid alone is no longer a credible base-load promise. SMEs and cooperatives are sizing systems against productive loads they could never run before. EV operators are building charging mini-grids ahead of the curve. The country is wiring itself differently, and the contractors who carry that wiring forward will determine whether it stays running for the next decade.
+          </p>
+          <p>
+            We started Precifarm because the contractor density Kenya needs has not yet been built. The country has plenty of installers; what it needs is operators. Engineering teams that show up after the install. Depots stocked in the regions where systems actually live. Five-year service commitments backed by the same hands that built the system. That is the gap we are filling.
+          </p>
+          <p>
+            The workforce angle matters as much as the customer angle. Every additional Precifarm city is more Kenyan engineering jobs and more on-the-ground experience in regional energy infrastructure. We grow on revenue, not capital. We answer to the customers who pay our bills. We do the work that lets a Kenyan engineer point at a system she has serviced for five years and say it is still hers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    variant="dark"
+    headline="Send us your site. We will reply with a design."
+    body="Two business days from your enquiry to a written design and quote. No commitment, no pressure."
+    primaryCta={{ href: '/contact/', label: 'Get a quote' }}
+    secondaryCta={{ href: '/how-we-work/', label: 'How we work' }}
+  />
+</BaseLayout>
