@@ -9,7 +9,6 @@ import StructuredData from '../../components/StructuredData.astro';
 import { cities } from '../../data/cities';
 import { company } from '../../data/company';
 
-const success = Astro.url.searchParams.get('success') === 'true';
 const cityOptions = cities.map((c) => c.name);
 
 type Tier = {
@@ -271,11 +270,13 @@ const trainingFaqs = [
       </div>
 
       <div class="max-w-4xl">
-        {success ? (
+        <div id="training-success" class="hidden" data-form-success>
           <Callout variant="green" eyebrow="Registration received">
-            <p class="text-navy-dark font-semibold">Thanks. We will contact you within two business days to confirm the next available cohort matching your tier and hub, and to share the published fee and prerequisite checklist.</p>
+            <p class="text-navy-dark font-semibold mb-2">Thanks. Your registration has been received.</p>
+            <p class="text-text-mid">We will contact you within two business days to confirm the next available cohort matching your tier and hub, and to share the published fee and the EPRA prerequisite checklist you should prepare. Registration does not commit you to enrolment.</p>
           </Callout>
-        ) : (
+        </div>
+        <div id="training-form-wrapper">
           <form
             name="training-registration"
             method="POST"
@@ -491,10 +492,27 @@ const trainingFaqs = [
               </p>
             </div>
           </form>
-        )}
+        </div>
       </div>
     </div>
   </section>
+
+  <script is:inline>
+    (function () {
+      if (!window.location.search.includes('success=true')) return;
+      const successEl = document.getElementById('training-success');
+      const formEl = document.getElementById('training-form-wrapper');
+      if (!successEl || !formEl) return;
+      successEl.classList.remove('hidden');
+      formEl.classList.add('hidden');
+      successEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('success');
+        history.replaceState({}, '', url.toString());
+      } catch (e) {}
+    })();
+  </script>
 
   <!-- WHAT HAPPENS NEXT -->
   <NarrativeSection
