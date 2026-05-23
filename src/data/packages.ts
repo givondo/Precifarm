@@ -46,7 +46,7 @@ export const packages: Package[] = [
     startingPrice: 'KSh 95,000 cash, or KSh 5,472/month',
     image: {
       src: '/images/packages/starter-home.jpg',
-      alt: 'Solar panels mounted on the corrugated metal roof of a rural Kenyan home at golden hour, with a service vehicle and acacia trees in the landscape beyond — illustrating a Starter-tier installation in its real operating environment.',
+      alt: 'Solar panels mounted on the corrugated iron roof of a rural Kenyan home at golden hour, with the Precifarm service vehicle parked along the dirt road behind and acacia trees scattered across the landscape. This is what the Starter package looks like in its real operating environment: small enough to fit on a single roof, sized to take a single-room household off-grid, and installed in a single working day by the regional engineering crew that will return to service the system for the next five years.',
     },
     whatYouGet: [
       'One 550 W solar panel with mounting hardware',
@@ -97,7 +97,7 @@ export const packages: Package[] = [
     startingPrice: 'KSh 290,000 cash',
     image: {
       src: '/images/packages/family-rooftop.jpg',
-      alt: 'A Precifarm installer in an orange safety vest walking on a red corrugated metal roof beside a freshly-installed array of solar panels, illustrating a Family-tier residential installation on a typical Kenyan home.',
+      alt: 'A Precifarm installer in a high-visibility orange safety vest walks across the red corrugated iron roof of a typical Kenyan home, having just finished commissioning the array of solar panels mounted across the rooftop alongside the chimney. The Family package sits on roofs like this across the country, sized to keep a two-to-three bedroom household running independently of the grid, with the same engineer returning to service the system across each year of the five-year commitment.',
     },
     whatYouGet: [
       'Two 450 W solar panels, mounted on roof or ground frame',
@@ -151,7 +151,7 @@ export const packages: Package[] = [
     startingPrice: 'From KSh 520,000',
     image: {
       src: '/images/packages/commercial-school.jpg',
-      alt: 'Four solar panels, a hybrid solar inverter, and a stack of six lithium battery units with cabling, illustrating the multi-component hardware specified in a Precifarm Commercial-tier deployment.',
+      alt: 'Four monocrystalline solar panels stand alongside a wall-mounted hybrid solar inverter, six stacked lithium battery units, and the DC and AC cabling that connects them, laid out as a complete kit. This is the hardware specification of a Precifarm Commercial-tier system: the configuration a school, clinic, agricultural cooperative, or small commercial operator receives when commissioning a fifteen-kilowatt-hour deployment built to keep operations running through grid interruptions and through the night.',
     },
     whatYouGet: [
       'Solar array sized 2.75 kWp to 13.2 kWp against your measured load',
@@ -211,7 +211,7 @@ export const packages: Package[] = [
     isHighlighted: true,
     image: {
       src: '/images/packages/commercial-plus-array.jpg',
-      alt: 'An aerial view of an extensive solar PV array covering an industrial warehouse rooftop, illustrating the megawatt-scale Commercial Plus deployment Precifarm delivers for industrial and SEZ tenant sites.',
+      alt: 'An aerial perspective of an industrial warehouse with its entire roof surface covered in solar PV panels arranged in a continuous gridded array, with the surrounding landscape and tree line visible beyond the building footprint. This is what a Commercial Plus deployment looks like at the upper end of its scale, where a single Precifarm installation can generate up to one megawatt of on-site solar power for an industrial tenant, a special economic zone operator, a hospitality or fuel-retail site, or a logistics fleet depot.',
     },
     whatYouGet: [
       'Solar array sized 50 kWp to 1 MWp against site demand',
