@@ -1,0 +1,46 @@
+---
+// Horizontal connected process flow. Replaces the 4-step card grid
+// pattern. Steps are connected by a hairline rule running through the
+// numbered nodes. Each step has a number circle, title, and body.
+
+export interface Props {
+  steps: { number: number | string; title: string; body: string }[];
+  variant?: 'light' | 'navy';
+}
+
+const { steps, variant = 'light' } = Astro.props;
+const isNavy = variant === 'navy';
+
+const numberRing = isNavy ? 'bg-amber text-navy-dark' : 'bg-navy text-white';
+const titleColor = isNavy ? 'text-white' : 'text-navy-dark';
+const bodyColor = isNavy ? 'text-white/75' : 'text-text-mid';
+const connectorColor = isNavy ? 'bg-white/15' : 'bg-hairline';
+
+// Tailwind needs complete class names at build time, so we look up the
+// grid-column count rather than interpolating.
+const gridColsClass: Record<number, string> = {
+  2: 'md:grid-cols-2',
+  3: 'md:grid-cols-3',
+  4: 'md:grid-cols-4',
+  5: 'md:grid-cols-5',
+};
+const colsClass = gridColsClass[steps.length] ?? 'md:grid-cols-4';
+---
+<ol class={`relative grid grid-cols-1 ${colsClass} gap-y-10 md:gap-x-8`}>
+  <!-- Horizontal connector (visible md and up) -->
+  <div aria-hidden="true" class={`hidden md:block absolute top-5 left-[5%] right-[5%] h-px ${connectorColor}`}></div>
+
+  {steps.map((step) => (
+    <li class="relative">
+      <div class="flex md:flex-col items-start md:items-start gap-4 md:gap-5">
+        <span class={`${numberRing} relative z-10 h-10 w-10 rounded-full flex items-center justify-center font-bold text-sm shrink-0`}>
+          {step.number}
+        </span>
+        <div class="flex-1">
+          <h3 class={`text-h3 ${titleColor}`}>{step.title}</h3>
+          <p class={`mt-2 leading-relaxed ${bodyColor}`}>{step.body}</p>
+        </div>
+      </div>
+    </li>
+  ))}
+</ol>

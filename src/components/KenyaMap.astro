@@ -1,0 +1,109 @@
+---
+// Simplified SVG outline of Kenya with markers for the six Precifarm
+// operating cities. Approximate geographic positions (not GIS-accurate)
+// but recognisable. Used on /cities/ as a footprint visualisation.
+
+import { cities } from '../data/cities';
+
+// Approximate marker positions normalised to a 100x100 viewBox roughly
+// matching Kenya's bounding box. Tuned for visual balance, not precise GPS.
+const markers: Record<string, { x: number; y: number }> = {
+  nairobi: { x: 48, y: 62 },
+  mombasa: { x: 70, y: 86 },
+  kisumu: { x: 22, y: 52 },
+  eldoret: { x: 28, y: 42 },
+  kitui: { x: 56, y: 64 },
+  nakuru: { x: 38, y: 54 },
+};
+---
+<figure class="relative w-full">
+  <svg
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-label="Map of Kenya with the six Precifarm operating cities marked"
+    class="w-full h-auto"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <!-- Simplified Kenya outline. Approximate, geographically suggestive -->
+    <path
+      d="M 16 32
+         L 26 26
+         L 38 22
+         L 48 18
+         L 60 22
+         L 68 28
+         L 72 36
+         L 78 44
+         L 88 48
+         L 92 56
+         L 88 64
+         L 82 72
+         L 78 82
+         L 70 92
+         L 60 94
+         L 50 92
+         L 42 88
+         L 32 82
+         L 24 74
+         L 18 64
+         L 14 54
+         L 12 44
+         L 14 38
+         Z"
+      fill="#F0F5F2"
+      stroke="#1F4E5F"
+      stroke-width="0.4"
+      stroke-linejoin="round"
+    />
+
+    <!-- Lake Victoria suggestion (south-west corner) -->
+    <ellipse cx="14" cy="56" rx="6" ry="4" fill="#E0EEF5" stroke="#1F4E5F" stroke-width="0.3"/>
+
+    <!-- City markers -->
+    {cities.map((city) => {
+      const m = markers[city.slug];
+      if (!m) return null;
+      const isHq = city.role === 'HQ';
+      return (
+        <g>
+          <circle
+            cx={m.x}
+            cy={m.y}
+            r={isHq ? 2.4 : 1.6}
+            fill={isHq ? '#E37E32' : '#1F4E5F'}
+            stroke="#FFFFFF"
+            stroke-width="0.5"
+          />
+          {isHq && (
+            <circle
+              cx={m.x}
+              cy={m.y}
+              r="4"
+              fill="none"
+              stroke="#E37E32"
+              stroke-width="0.4"
+              opacity="0.5"
+            >
+              <animate attributeName="r" values="2.4;5;2.4" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/>
+            </circle>
+          )}
+          <text
+            x={m.x}
+            y={m.y - 3.5}
+            text-anchor="middle"
+            font-family="Helvetica, Arial, sans-serif"
+            font-size="2.6"
+            font-weight="700"
+            fill="#0F2832"
+          >{city.name}</text>
+        </g>
+      );
+    })}
+  </svg>
+
+  <figcaption class="sr-only">
+    Precifarm operating cities: Nairobi (headquarters), Mombasa, Kisumu, Eldoret, Kitui, and Nakuru.
+  </figcaption>
+</figure>
