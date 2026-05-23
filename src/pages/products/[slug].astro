@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import NarrativeSection from '../../components/NarrativeSection.astro';
+import EditorialSplit from '../../components/EditorialSplit.astro';
 import FAQ from '../../components/FAQ.astro';
 import CTASection from '../../components/CTASection.astro';
-import Callout from '../../components/Callout.astro';
 import StructuredData from '../../components/StructuredData.astro';
 import { packages, commercialPlusArchetypes } from '../../data/packages';
 import type { Package } from '../../data/packages';
@@ -29,160 +30,153 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
 >
   <StructuredData slot="head" schema="product" pkg={pkg} />
   <StructuredData slot="head" schema="faqPage" faqs={pkg.faqs} />
-  <!-- Block 1: Hero -->
-  <section class="bg-paper pt-12 pb-10 md:pt-16 md:pb-14">
-    <div class="container-page">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-        <div>
-          <p class="eyebrow mb-4">{pkg.shortName}</p>
-          <h1 class="text-h1-sm md:text-display text-navy-dark">{pkg.name}</h1>
-          <p class="mt-5 text-lg md:text-xl text-text-mid leading-relaxed">{pkg.tagline}</p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            <a href="/contact/" class="btn btn-primary">Get a quote</a>
-            <a href="/products/" class="btn btn-secondary">Compare all packages</a>
+
+  <!-- HERO — full-bleed image background with copy laid over a gradient -->
+  <section class="relative bg-navy-dark text-white overflow-hidden">
+    <div class="absolute inset-0">
+      <img
+        src={pkg.image.src}
+        alt=""
+        width="2400"
+        height="1200"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+        class="w-full h-full object-cover opacity-30"
+      />
+      <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-r from-navy-dark via-navy-dark/85 to-navy-dark/40"></div>
+    </div>
+    <div class="relative container-page pt-24 pb-20 md:pt-32 md:pb-28">
+      <div class="max-w-2xl">
+        <p class="text-xs uppercase tracking-[0.18em] font-semibold text-amber mb-5">{pkg.shortName} package</p>
+        <h1 class="text-h1-sm md:text-display text-white leading-[1.05]">{pkg.name}.</h1>
+        <p class="mt-6 text-xl md:text-2xl text-white/85 leading-snug font-medium max-w-xl">
+          {pkg.tagline}
+        </p>
+        <dl class="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 max-w-md">
+          <div>
+            <dt class="text-xs uppercase tracking-wider text-amber font-semibold">Capacity</dt>
+            <dd class="mt-1.5 text-lg font-bold text-white">{pkg.capacity}</dd>
           </div>
-          <ul class="mt-8 flex flex-wrap gap-2">
-            <li class="badge"><span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-green"></span>{pkg.capacity}</li>
-            <li class="badge"><span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-green"></span>{pkg.startingPrice}</li>
-          </ul>
-        </div>
-        <div class="hidden lg:block">
-          <div class="relative overflow-hidden rounded-card shadow-xl ring-1 ring-black/5">
-            <img
-              src={pkg.image.src}
-              alt={pkg.image.alt}
-              width="1600"
-              height="1067"
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-              class="w-full h-full object-cover aspect-[4/3]"
-            />
-            <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy-dark/30 to-transparent pointer-events-none"></div>
+          <div>
+            <dt class="text-xs uppercase tracking-wider text-amber font-semibold">Starting</dt>
+            <dd class="mt-1.5 text-lg font-bold text-white">{pkg.startingPrice}</dd>
           </div>
+          <div>
+            <dt class="text-xs uppercase tracking-wider text-amber font-semibold">Service tier</dt>
+            <dd class="mt-1.5 text-lg font-bold text-white">{pkg.serviceTier}</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-wider text-amber font-semibold">Commitment</dt>
+            <dd class="mt-1.5 text-lg font-bold text-white">Five years</dd>
+          </div>
+        </dl>
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href="/contact/" class="btn btn-accent">{isCommercialPlus ? 'Brief an engineer' : 'Get a quote'}</a>
+          <a href="/products/" class="btn btn-secondary border-white text-white hover:bg-white hover:text-navy-dark">Compare all packages</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Block 2: Who it's for + Capacity at a glance -->
+  <!-- WHO IT IS FOR — editorial split with the package image -->
   <section class="bg-white">
-    <div class="container-page section">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
-        <div class="lg:col-span-2">
-          <p class="eyebrow mb-3">Who it is for</p>
-          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5">{pkg.bestFor}.</h2>
-          <div class="prose-precifarm">
-            <p>{pkg.targetCustomer}</p>
+    <div class="container-page py-20 md:py-28">
+      <EditorialSplit
+        image={pkg.image}
+        direction="image-right"
+        imageColumns={6}
+        imageAspect="landscape"
+      >
+        <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">Who it is for</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1] mb-6">{pkg.bestFor}.</h2>
+        <p class="text-lg text-text-mid leading-relaxed mb-8">{pkg.targetCustomer}</p>
+        <dl class="grid grid-cols-1 gap-4 text-sm border-t border-hairline pt-6">
+          <div class="flex flex-col sm:flex-row sm:gap-6">
+            <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-32 shrink-0 mt-0.5">Daily load</dt>
+            <dd class="text-ink">{pkg.dailyLoad}</dd>
           </div>
-          <dl class="mt-6 grid grid-cols-1 gap-3 border-t border-hairline pt-5 text-sm">
-            <div class="flex flex-col sm:flex-row sm:gap-4">
-              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-28 shrink-0 mt-0.5">Daily load</dt>
-              <dd class="text-ink">{pkg.dailyLoad}</dd>
-            </div>
-            <div class="flex flex-col sm:flex-row sm:gap-4">
-              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-28 shrink-0 mt-0.5">Hardware</dt>
-              <dd class="text-ink">{pkg.hardware}</dd>
-            </div>
-          </dl>
-        </div>
-
-        <aside class="rounded-card border border-hairline bg-paper p-6 md:p-7 self-start">
-          <p class="eyebrow text-text-muted mb-3">At a glance</p>
-          <dl class="space-y-4 text-sm">
-            <div>
-              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Capacity</dt>
-              <dd class="mt-1 text-ink font-semibold">{pkg.capacity}</dd>
-            </div>
-            <div>
-              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Inverter</dt>
-              <dd class="mt-1 text-ink">{pkg.inverter}</dd>
-            </div>
-            <div>
-              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Panels</dt>
-              <dd class="mt-1 text-ink">{pkg.panels}</dd>
-            </div>
-            <div>
-              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Starting price</dt>
-              <dd class="mt-1 text-ink font-semibold">{pkg.startingPrice}</dd>
-            </div>
-          </dl>
-        </aside>
-      </div>
+          <div class="flex flex-col sm:flex-row sm:gap-6">
+            <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-32 shrink-0 mt-0.5">Hardware</dt>
+            <dd class="text-ink">{pkg.hardware}</dd>
+          </div>
+          <div class="flex flex-col sm:flex-row sm:gap-6">
+            <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-32 shrink-0 mt-0.5">Inverter</dt>
+            <dd class="text-ink">{pkg.inverter}</dd>
+          </div>
+          <div class="flex flex-col sm:flex-row sm:gap-6">
+            <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-32 shrink-0 mt-0.5">Panels</dt>
+            <dd class="text-ink">{pkg.panels}</dd>
+          </div>
+        </dl>
+      </EditorialSplit>
     </div>
   </section>
 
-  <!-- Block 3: What you get -->
-  <section class="bg-paper">
-    <div class="container-page section">
-      <div class="max-w-3xl mb-8 md:mb-10">
-        <p class="eyebrow mb-3">What you get</p>
-        <h2 class="text-h2-sm md:text-h2 text-navy-dark">What every {pkg.shortName} deployment delivers on site.</h2>
-      </div>
-      <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 max-w-4xl">
-        {pkg.whatYouGet.map((item) => (
-          <li class="flex gap-3">
-            <span aria-hidden="true" class="mt-1 h-5 w-5 shrink-0 rounded-full bg-callout-green flex items-center justify-center">
-              <svg class="h-3 w-3 text-green" viewBox="0 0 12 12" fill="none">
-                <path d="M2.5 6.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            <span class="text-text-mid">{item}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
+  <!-- WHAT YOU GET — inline checklist, no card chrome -->
+  <NarrativeSection
+    background="paper"
+    eyebrow="What every install delivers"
+    headline={`Every ${pkg.shortName} install ships with the same scope.`}
+    lede="Hardware, EPRA-licensed installation, the one-year workmanship warranty, and the same regional engineering team carrying the system through the next five years of service."
+  >
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 max-w-4xl">
+      {pkg.whatYouGet.map((item) => (
+        <li class="flex gap-4 items-start">
+          <span aria-hidden="true" class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber"></span>
+          <span class="text-text-mid leading-relaxed">{item}</span>
+        </li>
+      ))}
+    </ul>
+  </NarrativeSection>
 
   {isCommercialPlus && (
-    <!-- Commercial Plus only: deployment archetypes -->
-    <section class="bg-white">
-      <div class="container-page section">
-        <div class="max-w-3xl mb-10 md:mb-12">
-          <p class="eyebrow mb-3">Deployment archetypes</p>
-          <h2 class="text-h2-sm md:text-h1 text-navy-dark">Five deployment archetypes Precifarm sizes and builds to template.</h2>
-          <p class="mt-4 text-lg text-text-mid leading-relaxed">
-            Each archetype below is a starting configuration template. The final solar, storage, and charging specification is set during the engineering site assessment, against measured site demand, the customer's charging profile, and the available grid interconnection.
-          </p>
-        </div>
-        <div class="space-y-4">
-          {commercialPlusArchetypes.map((arch, i) => (
-            <article class="rounded-card border border-hairline bg-paper p-6 md:p-7">
-              <div class="flex items-start gap-4">
-                <span class="text-navy font-bold text-lg shrink-0 w-8">{String(i + 1).padStart(2, '0')}</span>
-                <div class="flex-1">
-                  <h3 class="text-h3 text-navy-dark">{arch.title}</h3>
-                  <p class="mt-2 text-text-mid leading-relaxed">{arch.description}</p>
-                  <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-                    <div class="bg-white rounded-md border border-hairline p-3">
-                      <p class="text-text-muted text-xs uppercase tracking-wider font-semibold">Solar</p>
-                      <p class="mt-1 text-ink font-medium">{arch.solar}</p>
-                    </div>
-                    <div class="bg-white rounded-md border border-hairline p-3">
-                      <p class="text-text-muted text-xs uppercase tracking-wider font-semibold">Storage</p>
-                      <p class="mt-1 text-ink font-medium">{arch.storage}</p>
-                    </div>
-                    <div class="bg-white rounded-md border border-hairline p-3">
-                      <p class="text-text-muted text-xs uppercase tracking-wider font-semibold">Charging</p>
-                      <p class="mt-1 text-ink font-medium">{arch.charging}</p>
-                    </div>
-                  </div>
+    <!-- COMMERCIAL PLUS ONLY — five deployment archetypes as editorial list -->
+    <NarrativeSection
+      background="white"
+      eyebrow="Deployment archetypes"
+      headline="Five deployment templates Precifarm sizes and builds."
+      lede="Each archetype below is a starting configuration. The final solar, storage, and charging specification is set during the engineering site assessment, against measured site demand, the customer's charging profile, and the available grid interconnection."
+    >
+      <div class="space-y-12 md:space-y-16 max-w-5xl">
+        {commercialPlusArchetypes.map((arch, i) => (
+          <article class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 pt-8 border-t border-hairline">
+            <div class="lg:col-span-3">
+              <p class="text-5xl font-bold text-amber leading-none tracking-tight">{String(i + 1).padStart(2, '0')}</p>
+              <h3 class="mt-4 text-h3 text-navy-dark">{arch.title}</h3>
+            </div>
+            <div class="lg:col-span-5">
+              <p class="text-text-mid leading-relaxed">{arch.description}</p>
+            </div>
+            <div class="lg:col-span-4">
+              <dl class="space-y-3 text-sm">
+                <div class="flex gap-3">
+                  <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold w-20 shrink-0 mt-0.5">Solar</dt>
+                  <dd class="text-ink font-medium">{arch.solar}</dd>
                 </div>
-              </div>
-            </article>
-          ))}
-        </div>
+                <div class="flex gap-3">
+                  <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold w-20 shrink-0 mt-0.5">Storage</dt>
+                  <dd class="text-ink font-medium">{arch.storage}</dd>
+                </div>
+                <div class="flex gap-3">
+                  <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold w-20 shrink-0 mt-0.5">Charging</dt>
+                  <dd class="text-ink font-medium">{arch.charging}</dd>
+                </div>
+              </dl>
+            </div>
+          </article>
+        ))}
       </div>
-    </section>
+    </NarrativeSection>
   )}
 
-  <!-- Block 4: Pricing and financing -->
+  <!-- PRICING + FINANCING — clean two-column band, no card chrome -->
   <section class={isCommercialPlus ? 'bg-paper' : 'bg-white'}>
-    <div class="container-page section">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12">
+    <div class="container-page py-20 md:py-28">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 max-w-5xl">
         <div>
-          <p class="eyebrow mb-3">Pricing</p>
-          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5">{pkg.cashPrice}</h2>
+          <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">Pricing</p>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5 leading-[1.15]">{pkg.cashPrice}</h2>
           <p class="text-text-mid leading-relaxed">
             {isCommercialPlus
               ? 'Commercial Plus pricing is bespoke and is finalised in writing after the engineering site assessment. The principal variables are measured site load, charging infrastructure scope, storage sizing, the deployment archetype, and any grid-interconnection or net-metering requirements. Payment is accepted by bank transfer, M-Pesa enterprise, or via the partner-bank facility used for financing.'
@@ -192,16 +186,16 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
           </p>
         </div>
         <div>
-          <p class="eyebrow mb-3">Financing</p>
-          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5">
+          <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">Financing</p>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5 leading-[1.15]">
             {isCommercialPlus ? 'Partner-bank financing, or a five-year operating lease.' : 'Pay your way.'}
           </h2>
-          <p class="text-text-mid leading-relaxed">
+          <p class="text-text-mid leading-relaxed mb-5">
             {isCommercialPlus
               ? 'Commercial Plus deployments are typically financed through the partner-bank facilities we work with on solar-PV asset finance (KCB Clean Energy, Stanbic Solar PV, Co-op Bank). For institutional anchor sites (schools, clinics, and agricultural cooperatives), the deployment can also be structured as a five-year operating lease, where Precifarm owns and operates the system for an agreed monthly fee and the customer pays for delivered energy on a tariff basis.'
               : pkg.financing}
           </p>
-          <a href="/financing/" class="mt-4 inline-flex items-center gap-1.5 text-navy font-semibold hover:underline">
+          <a href="/financing/" class="inline-flex items-center gap-1.5 text-navy font-semibold hover:underline">
             See all financing options
             <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 16 16" fill="none">
               <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
@@ -209,126 +203,82 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
           </a>
         </div>
       </div>
-
-      <!-- What your price covers -->
-      <div class="mt-12 md:mt-16">
-        <p class="eyebrow mb-3">What your price covers</p>
-        <h3 class="text-h3 md:text-h2-sm text-navy-dark mb-6">
-          {isCommercialPlus
-            ? 'A single integrated contract, not a stack of hardware invoices.'
-            : 'More than the box on the wall.'}
-        </h3>
-        <p class="text-text-mid leading-relaxed max-w-prose mb-8">
-          {isCommercialPlus
-            ? 'A Commercial Plus quote from Precifarm covers the engineering design, the EPRA-licensed installation, the commissioning records, and the five-year operations and maintenance contract as a single integrated engagement. The customer signs one engineering contract, not five separate purchase orders to a panel supplier, an inverter vendor, a storage vendor, an installation crew, and a maintenance retainer.'
-            : `A ${pkg.shortName} quote from a hardware-only installer will look cheaper on paper. It buys you the box. Our price buys you the box plus the team that designed it, installed it, and will service it for the next five years.`}
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="rounded-card bg-white border border-hairline p-5">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">01</span>
-              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">Hardware</span>
-            </div>
-            <p class="text-navy-dark font-semibold text-sm">Tier-1 panels, hybrid inverter, lithium storage</p>
-            <p class="mt-2 text-xs text-text-mid leading-relaxed">Sized to your site. Sourced through our regional supply chain.</p>
-          </div>
-          <div class="rounded-card bg-white border border-hairline p-5">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">02</span>
-              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">EPRA-licensed install</span>
-            </div>
-            <p class="text-navy-dark font-semibold text-sm">Engineering, procurement, construction</p>
-            <p class="mt-2 text-xs text-text-mid leading-relaxed">Site survey, written design, bill of quantities, commissioning records.</p>
-          </div>
-          <div class="rounded-card bg-white border border-hairline p-5">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">03</span>
-              <span class="text-xs uppercase tracking-wider text-text-muted font-semibold">Workmanship warranty</span>
-            </div>
-            <p class="text-navy-dark font-semibold text-sm">One-year cover on our install</p>
-            <p class="mt-2 text-xs text-text-mid leading-relaxed">Any fault arising from how we built it is on us, free of charge.</p>
-          </div>
-          <div class="rounded-card bg-callout-green border border-green p-5">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs uppercase tracking-wider text-green font-semibold">04</span>
-              <span class="text-xs uppercase tracking-wider text-green font-semibold">Five-year service</span>
-            </div>
-            <p class="text-navy-dark font-semibold text-sm">{pkg.serviceTier} tier across five years</p>
-            <p class="mt-2 text-xs text-text-mid leading-relaxed">Scheduled maintenance, fault response, warranty management. Same engineering team.</p>
-          </div>
-        </div>
-        <p class="mt-6 text-sm text-text-muted max-w-prose">
-          {isCommercialPlus
-            ? 'On industrial-scale deployments, the standard five-year contract extends to ten years on request. For institutional anchor sites, the operating-lease structure converts the full lifecycle into a single monthly fee with no upfront capital outlay.'
-            : 'Hardware-only quotes typically come in below ours at the install. Most fail to recover that saving past year four, because there is no service to call when something fails. We price the five years up front so the cost of owning the system is the price you saw.'}
-        </p>
-      </div>
     </div>
   </section>
 
-  <!-- Block 5: Service tier -->
-  <section class={isCommercialPlus ? 'bg-white' : 'bg-paper'}>
-    <div class="container-page section">
-      <div class="max-w-3xl mb-8 md:mb-10">
-        <p class="eyebrow mb-3">Service tier · {pkg.serviceTier}</p>
-        <h2 class="text-h2-sm md:text-h2 text-navy-dark">{pkg.serviceCommitment}</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div class="rounded-card bg-white border border-hairline p-5">
-          <p class="text-text-muted text-xs uppercase tracking-wider font-semibold mb-2">Workmanship</p>
-          <p class="text-navy-dark font-semibold">{pkg.warranty}</p>
-        </div>
-        <div class="rounded-card bg-white border border-hairline p-5">
-          <p class="text-text-muted text-xs uppercase tracking-wider font-semibold mb-2">Service tier</p>
-          <p class="text-navy-dark font-semibold">{pkg.serviceTier}</p>
-        </div>
-        <div class="rounded-card bg-white border border-hairline p-5">
-          <p class="text-text-muted text-xs uppercase tracking-wider font-semibold mb-2">Commitment</p>
-          <p class="text-navy-dark font-semibold">Five-year service, same team</p>
-        </div>
-      </div>
-      <Callout variant="green" eyebrow="What ‘same team’ means">
-        <p class="text-text-mid leading-relaxed">
+  <!-- FIVE-YEAR SERVICE TIMELINE — visual rather than card grid -->
+  <section class="bg-navy-dark text-white overflow-hidden">
+    <div class="container-page py-20 md:py-28">
+      <div class="max-w-3xl mb-12 md:mb-16">
+        <p class="text-xs uppercase tracking-[0.14em] font-semibold text-amber mb-4">Service tier · {pkg.serviceTier}</p>
+        <h2 class="text-h2-sm md:text-h1 text-white leading-[1.1]">{pkg.serviceCommitment}</h2>
+        <p class="mt-5 text-lg text-white/80 leading-relaxed">
           The engineering team that designs your {pkg.shortName} system is the same team that installs it and services it across the next five years. Your regional depot retains the install record, so the engineer who shows up has worked on your system before.
         </p>
-      </Callout>
+      </div>
+
+      <!-- 5-year horizontal timeline -->
+      <div class="relative">
+        <div aria-hidden="true" class="absolute top-5 left-[5%] right-[5%] h-px bg-white/15"></div>
+        <ol class="relative grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-y-10 md:gap-x-6">
+          {[
+            { year: 'Year 1', body: 'Commissioning, workmanship warranty, scheduled checks.' },
+            { year: 'Year 2', body: 'Preventive maintenance and firmware updates.' },
+            { year: 'Year 3', body: 'Mid-life service: hardware inspection, dispatch tuning.' },
+            { year: 'Year 4', body: 'Battery health review, fault-response continuity.' },
+            { year: 'Year 5', body: 'End-of-cycle review and renewal of service plan.' },
+          ].map((t, i) => (
+            <li class="relative">
+              <span class="relative z-10 h-10 w-10 rounded-full bg-amber text-navy-dark flex items-center justify-center font-bold text-sm">{i + 1}</span>
+              <p class="mt-5 text-white font-bold">{t.year}</p>
+              <p class="mt-2 text-sm text-white/70 leading-relaxed">{t.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   </section>
 
-  <!-- Block 6: FAQs -->
-  <section class={isCommercialPlus ? 'bg-paper' : 'bg-white'}>
-    <div class="container-page section">
-      <div class="max-w-3xl mb-8 md:mb-10">
-        <p class="eyebrow mb-3">Frequently asked</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark">{pkg.shortName} questions, answered.</h2>
-      </div>
-      <div class="max-w-4xl">
-        <FAQ items={pkg.faqs} />
-      </div>
+  <!-- FAQ — kept, light styling -->
+  <NarrativeSection
+    background="white"
+    eyebrow="Frequently asked"
+    headline={`${pkg.shortName} questions, answered.`}
+  >
+    <div class="max-w-3xl">
+      <FAQ items={pkg.faqs} />
     </div>
-  </section>
+  </NarrativeSection>
 
-  <!-- Other packages -->
-  <section class={isCommercialPlus ? 'bg-white' : 'bg-paper'}>
-    <div class="container-page section">
-      <div class="max-w-3xl mb-8 md:mb-10">
-        <p class="eyebrow mb-3">Other packages</p>
-        <h2 class="text-h2-sm md:text-h2 text-navy-dark">Maybe a different size fits better.</h2>
+  <!-- OTHER PACKAGES — minimal inline strip, no cards -->
+  <section class="bg-paper">
+    <div class="container-page py-16 md:py-20">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 max-w-5xl">
+        <div>
+          <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-3">Other packages</p>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark">Maybe a different size fits the site better.</h2>
+        </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-hairline">
         {otherPackages.map((p) => (
-          <a href={`/products/${p.slug}/`} class="block rounded-card border border-hairline bg-white p-5 hover:shadow-md transition-shadow">
-            <p class="eyebrow text-navy mb-1">{p.shortName}</p>
-            <p class="text-h3 text-navy-dark mb-2">{p.name}</p>
-            <p class="text-sm text-text-mid">{p.tagline}</p>
-            <p class="mt-3 text-xs text-text-muted">{p.capacity} · {p.startingPrice}</p>
+          <a href={`/products/${p.slug}/`} class="group block py-6 sm:py-0 sm:px-8 first:sm:pl-0 last:sm:pr-0">
+            <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-2">{p.shortName}</p>
+            <p class="text-h3 text-navy-dark group-hover:text-navy transition-colors">{p.name}</p>
+            <p class="mt-2 text-sm text-text-mid">{p.tagline}</p>
+            <p class="mt-4 text-xs text-text-muted">{p.capacity} · {p.startingPrice}</p>
+            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-navy group-hover:underline">
+              See {p.shortName}
+              <svg aria-hidden="true" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none">
+                <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
           </a>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Block 7: Closing CTA -->
+  <!-- CLOSING CTA -->
   <CTASection
     variant="dark"
     headline={isCommercialPlus
