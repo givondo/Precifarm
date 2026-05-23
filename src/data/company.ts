@@ -98,24 +98,33 @@ export const exampleInstallations = [
   {
     customer: 'A school in Kitui',
     package: 'Commercial',
+    region: 'Kitui County, Eastern region',
+    capacity: 'From 2.75 kWp PV · 15 kWh storage',
+    loadProfile: 'Classroom lighting, tablet charging, twin borehole pumps',
     description:
-      'A canopy array overhead, classrooms running below. Tablet charging through the morning, lights that hold for night classes, and two pumps keeping the school garden alive.',
+      'A canopy array overhead, classrooms running below. Tablet charging through the morning, lights that hold for night classes, and two pumps keeping the school garden alive across the dry season.',
     image: '/images/installations/school-kitui.jpg',
-    alt: 'A solar-panel canopy mounted above an institutional building, illustrating the kind of Commercial deployment a Kenyan school would commission.',
+    alt: 'A solar-panel canopy mounted above an institutional building, illustrating the kind of Commercial deployment a Kenyan school commissions to run classroom lighting, tablet charging, and borehole pumps off a single hybrid system.',
   },
   {
     customer: 'A salon in Eldoret',
     package: 'Family',
+    region: 'Uasin Gishu County, Rift Valley',
+    capacity: '900 W PV · 5 kWh storage',
+    loadProfile: 'Clippers, driers, drinks fridge, full lighting',
     description:
-      'Panels above, business below. Clippers, driers, and a drinks fridge running on stable power, every day, while the rest of the strip waits out the next blackout.',
+      'Panels above, business below. Clippers, driers, and a drinks fridge running on stable power every day, while the rest of the strip waits out the next blackout. The system is sized so the salon never closes for a grid event.',
     image: '/images/installations/salon-eldoret.jpg',
-    alt: 'Rooftop solar panels on a small commercial building in warm afternoon light, illustrating the Family-tier system powering a small business.',
+    alt: 'Rooftop solar panels on a small commercial building in warm afternoon light, illustrating the Family-tier system powering a small business through unreliable grid supply.',
   },
   {
     customer: 'A boda rider in Mombasa',
     package: 'Starter',
+    region: 'Mombasa County, Coast',
+    capacity: '550 W PV · 1.5 kWh storage',
+    loadProfile: 'Phone charging, evening lighting, fans',
     description:
-      'A Starter package on the wall. Phone charged for every shift, lights on for the family at night, and the monthly KPLC bill is gone.',
+      'A Starter package on the wall. Phone charged for every shift, lights on for the family at night, and the monthly KPLC bill removed from the household budget over the financed term.',
     image: '/images/installations/boda-mombasa.jpg',
     alt: 'A small wall-mounted electrical installation with cabling and controllers, illustrating a Starter system on the wall of a single-room dwelling.',
   },

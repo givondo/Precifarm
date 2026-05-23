@@ -94,38 +94,60 @@ import { exampleInstallations, trustBadges } from '../data/company';
     </div>
   </section>
 
-  <!-- 04 — In the field -->
+  <!-- 04 — Portfolio: representative installations -->
   <section class="bg-paper">
     <div class="container-page section">
-      <div class="max-w-3xl mb-10 md:mb-12">
-        <p class="eyebrow mb-3">In the field</p>
+      <div class="max-w-3xl mb-12 md:mb-16">
+        <p class="eyebrow mb-3">Portfolio</p>
         <h2 class="text-h2-sm md:text-h1 text-navy-dark">These systems are already running across Kenya today.</h2>
         <p class="mt-4 text-lg text-text-mid leading-relaxed">
-          A representative cross-section of the customer profiles Precifarm currently serves, with each illustration showing how a single package configuration performs in daily commercial or residential use.
+          Three representative installations, one for each of the standardised residential and commercial tiers. Each profile shows the customer context, the hardware configuration commissioned on site, and the load that the system was sized to carry through both grid and off-grid conditions.
         </p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {exampleInstallations.map((ex) => (
-          <article class="rounded-card border border-hairline bg-white overflow-hidden flex flex-col">
-            <div class="relative aspect-[16/10] overflow-hidden bg-paper">
-              <img
-                src={ex.image}
-                alt={ex.alt}
-                width="1600"
-                height="1000"
-                loading="lazy"
-                decoding="async"
-                class="w-full h-full object-cover"
-              />
-              <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-navy-dark/10 to-transparent"></div>
-              <div class="absolute inset-x-0 bottom-0 p-4 flex items-baseline justify-between gap-3">
-                <p class="text-white font-semibold drop-shadow">{ex.customer}</p>
-                <span class="badge badge-amber text-xs shrink-0">{ex.package}</span>
+
+      <div class="space-y-16 md:space-y-20">
+        {exampleInstallations.map((ex, i) => (
+          <article class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div class={`lg:col-span-7 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+              <div class="relative overflow-hidden rounded-card shadow-lg ring-1 ring-black/5">
+                <img
+                  src={ex.image}
+                  alt={ex.alt}
+                  width="1600"
+                  height="1000"
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover aspect-[16/10]"
+                />
               </div>
             </div>
-            <p class="p-5 md:p-6 text-text-mid leading-relaxed flex-1">
-              {ex.description}
-            </p>
+            <div class={`lg:col-span-5 ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+              <div class="flex items-center gap-3 mb-4">
+                <span class="badge badge-amber text-xs">{ex.package} package</span>
+                <span class="text-xs uppercase tracking-wider font-semibold text-text-muted">Customer-type illustration</span>
+              </div>
+              <h3 class="text-h2-sm md:text-h2 text-navy-dark mb-4">{ex.customer}.</h3>
+              <p class="text-text-mid leading-relaxed mb-6">{ex.description}</p>
+
+              <dl class="grid grid-cols-1 gap-3 border-t border-hairline pt-5 text-sm">
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-32 shrink-0 mt-0.5">Region</dt>
+                  <dd class="text-ink font-medium">{ex.region}</dd>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-32 shrink-0 mt-0.5">Capacity</dt>
+                  <dd class="text-ink font-medium">{ex.capacity}</dd>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-32 shrink-0 mt-0.5">Load profile</dt>
+                  <dd class="text-ink font-medium">{ex.loadProfile}</dd>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-32 shrink-0 mt-0.5">Service</dt>
+                  <dd class="text-ink font-medium">Five-year EPC and O&amp;M commitment</dd>
+                </div>
+              </dl>
+            </div>
           </article>
         ))}
       </div>
