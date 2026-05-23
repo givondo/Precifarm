@@ -97,7 +97,7 @@ export const packages: Package[] = [
     startingPrice: 'KSh 290,000 cash',
     image: {
       src: '/images/packages/family-rooftop.jpg',
-      alt: 'A solar panel, a Premier-branded lithium storage unit, a MUST-branded hybrid solar inverter, and PV cabling, illustrating the Precifarm Family-tier kit with 5 kWh of storage and a 5 kW inverter.',
+      alt: 'A single-bay solar carport with PV panels mounted overhead, sheltering a parked sedan — illustrating an off-grid 2-to-3 bedroom Family setup paired with everyday vehicle use.',
     },
     whatYouGet: [
       'Two 450 W solar panels, mounted on roof or ground frame',
