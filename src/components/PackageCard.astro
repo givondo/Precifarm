@@ -55,6 +55,41 @@ const cardImg = pkg.cardImage ?? pkg.image;
       </div>
     </dl>
 
+    {/* Best-for detail block: shown on every card. Compact layout truncates to a 2-line clamp for the longer "Powers" sentence; detailed layout shows everything in full. */}
+    {(pkg.powers || pkg.irrigationSupport || pkg.designedFor) && (
+      <ul class={`mt-5 border-t border-hairline pt-4 space-y-3 text-sm ${layout === 'compact' ? '' : ''}`}>
+        {pkg.powers && (
+          <li class="flex gap-2.5">
+            <span aria-hidden="true" class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-green"></span>
+            <span class="text-text-mid leading-relaxed">
+              <span class="font-semibold text-navy-dark">Powers · </span>{pkg.powers}
+            </span>
+          </li>
+        )}
+        {pkg.irrigationSupport && (
+          <li class="flex gap-2.5">
+            <span aria-hidden="true" class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-green"></span>
+            <span class="text-text-mid leading-relaxed">
+              <span class="font-semibold text-navy-dark">Irrigation · </span>{pkg.irrigationSupport}
+            </span>
+          </li>
+        )}
+        {pkg.designedFor && (
+          <li class="flex gap-2.5">
+            <span aria-hidden="true" class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber"></span>
+            <span class="text-text-mid leading-relaxed">
+              <span class="font-semibold text-navy-dark">Designed for · </span>{pkg.designedFor}
+            </span>
+          </li>
+        )}
+        {pkg.irrigationNote && (
+          <li class="text-xs text-text-muted italic leading-relaxed pl-4">
+            {pkg.irrigationNote}
+          </li>
+        )}
+      </ul>
+    )}
+
     {layout === 'detailed' && (
       <div class="mt-5 border-t border-hairline pt-4">
         <p class="text-text-muted text-xs uppercase tracking-wider font-semibold mb-3">What you get</p>
