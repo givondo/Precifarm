@@ -2,7 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
 import PackageCard from '../../components/PackageCard.astro';
-import PackageComparisonTable from '../../components/PackageComparisonTable.astro';
 import CTASection from '../../components/CTASection.astro';
 import { packages } from '../../data/packages';
 ---
@@ -13,7 +12,7 @@ import { packages } from '../../data/packages';
 >
   <Hero
     eyebrow="Products"
-    headline="Four systems. One platform."
+    headline="Four systems built on one Neura Pod platform."
     subhead="Same engineers, same operating discipline, same five-year service commitment. Pick the size that fits."
     badges={[
       'EPRA-licensed installation',
@@ -36,32 +35,31 @@ import { packages } from '../../data/packages';
   <section class="bg-paper">
     <div class="container-page section">
       <div class="max-w-3xl mb-10 md:mb-12">
-        <p class="eyebrow mb-3">Side-by-side</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Compare every spec.</h2>
+        <p class="eyebrow mb-3">How we price</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">A firm starting price, then a written quote after the site survey.</h2>
         <p class="mt-4 text-lg text-text-mid leading-relaxed">
-          Capacity, daily load, inverter, panels, service tier, starting price. Everything in one table.
+          The side-by-side specification table lives on the homepage. Below is how Precifarm pricing is structured and what every starting price actually covers.
         </p>
       </div>
-      <PackageComparisonTable />
 
-      <div class="mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-5xl">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-5xl">
         <div class="rounded-card bg-white border border-hairline p-6">
           <p class="eyebrow text-navy mb-3">How we price</p>
-          <h3 class="text-h3 text-navy-dark mb-3">Starting price, then site survey.</h3>
+          <h3 class="text-h3 text-navy-dark mb-3">A firm starting price up front.</h3>
           <p class="text-sm text-text-mid leading-relaxed">
-            Starter and Family carry firm starting prices because the standard configuration covers most homes. Commercial and Commercial Plus carry a "from" price and a written, firm quote follows the site survey.
+            Starter and Family carry firm starting prices because the standard configuration covers most homes. Commercial and Commercial Plus carry a "from" price, with a written quote issued after the site survey.
           </p>
         </div>
         <div class="rounded-card bg-white border border-hairline p-6">
           <p class="eyebrow text-navy mb-3">What is included</p>
-          <h3 class="text-h3 text-navy-dark mb-3">Hardware, install, five-year service.</h3>
+          <h3 class="text-h3 text-navy-dark mb-3">Hardware, installation, and five years of service.</h3>
           <p class="text-sm text-text-mid leading-relaxed">
-            Every starting price covers tier-1 hardware, EPRA-licensed installation, the one-year workmanship warranty, and the five-year service commitment from the same engineering team.
+            Every starting price covers tier-1 hardware, EPRA-licensed installation, the one-year workmanship warranty, and the five-year service commitment from the same regional engineering team.
           </p>
         </div>
         <div class="rounded-card bg-callout-green border border-green p-6">
           <p class="eyebrow text-green mb-3">Compare like for like</p>
-          <h3 class="text-h3 text-navy-dark mb-3">Hardware-only quotes look cheaper.</h3>
+          <h3 class="text-h3 text-navy-dark mb-3">Hardware-only quotes look cheaper than ours.</h3>
           <p class="text-sm text-text-mid leading-relaxed">
             A hardware-only quote will typically come in below ours at the install. Most of that saving is the absent five-year service. Ask any installer whether the price they quote includes the engineer that returns in year three.
           </p>
