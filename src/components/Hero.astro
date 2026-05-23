@@ -10,7 +10,6 @@ export interface Props {
   badges?: string[];
   variant?: 'default' | 'compact';
   showIllustration?: boolean;
-  size?: 'default' | 'xl';
 }
 
 const {
@@ -22,25 +21,16 @@ const {
   badges = [],
   variant = 'default',
   showIllustration = false,
-  size = 'default',
 } = Astro.props;
 
-const padding = variant === 'compact'
-  ? 'pt-12 pb-10 md:pt-16 md:pb-12'
-  : size === 'xl'
-    ? 'pt-16 pb-14 md:pt-28 md:pb-24'
-    : 'pt-16 pb-12 md:pt-24 md:pb-20';
-
-const headlineClass = size === 'xl'
-  ? 'text-h1-sm md:text-display-lg xl:text-display-xl text-navy-dark'
-  : 'text-h1-sm md:text-display text-navy-dark';
+const padding = variant === 'compact' ? 'pt-12 pb-10 md:pt-16 md:pb-12' : 'pt-16 pb-12 md:pt-24 md:pb-20';
 ---
 <section class={`bg-paper ${padding}`}>
   <div class="container-page">
     <div class={showIllustration ? 'grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center' : ''}>
       <div class={showIllustration ? '' : 'max-w-3xl'}>
         {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
-        <h1 class={headlineClass}>{headline}</h1>
+        <h1 class="text-h1-sm md:text-display text-navy-dark">{headline}</h1>
         {subhead && (
           <p class="mt-5 text-lg md:text-xl text-text-mid leading-relaxed max-w-prose">
             {subhead}

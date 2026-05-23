@@ -2,164 +2,164 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import PackageCard from '../components/PackageCard.astro';
+import ProcessStep from '../components/ProcessStep.astro';
 import CTASection from '../components/CTASection.astro';
 import StructuredData from '../components/StructuredData.astro';
 import { packages } from '../data/packages';
-import { exampleInstallations, trustBadges } from '../data/company';
+import {
+  audienceSegments,
+  deploymentSteps,
+  exampleInstallations,
+  trustBadges,
+} from '../data/company';
 ---
 <BaseLayout
-  title="Solar that works. For five years. For every Kenyan."
-  description="Kenya's first EPRA-licensed EPC and O&M contractor delivering distributed solar and EV-ready charging on a single platform. Four packages, six cities, one engineering team."
+  title="Reliable solar power for every Kenyan home and business"
+  description="EPRA-licensed EPC and O&M contractor. Four packages on one platform. Designed, installed, and serviced for five years by the same engineering team."
   canonicalPath="/"
 >
   <StructuredData slot="head" schema="organization" />
   <StructuredData slot="head" schema="localBusiness" />
-
-  <!-- 01 — Hero -->
+  <!-- Block 1: Hero -->
   <Hero
     eyebrow="Solar built for Kenya"
-    headline="Solar that works. For five years. For every Kenyan."
-    subhead="Kenya's first EPRA-licensed EPC and O&M contractor, delivering distributed solar and EV-ready charging on a single platform across six operating cities."
+    headline="Reliable solar power for every Kenyan home and business."
+    subhead="EPRA-licensed EPC and O&M contractor. Four packages on one platform. Designed, installed, and serviced for five years by the same engineering team."
     primaryCta={{ href: '/products/', label: 'See the packages' }}
     secondaryCta={{ href: '/contact/', label: 'Talk to us' }}
     badges={[...trustBadges]}
     showIllustration={true}
-    size="xl"
   />
 
-  <!-- 02 — Mission moment: the operating principle, full-bleed navy -->
-  <section class="bg-navy-dark text-white">
-    <div class="container-page py-20 md:py-28">
-      <div class="max-w-4xl">
-        <p class="text-xs uppercase tracking-[0.18em] font-semibold text-amber mb-8">
-          The operating principle
-        </p>
-        <p class="text-2xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-white">
-          Critical energy infrastructure demands lifelong accountability.
-        </p>
-        <p class="mt-8 md:mt-10 text-lg md:text-xl text-white/80 leading-relaxed max-w-3xl">
-          Most Kenyan solar is sold as a transactional product. We build it as infrastructure. The engineering crew that designs your system installs it, then carries it forward for the next five years from one of our six city-resident hubs. No subcontractors. No handoffs. No contractor who disappears in year three.
-        </p>
-        <div class="mt-10">
-          <a href="/how-we-work/" class="inline-flex items-center gap-2 text-amber hover:text-amber-soft font-semibold transition-colors">
-            How we work
-            <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 16 16" fill="none">
-              <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 03 — The problem, in three numbers -->
+  <!-- Block 2: Who we install for -->
   <section class="bg-white">
-    <div class="container-page section">
-      <div class="max-w-3xl mb-12 md:mb-16">
-        <p class="eyebrow mb-4">The problem</p>
-        <h2 class="text-h2-sm md:text-h1 lg:text-display text-navy-dark leading-[1.1]">
-          Kenyan solar is sold like a product. It should be built like infrastructure.
-        </h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-hairline border border-hairline rounded-card overflow-hidden">
-        <article class="bg-white p-8 md:p-10">
-          <p class="text-6xl md:text-7xl font-bold text-navy-dark leading-none tracking-tight">23%</p>
-          <p class="mt-6 text-base font-semibold text-navy-dark">of grid power lost in transmission</p>
-          <p class="mt-3 text-sm text-text-mid leading-relaxed">
-            Network losses tax every kilowatt-hour. Utility bills do not reflect actual uptime, and grid-only buildings carry the cost twice.
-          </p>
-        </article>
-        <article class="bg-white p-8 md:p-10">
-          <p class="text-6xl md:text-7xl font-bold text-navy-dark leading-none tracking-tight">~4 yr</p>
-          <p class="mt-6 text-base font-semibold text-navy-dark">until orphaned solar systems fail</p>
-          <p class="mt-3 text-sm text-text-mid leading-relaxed">
-            Battery degradation, inverter faults, and unaddressed maintenance hit before the second warranty cycle completes.
-          </p>
-        </article>
-        <article class="bg-white p-8 md:p-10">
-          <p class="text-6xl md:text-7xl font-bold text-navy-dark leading-none tracking-tight">0</p>
-          <p class="mt-6 text-base font-semibold text-navy-dark">service infrastructure from most installers</p>
-          <p class="mt-3 text-sm text-text-mid leading-relaxed">
-            Companies that sold solar at scale a decade ago are not there in year five. Customers chase contractors who have moved on.
-          </p>
-        </article>
-      </div>
+    <div class="container-page py-10 md:py-14">
+      <p class="eyebrow text-text-muted mb-4">Who we install for</p>
+      <ul class="flex flex-wrap gap-2.5" aria-label="Customer segments we serve">
+        {audienceSegments.map((segment) => (
+          <li class="inline-flex items-center px-3.5 py-1.5 rounded-full bg-paper border border-hairline text-sm font-medium text-text-mid">
+            {segment}
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  <!-- 04 — Four packages -->
+  <!-- Block 3: Four packages, one platform -->
   <section class="bg-paper">
     <div class="container-page section">
-      <div class="max-w-3xl mb-12 md:mb-16">
-        <p class="eyebrow mb-4">The packages</p>
-        <h2 class="text-h2-sm md:text-h1 lg:text-display text-navy-dark leading-[1.1]">Four systems. One Neura Pod platform.</h2>
-        <p class="mt-6 text-lg md:text-xl text-text-mid leading-relaxed">
-          From a 1.5 kilowatt-hour Starter pack on a single wall to a one-megawatt EV-ready mini-grid serving an industrial tenant. Same engineering team, same five-year service commitment, regardless of scale.
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Products</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Four packages. One Neura Pod platform.</h2>
+        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+          Pick the size that fits. The engineering team underneath is the same.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
         {packages.map((pkg) => (
           <PackageCard pkg={pkg} />
         ))}
       </div>
 
-      <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3">
+      <div class="mt-10 flex flex-wrap items-center gap-4">
         <a href="/products/" class="btn btn-primary">Compare the four packages</a>
-        <p class="text-sm text-text-muted max-w-prose">
-          Capacity, hardware, daily load, inverter, panels, service tier, and starting price side by side.
-        </p>
+        <p class="text-sm text-text-muted">Capacity, hardware, price, service tier, side-by-side.</p>
       </div>
     </div>
   </section>
 
-  <!-- 05 — How we work — three principles -->
+  <!-- Block 4: How we work (operating principle) -->
   <section class="bg-white">
     <div class="container-page section">
-      <div class="max-w-3xl mb-12 md:mb-16">
-        <p class="eyebrow mb-4">How we work</p>
-        <h2 class="text-h2-sm md:text-h1 lg:text-display text-navy-dark leading-[1.1]">We stay after the install.</h2>
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">How we work</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">We stay after the install.</h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-hairline border border-hairline rounded-card overflow-hidden">
-        <article class="bg-white p-8 md:p-10">
-          <p class="text-amber font-bold text-sm tracking-wider mb-4">01</p>
-          <h3 class="text-h3 text-navy-dark mb-3">One team, end to end</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <article class="rounded-card border border-hairline bg-white p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <span aria-hidden="true" class="h-10 w-10 rounded-full bg-callout-green flex items-center justify-center">
+              <svg class="h-5 w-5 text-green" viewBox="0 0 20 20" fill="none">
+                <path d="M3 10a7 7 0 1014 0 7 7 0 00-14 0z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <h3 class="text-h3 text-navy-dark">One team, end to end</h3>
+          </div>
           <p class="text-text-mid leading-relaxed">
-            The crew that designs your system installs it, then services it for the next five years. No subcontractors, no handoffs, no contractor who disappears once the work is done.
+            The crew that designs your system installs it, then services it for the next five years. No subcontractors, no handoffs.
           </p>
         </article>
-        <article class="bg-white p-8 md:p-10">
-          <p class="text-amber font-bold text-sm tracking-wider mb-4">02</p>
-          <h3 class="text-h3 text-navy-dark mb-3">EPC and O&amp;M as one obligation</h3>
+
+        <article class="rounded-card border border-hairline bg-white p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <span aria-hidden="true" class="h-10 w-10 rounded-full bg-callout-green flex items-center justify-center">
+              <svg class="h-5 w-5 text-green" viewBox="0 0 20 20" fill="none">
+                <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <h3 class="text-h3 text-navy-dark">EPC and O&amp;M as one obligation</h3>
+          </div>
           <p class="text-text-mid leading-relaxed">
-            Engineering, procurement, construction, operations, and maintenance live in the same team. Most Kenyan installers sell EPC and walk away from O&amp;M. We do not split the obligation.
+            Engineering, procurement, construction, operations, and maintenance live in the same team. Most Kenyan installers sell EPC and walk away from O&amp;M. We do not.
           </p>
         </article>
-        <article class="bg-white p-8 md:p-10">
-          <p class="text-amber font-bold text-sm tracking-wider mb-4">03</p>
-          <h3 class="text-h3 text-navy-dark mb-3">Six cities, regional depots</h3>
+
+        <article class="rounded-card border border-hairline bg-white p-6 md:p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <span aria-hidden="true" class="h-10 w-10 rounded-full bg-callout-green flex items-center justify-center">
+              <svg class="h-5 w-5 text-green" viewBox="0 0 20 20" fill="none">
+                <path d="M10 2C6 2 4 5 4 8c0 4.5 6 10 6 10s6-5.5 6-10c0-3-2-6-6-6z" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="10" cy="8" r="2" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+            <h3 class="text-h3 text-navy-dark">Six cities, regional depots</h3>
+          </div>
           <p class="text-text-mid leading-relaxed">
             Resident engineering teams in Nairobi, Mombasa, Kisumu, Eldoret, Kitui, and Nakuru. No customer is more than a same-day drive from an engineer who has worked on their system before.
           </p>
         </article>
       </div>
+
+      <div class="mt-10">
+        <a href="/how-we-work/" class="inline-flex items-center gap-1.5 text-navy font-semibold hover:underline">
+          How we work
+          <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 16 16" fill="none">
+            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- 06 — In the field: customer-type illustrations -->
+  <!-- Block 5: Deployment process -->
   <section class="bg-paper">
     <div class="container-page section">
-      <div class="max-w-3xl mb-12 md:mb-16">
-        <p class="eyebrow mb-4">In the field</p>
-        <h2 class="text-h2-sm md:text-h1 lg:text-display text-navy-dark leading-[1.1]">Already running, today.</h2>
-        <p class="mt-6 text-lg md:text-xl text-text-mid leading-relaxed">
-          A small sample of customer types we design, build, and operate systems for across the country. Each illustrates what a single Precifarm package looks like in daily use.
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Deployment</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Four steps from quote to commissioning.</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        {deploymentSteps.map((step) => (
+          <ProcessStep number={step.number} title={step.title} body={step.body} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Block 6: Selected installations -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Installations</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Already running, today.</h2>
+        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+          A small sample of systems we have designed, built, and now operate across the country.
         </p>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         {exampleInstallations.map((ex) => (
           <article class="rounded-card border border-hairline bg-white overflow-hidden flex flex-col">
             <div class="relative aspect-[16/10] overflow-hidden bg-paper">
@@ -187,11 +187,10 @@ import { exampleInstallations, trustBadges } from '../data/company';
     </div>
   </section>
 
-  <!-- 07 — Closing CTA -->
+  <!-- Block 7: Closing CTA -->
   <CTASection
     variant="dark"
-    headline="Solar that works. Backed by a team that answers."
-    body="Send us your site. We reply with a written design and a firm quote within two business days of the assessment. No commitment, no pressure, no subcontractors."
+    headline="Reliable solar, supported by a team that answers."
     primaryCta={{ href: '/contact/', label: 'Get a quote' }}
     secondaryCta={{ href: '/products/', label: 'Compare packages' }}
   />

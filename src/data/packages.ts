@@ -46,7 +46,7 @@ export const packages: Package[] = [
     startingPrice: 'KSh 95,000 cash, or KSh 5,472/month',
     image: {
       src: '/images/packages/starter-home.jpg',
-      alt: 'A single solar panel alongside a compact Vestwoods lithium power station and PV cabling, illustrating the Precifarm Starter package: 550 W solar with 1.5 kWh of storage.',
+      alt: 'Solar panels mounted on the corrugated metal roof of a rural Kenyan home at golden hour, with a service vehicle and acacia trees in the landscape beyond — illustrating a Starter-tier installation in its real operating environment.',
     },
     whatYouGet: [
       'One 550 W solar panel with mounting hardware',
