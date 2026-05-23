@@ -95,9 +95,69 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
         imageColumns={6}
         imageAspect="landscape"
       >
-        <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">Who it is for</p>
+        <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">Best for</p>
         <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1] mb-6">{pkg.bestFor}.</h2>
         <p class="text-lg text-text-mid leading-relaxed mb-8">{pkg.targetCustomer}</p>
+
+        {(pkg.powers || pkg.irrigationSupport || pkg.designedFor) && (
+          <ul class="space-y-5 border-t border-hairline pt-6 mb-8">
+            {pkg.powers && (
+              <li class="flex gap-4">
+                <span aria-hidden="true" class="mt-1 h-6 w-6 shrink-0 rounded-full bg-callout-green flex items-center justify-center">
+                  <svg class="h-3.5 w-3.5 text-green" viewBox="0 0 16 16" fill="none">
+                    <path d="M9 1 L4 9 L8 9 L7 15 L12 7 L8 7 Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" fill="currentColor" fill-opacity="0.15"/>
+                  </svg>
+                </span>
+                <div>
+                  <p class="text-xs uppercase tracking-wider text-text-muted font-semibold mb-1">Powers</p>
+                  <p class="text-text-mid leading-relaxed">{pkg.powers}</p>
+                </div>
+              </li>
+            )}
+            {pkg.irrigationSupport && (
+              <li class="flex gap-4">
+                <span aria-hidden="true" class="mt-1 h-6 w-6 shrink-0 rounded-full bg-callout-green flex items-center justify-center">
+                  <svg class="h-3.5 w-3.5 text-green" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 1 C5 5 3 8 3 10 C3 12.8 5.2 15 8 15 C10.8 15 13 12.8 13 10 C13 8 11 5 8 1 Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" fill="currentColor" fill-opacity="0.15"/>
+                  </svg>
+                </span>
+                <div>
+                  <p class="text-xs uppercase tracking-wider text-text-muted font-semibold mb-1">Irrigation support</p>
+                  <p class="text-text-mid leading-relaxed">{pkg.irrigationSupport}</p>
+                </div>
+              </li>
+            )}
+            {pkg.designedFor && (
+              <li class="flex gap-4">
+                <span aria-hidden="true" class="mt-1 h-6 w-6 shrink-0 rounded-full bg-callout-amber flex items-center justify-center">
+                  <svg class="h-3.5 w-3.5 text-amber" viewBox="0 0 16 16" fill="none">
+                    <rect x="2.5" y="3" width="11" height="7" rx="1.2" stroke="currentColor" stroke-width="1.4" fill="currentColor" fill-opacity="0.15"/>
+                    <path d="M5 12 L11 12 M6 13.5 L10 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <div>
+                  <p class="text-xs uppercase tracking-wider text-text-muted font-semibold mb-1">Designed for</p>
+                  <p class="text-text-mid leading-relaxed">{pkg.designedFor}</p>
+                </div>
+              </li>
+            )}
+            {pkg.irrigationNote && (
+              <li class="flex gap-4 pt-1">
+                <span aria-hidden="true" class="mt-1 h-6 w-6 shrink-0 rounded-full bg-paper border border-hairline flex items-center justify-center">
+                  <svg class="h-3.5 w-3.5 text-text-muted" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M8 5 L8 9 M8 11 L8 11.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <div>
+                  <p class="text-xs uppercase tracking-wider text-text-muted font-semibold mb-1">Please note</p>
+                  <p class="text-text-mid leading-relaxed text-sm">{pkg.irrigationNote}</p>
+                </div>
+              </li>
+            )}
+          </ul>
+        )}
+
         <dl class="grid grid-cols-1 gap-4 text-sm border-t border-hairline pt-6">
           <div class="flex flex-col sm:flex-row sm:gap-6">
             <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-32 shrink-0 mt-0.5">Daily load</dt>

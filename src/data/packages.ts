@@ -27,6 +27,14 @@ export type Package = {
   // Used so a product can carry a clean studio kit shot on the card and a
   // location-context photo on the detail-page hero.
   cardImage?: { src: string; alt: string };
+  // "Best for" detail block surfaced on the product detail page beneath the
+  // bestFor heading. Each package describes what it powers; the residential
+  // and commercial tiers also describe irrigation support; Commercial Plus
+  // describes its designed-for use cases instead of irrigation.
+  powers?: string;
+  irrigationSupport?: string;
+  irrigationNote?: string;
+  designedFor?: string;
 };
 
 export const packages: Package[] = [
@@ -47,7 +55,10 @@ export const packages: Package[] = [
     serviceTier: 'Standard',
     warranty: 'One-year workmanship warranty',
     serviceCommitment: 'Five-year service commitment, same engineering team.',
-    bestFor: 'Single-room households, kibandas, renters, boda riders',
+    bestFor: 'Single-room homes, kiosks, renters, boda riders',
+    powers: 'Up to 10 LED bulbs, 1 TV, Wi-Fi router, phone charging, and 1 small fan (8 to 12 hours per day depending on usage).',
+    irrigationSupport: 'Up to 1 acre of irrigation water supply (approximately 10,000 litres per day).',
+    irrigationNote: 'Irrigation pump is not included in the package.',
     startingPrice: 'KSh 95,000 cash, or KSh 5,472/month',
     image: {
       src: '/images/packages/starter-home.jpg',
@@ -102,7 +113,10 @@ export const packages: Package[] = [
     serviceTier: 'Standard',
     warranty: 'One-year workmanship warranty',
     serviceCommitment: 'Five-year service commitment, same engineering team.',
-    bestFor: 'Off-grid 2 to 3 bedroom homes seeking independence from the grid',
+    bestFor: 'Two to three bedroom off-grid homes seeking reliable full-day power',
+    powers: '10 to 20 LED bulbs across the home, 1 energy-efficient fridge, 1 TV, Wi-Fi router, 2 to 3 fans, phone charging, and small appliances (used at different times).',
+    irrigationSupport: 'Up to 2 acres of irrigation water supply (approximately 25,000 litres per day).',
+    irrigationNote: 'Irrigation pump is not included in the package.',
     startingPrice: 'KSh 290,000 cash',
     image: {
       src: '/images/packages/family-rooftop.jpg',
@@ -156,7 +170,10 @@ export const packages: Package[] = [
     serviceTier: 'Priority, on-site',
     warranty: 'One-year workmanship warranty',
     serviceCommitment: 'Five-year service commitment, same engineering team.',
-    bestFor: 'Schools, clinics, SMEs, cooperatives, farms with borehole irrigation',
+    bestFor: 'Schools, clinics, SMEs, cooperatives, irrigation farms',
+    powers: 'Multi-room lighting systems, refrigeration (clinics and shops), water pumping systems, milling or processing equipment, and productive farm or enterprise loads.',
+    irrigationSupport: 'Designed for 5 to 45 acres depending on site energy requirements and system configuration.',
+    irrigationNote: 'Irrigation pump is not included unless specified in the project scope.',
     startingPrice: 'From KSh 520,000',
     image: {
       src: '/images/packages/commercial-school.jpg',
@@ -215,7 +232,9 @@ export const packages: Package[] = [
     serviceTier: 'Priority, on-site',
     warranty: 'One-year workmanship warranty',
     serviceCommitment: 'Five-year EPC and O&M contract standard. Extended to ten years on industrial-scale deployments.',
-    bestFor: 'EV-ready solar mini-grids under 1 MW across five deployment archetypes',
+    bestFor: 'EV-ready mini-grids, industrial sites, fleets, campuses',
+    powers: 'Large facilities, workshops, agro-processing units, cold storage clusters, ICT systems, and EV charging infrastructure (multi-point charging possible).',
+    designedFor: 'Distributed energy systems, continuous industrial loads, and fleet charging operations at scale.',
     startingPrice: 'From KSh 4 million',
     isHighlighted: true,
     image: {
