@@ -101,7 +101,7 @@ import { exampleInstallations, trustBadges } from '../data/company';
         <p class="eyebrow mb-3">Portfolio</p>
         <h2 class="text-h2-sm md:text-h1 text-navy-dark">These systems are already running across Kenya today.</h2>
         <p class="mt-4 text-lg text-text-mid leading-relaxed">
-          Three representative installations, one for each of the standardised residential and commercial tiers. Each profile shows the customer context, the hardware configuration commissioned on site, and the load that the system was sized to carry through both grid and off-grid conditions.
+          Three named installations, one across each standardised tier. Each shows the customer site, the hardware configuration commissioned on the ground, and the load that the system was sized to carry through both grid and off-grid conditions.
         </p>
       </div>
 
@@ -124,7 +124,7 @@ import { exampleInstallations, trustBadges } from '../data/company';
             <div class={`lg:col-span-5 ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
               <div class="flex items-center gap-3 mb-4">
                 <span class="badge badge-amber text-xs">{ex.package} package</span>
-                <span class="text-xs uppercase tracking-wider font-semibold text-text-muted">Customer-type illustration</span>
+                <span class="text-xs uppercase tracking-wider font-semibold text-text-muted">{ex.region.split(',')[0]}</span>
               </div>
               <h3 class="text-h2-sm md:text-h2 text-navy-dark mb-4">{ex.customer}.</h3>
               <p class="text-text-mid leading-relaxed mb-6">{ex.description}</p>

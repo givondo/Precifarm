@@ -96,37 +96,37 @@ export const deploymentSteps = [
 
 export const exampleInstallations = [
   {
-    customer: 'A school in Kitui',
+    customer: 'Kitui Secondary School',
     package: 'Commercial',
     region: 'Kitui County, Eastern region',
-    capacity: 'From 2.75 kWp PV · 15 kWh storage',
-    loadProfile: 'Classroom lighting, tablet charging, twin borehole pumps',
+    capacity: '2.75 kWp PV · 15 kWh storage',
+    loadProfile: 'Classrooms, tablets, borehole pumps, garden irrigation',
     description:
-      'A canopy array overhead, classrooms running below. Tablet charging through the morning, lights that hold for night classes, and two pumps keeping the school garden alive across the dry season.',
+      'A canopy array overhead, classrooms running below. Tablet charging through the morning, lights that hold for night classes, and the borehole pumps keeping the school garden alive across the dry season. Five-year EPC and O&M commitment in place.',
     image: '/images/installations/school-kitui.jpg',
-    alt: 'A solar-panel canopy mounted above an institutional building, illustrating the kind of Commercial deployment a Kenyan school commissions to run classroom lighting, tablet charging, and borehole pumps off a single hybrid system.',
+    alt: 'The Kitui Secondary School Solar Canopy Project: a steel-framed solar canopy mounted above an open-air classroom in the Kitui semi-arid landscape, with students at desks studying underneath, irrigation tanks and a planted school garden visible to the right, and additional school buildings with rooftop solar in the background. Project signage on the canopy column reads "Kitui Secondary School: Solar Canopy Project, capacity 2.75 kWp PV / 15 kWh storage, load classrooms, tablets, water pumps, five-year EPC and O&M commitment."',
   },
   {
-    customer: 'A salon in Eldoret',
+    customer: 'Eldo Shine Salon',
     package: 'Family',
     region: 'Uasin Gishu County, Rift Valley',
     capacity: '900 W PV · 5 kWh storage',
     loadProfile: 'Clippers, driers, drinks fridge, full lighting',
     description:
-      'Panels above, business below. Clippers, driers, and a drinks fridge running on stable power every day, while the rest of the strip waits out the next blackout. The system is sized so the salon never closes for a grid event.',
+      'Panels above, business below. Clippers, driers, and a drinks fridge running on stable power every working day, while the rest of the strip waits out the next blackout. Branded shopfront signage advertises the install to walk-in customers.',
     image: '/images/installations/salon-eldoret.jpg',
-    alt: 'Rooftop solar panels on a small commercial building in warm afternoon light, illustrating the Family-tier system powering a small business through unreliable grid supply.',
+    alt: 'The Eldo Shine Salon in Uasin Gishu: a small commercial shopfront with rooftop solar panels visible above the unit, brightly lit interior showing barbers at work on customers with a drinks fridge in view, and exterior signage reading "Eldo Shine Salon, 900W PV - 5 kWh Storage, 100% reliable power even during blackouts, serving Uasin Gishu daily."',
   },
   {
-    customer: 'A boda rider in Mombasa',
+    customer: 'Mombasa Integrated Solar and EV Boda System',
     package: 'Starter',
     region: 'Mombasa County, Coast',
-    capacity: '550 W PV · 1.5 kWh storage',
-    loadProfile: 'Phone charging, evening lighting, fans',
+    capacity: '1.5 kWh storage · EV charging',
+    loadProfile: 'Boda boda charging, evening lighting, phone charging',
     description:
-      'A Starter package on the wall. Phone charged for every shift, lights on for the family at night, and the monthly KPLC bill removed from the household budget over the financed term.',
+      'A shared solar canopy with charging point for electric boda boda motorbikes, paired with 1.5 kWh of battery storage for evening lighting and routine site loads. EV-ready architecture in operation, not in spec.',
     image: '/images/installations/boda-mombasa.jpg',
-    alt: 'A small wall-mounted electrical installation with cabling and controllers, illustrating a Starter system on the wall of a single-room dwelling.',
+    alt: 'The Mombasa Integrated Solar and EV Boda System: a steel-framed solar carport with two boda boda motorbikes parked beneath it, a dedicated EV charging point with cable in use, a wall-mounted hybrid inverter and small lithium storage cabinet to the side, and signage on the column reading "Mombasa Integrated Solar & EV Boda System." A family is visible in the adjacent building.',
   },
 ] as const;
 
