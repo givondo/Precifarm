@@ -215,6 +215,28 @@ Both forms include a required opt-in consent checkbox (`name="consent"`, value `
 
 After deploy, configure form notifications in **Netlify dashboard → Site → Forms → Form notifications**. By default submissions only appear in the dashboard. The most useful notification is an email to `sales@precifarm.com` triggered on every submission of `contact` and `training-registration`.
 
+### Auto-reply to the submitter
+
+A Netlify Function at [netlify/functions/submission-created.mjs](./netlify/functions/submission-created.mjs) sends a branded acknowledgement email back to the form submitter, with the product catalogue PDF attached. Netlify auto-invokes any function named exactly `submission-created` on every form submission, no webhook setup required.
+
+The function uses [Resend](https://resend.com) as the transport. Required Netlify env vars (set in **Site configuration → Environment variables**):
+
+| Variable          | Required | Notes                                                                |
+| ----------------- | -------- | -------------------------------------------------------------------- |
+| `RESEND_API_KEY`  | yes      | Resend Project API key with "Send" scope.                            |
+| `REPLY_FROM`      | no       | Defaults to `Precifarm <sales@precifarm.com>`.                       |
+| `REPLY_BCC`       | no       | If set, BCCs every auto-reply to this address (useful for audit).    |
+
+Required Resend setup:
+
+1. Sign up at [resend.com](https://resend.com) (free tier covers 3,000 sends/month).
+2. Add `precifarm.com` as a domain. Resend issues 3–4 DNS records (a TXT for SPF and CNAMEs for DKIM).
+3. Add those records at **Netlify Domains → precifarm.com → DNS records** (Name = exactly what Resend gives, do not append `.precifarm.com`).
+4. Click "Verify" in Resend until all rows show green.
+5. Copy the API key into Netlify env vars as `RESEND_API_KEY`.
+
+Until the env var is set, the function logs and returns 200 (no auto-reply sent, submissions still recorded normally).
+
 ### Adding a new form
 
 1. Add the `<form>` to a page or component with the required wiring above (unique `name`, hidden `form-name`, `data-netlify="true"`, honeypot).

@@ -1,0 +1,9 @@
+{
+  "name": "precifarm-functions",
+  "type": "module",
+  "private": true,
+  "description": "Netlify Functions for Precifarm — auto-reply on form submissions via Resend",
+  "dependencies": {
+    "resend": "^4.0.0"
+  }
+}
