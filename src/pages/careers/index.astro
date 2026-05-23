@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import NarrativeSection from '../../components/NarrativeSection.astro';
+import CTASection from '../../components/CTASection.astro';
+import { company } from '../../data/company';
+
+const principles = [
+  {
+    title: 'Engineering, not sales.',
+    body: 'Every site is sized against a written load assessment and a fixed scope. Nobody at Precifarm closes a deal by promising what the system cannot deliver. The number we put on paper is the number we install.',
+  },
+  {
+    title: 'Five years of after-install accountability.',
+    body: 'The crew that commissions a system is the crew responsible for it through year five. There is no handoff to a subcontractor. Responsibility is durable, not transferable.',
+  },
+  {
+    title: 'We grow on revenue, not capital.',
+    body: 'No outside investors. No targets that depend on a fundraise. Headcount expands when customers fund it, which keeps the engineering work honest and the quality bar enforceable.',
+  },
+];
+
+const openRoles = [
+  {
+    title: 'Field Solar Engineer',
+    location: 'Nairobi, Mombasa, Eldoret, Kisumu, Nakuru, Nyeri',
+    type: 'Full-time',
+    blurb:
+      'Site assessment, system commissioning, and the first two years of preventive maintenance for residential and SME installations across the assigned regional hub. EBK registration or progression toward registration required.',
+  },
+  {
+    title: 'Embedded Firmware Engineer',
+    location: 'Nairobi',
+    type: 'Full-time',
+    blurb:
+      'Contributing to the Neura Pod control firmware and OTA update infrastructure. C or Rust on ARM Cortex-M, comfort with constrained memory budgets, and an interest in long-lifecycle field software.',
+  },
+  {
+    title: 'Solar Irrigation Specialist',
+    location: 'Eldoret or Nakuru',
+    type: 'Full-time',
+    blurb:
+      'Hydraulic system design, borehole assessment, and pump-controller commissioning for agricultural deployments from 1 to 100+ acres. Background in water engineering or agronomy preferred.',
+  },
+  {
+    title: 'O&M Technician',
+    location: 'All six operating hubs',
+    type: 'Full-time',
+    blurb:
+      'Scheduled preventive maintenance, fault diagnosis, and warranty work across the installed fleet. Trade certification in electrical installation, comfort working at height, and a clean driving record.',
+  },
+  {
+    title: 'Internships and graduate placements',
+    location: 'Nairobi (rotating)',
+    type: 'Twelve weeks',
+    blurb:
+      'Structured rotations across engineering, operations, and customer commissioning. Open to final-year and recently graduated engineering students. Applications are reviewed quarterly.',
+  },
+];
+
+const whatWeLookFor = [
+  'Engineering judgement over engineering credentials. We read transcripts; we also read the projects you finished outside of them.',
+  'A bias toward measuring before specifying. The cost of a wrong assumption on a Commercial system is several months of margin.',
+  'Comfort with site work. Most of these roles spend the first two years closer to a roof than to a desk.',
+  'Plain writing. Every quote, every commissioning report, and every fault log goes to a customer who pays attention.',
+  'A long horizon. Precifarm is built to be operating in 2045. We hire for that timeline, not for a two-year exit.',
+];
+---
+<BaseLayout
+  title="Careers"
+  description="Engineering, operations, and field roles at Precifarm. EPRA-licensed EPC and O&M contractor hiring across Nairobi, Mombasa, Eldoret, Kisumu, Nakuru, and Nyeri. Open positions in solar engineering, embedded firmware, irrigation, and operations."
+  canonicalPath="/careers/"
+  keywords={['solar engineering jobs Kenya', 'EPC careers Kenya', 'Precifarm careers', 'renewable energy jobs Nairobi', 'embedded firmware Kenya']}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Careers', href: '/careers/' },
+  ]}
+>
+  <Hero
+    eyebrow="Careers"
+    headline="Build the energy infrastructure Kenya will run on for the next twenty years."
+    subhead="Precifarm is hiring engineers, field technicians, and operators who want to work on systems that have to keep running long after the install crew has left site."
+    primaryCta={{ href: '#open-roles', label: 'See open roles' }}
+    secondaryCta={{ href: '/about/', label: 'About Precifarm' }}
+  />
+
+  <!-- WHY PRECIFARM -->
+  <NarrativeSection
+    background="white"
+    eyebrow="Why Precifarm"
+    headline="An engineering company that intends to still be servicing its first installations in 2045."
+    lede="Most distributed-solar companies in the region are organised as installation businesses. Precifarm is organised as a long-lifecycle infrastructure operator. That distinction shapes how we hire, how we pay, and how we keep score."
+    maxWidth="prose"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12">
+      {principles.map((principle) => (
+        <div>
+          <h3 class="text-h3 text-navy-dark mb-3 leading-tight">{principle.title}</h3>
+          <p class="text-text-mid leading-relaxed">{principle.body}</p>
+        </div>
+      ))}
+    </div>
+  </NarrativeSection>
+
+  <!-- WHAT WE LOOK FOR -->
+  <NarrativeSection
+    background="paper"
+    eyebrow="What we look for"
+    headline="Engineering judgement, plain writing, and a long horizon."
+    maxWidth="prose"
+  >
+    <ul class="mt-8 space-y-5 max-w-3xl">
+      {whatWeLookFor.map((item) => (
+        <li class="flex gap-4 text-lg text-text-mid leading-relaxed">
+          <span aria-hidden="true" class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber"></span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </NarrativeSection>
+
+  <!-- OPEN ROLES -->
+  <section id="open-roles" class="bg-white">
+    <div class="container-page py-20 md:py-28">
+      <div class="max-w-3xl mb-12">
+        <p class="eyebrow text-green mb-4">Open roles</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1] mb-5">
+          Where we are hiring now.
+        </h2>
+        <p class="text-lg text-text-mid leading-relaxed">
+          Roles are listed against the regional hub they support. Where a role spans multiple cities, we will tell you during the first conversation which hub fits your situation best.
+        </p>
+      </div>
+
+      <ul class="divide-y divide-hairline border-y border-hairline">
+        {openRoles.map((role) => (
+          <li class="grid grid-cols-1 md:grid-cols-12 gap-6 py-8">
+            <div class="md:col-span-4">
+              <h3 class="text-h3 text-navy-dark leading-tight">{role.title}</h3>
+              <p class="mt-2 text-sm text-text-muted">{role.location}</p>
+              <p class="mt-1 text-xs uppercase tracking-[0.14em] font-semibold text-amber">{role.type}</p>
+            </div>
+            <div class="md:col-span-7">
+              <p class="text-text-mid leading-relaxed">{role.blurb}</p>
+            </div>
+            <div class="md:col-span-1 md:text-right">
+              <a
+                href={`mailto:${company.email}?subject=${encodeURIComponent(`Application: ${role.title}`)}`}
+                class="inline-flex items-center gap-1 text-sm font-semibold text-navy-dark hover:text-amber transition-colors"
+                aria-label={`Apply for ${role.title}`}
+              >
+                Apply
+                <svg aria-hidden="true" class="h-3.5 w-3.5" viewBox="0 0 12 12" fill="none">
+                  <path d="M2.5 6h7M6 2.5L9.5 6 6 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- HOW TO APPLY -->
+  <NarrativeSection
+    background="paper"
+    eyebrow="How to apply"
+    headline="A short application, a structured conversation, a site day."
+    maxWidth="prose"
+  >
+    <div class="max-w-2xl space-y-5 text-lg text-text-mid leading-relaxed">
+      <p>
+        Send a CV and a one-page note explaining the project, system, or piece of work you are proudest of and what you learned from it. No cover letter is required.
+      </p>
+      <p>
+        Shortlisted candidates have a structured technical conversation with the relevant team lead, then spend a day with the field crew on a live installation or commissioning. We make a decision within two weeks of that day.
+      </p>
+      <p>
+        Applications go to <a href={`mailto:${company.email}`} class="text-navy-dark font-semibold underline decoration-amber decoration-2 underline-offset-4 hover:text-amber transition-colors">{company.email}</a> with the role title in the subject line.
+      </p>
+    </div>
+  </NarrativeSection>
+
+  <CTASection
+    variant="dark"
+    headline="Build infrastructure that has to outlast the people who built it."
+    body="If the work above is the work you want to do, we want to hear from you. Send your application to sales@precifarm.com with the role title in the subject line."
+    primaryCta={{ href: `mailto:${company.email}`, label: 'Email an application' }}
+    secondaryCta={{ href: '/about/', label: 'About Precifarm' }}
+  />
+</BaseLayout>

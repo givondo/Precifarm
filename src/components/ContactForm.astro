@@ -12,6 +12,11 @@ const cityOptions = cities.map((c) => c.name);
   class="space-y-5"
 >
   <input type="hidden" name="form-name" value="contact" />
+  {/* Canonical, derived fields populated by JS at submit time. Kept separate
+      from the raw phone input so the raw value is still captured if JS fails. */}
+  <input type="hidden" name="phone_e164" value="" />
+  <input type="hidden" name="page_path" value="" />
+  <input type="hidden" name="submitted_at" value="" />
   <p class="hidden">
     <label>
       Leave this field blank if you are human:
@@ -132,6 +137,23 @@ const cityOptions = cities.map((c) => c.name);
     ></textarea>
   </div>
 
+  <div class="pt-2">
+    <label class="flex items-start gap-3 text-sm text-text-mid cursor-pointer">
+      <input
+        type="checkbox"
+        name="consent"
+        value="yes"
+        required
+        class="mt-1 h-4 w-4 accent-navy shrink-0"
+      />
+      <span>
+        I agree to be contacted by Precifarm about this enquiry.
+        See our <a href="/privacy/" class="text-navy-dark underline decoration-amber decoration-2 underline-offset-2 hover:text-amber transition-colors">privacy policy</a> for how your details are used.
+        <span aria-hidden="true" class="text-navy">*</span>
+      </span>
+    </label>
+  </div>
+
   <div class="pt-2 flex flex-col sm:flex-row sm:items-center gap-4">
     <button type="submit" class="btn btn-primary">Send enquiry</button>
     <p class="text-sm text-text-muted">
@@ -139,3 +161,52 @@ const cityOptions = cities.map((c) => c.name);
     </p>
   </div>
 </form>
+
+<script>
+  (() => {
+    const form = document.querySelector<HTMLFormElement>('form[name="contact"]');
+    if (!form) return;
+    const phoneInput = form.querySelector<HTMLInputElement>('input[name="phone"]');
+    const phoneE164 = form.querySelector<HTMLInputElement>('input[name="phone_e164"]');
+    const pagePath = form.querySelector<HTMLInputElement>('input[name="page_path"]');
+    const submittedAt = form.querySelector<HTMLInputElement>('input[name="submitted_at"]');
+    if (pagePath) pagePath.value = window.location.pathname;
+    form.addEventListener('submit', () => {
+      if (submittedAt) submittedAt.value = new Date().toISOString();
+      if (phoneInput && phoneE164) {
+        let core = String(phoneInput.value || '').replace(/\D/g, '');
+        if (core.startsWith('254')) core = core.slice(3);
+        if (core.startsWith('0')) core = core.slice(1);
+        phoneE164.value = core ? '+254' + core : '';
+      }
+    });
+  })();
+</script>
+
+<script>
+  (function () {
+    const form = document.querySelector<HTMLFormElement>('form[name="contact"]');
+    if (!form) return;
+    const pathField = form.querySelector<HTMLInputElement>('input[name="page_path"]');
+    const tsField = form.querySelector<HTMLInputElement>('input[name="submitted_at"]');
+    const phoneField = form.querySelector<HTMLInputElement>('input[name="phone"]');
+    const phoneE164Field = form.querySelector<HTMLInputElement>('input[name="phone_e164"]');
+
+    if (pathField) pathField.value = window.location.pathname + window.location.search;
+
+    function normaliseKenyanPhone(raw: string): string {
+      const digits = String(raw || '').replace(/\D/g, '');
+      let core = digits;
+      if (core.startsWith('254')) core = core.slice(3);
+      if (core.startsWith('0')) core = core.slice(1);
+      return core ? '+254' + core : '';
+    }
+
+    form.addEventListener('submit', () => {
+      if (tsField) tsField.value = new Date().toISOString();
+      if (phoneField && phoneE164Field) {
+        phoneE164Field.value = normaliseKenyanPhone(phoneField.value);
+      }
+    });
+  })();
+</script>

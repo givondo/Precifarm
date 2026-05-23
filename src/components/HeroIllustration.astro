@@ -1,24 +1,17 @@
 ---
 // Hero photograph slot. Used in the homepage hero next to the headline.
-// Real Unsplash photo replacing the earlier SVG illustration.
-// To swap to a different photo, drop a 1600x900-ish JPG into /public/images/hero/
-// and update the src below.
-//
-// Photo: client-supplied installer crew on a rooftop, replacing the earlier
-// Unsplash engineer-at-panels stock photo. Saved at the same path so all
-// references continue to resolve without code churn.
+// To swap photos, drop a 1600-wide JPG into /public/images/hero/ and update the src below.
 ---
 <div class="relative overflow-hidden rounded-card shadow-xl ring-1 ring-black/5">
   <img
-    src="/images/hero/hero-solar-engineer.jpg"
-    alt="Two installers in safety vests and hard hats mounting a tilted solar panel array on a rooftop, with the wall-mounted inverter visible on the building below — illustrating the EPRA-licensed installation crews Precifarm dispatches to every site."
-    width="1600"
-    height="1067"
+    src="/images/hero/hero-modular-storage.jpg"
+    alt="A modular wall-mounted lithium battery stack of four stacked modules with an adjacent rooftop solar PV array on a clean residential exterior, illustrating Precifarm's modular solar PV and storage architecture."
+    width="1120"
+    height="959"
     loading="eager"
     decoding="async"
     fetchpriority="high"
     class="w-full h-full object-cover aspect-[4/3]"
   />
-  <!-- Subtle navy gradient overlay at the bottom for legibility if text ever overlays it -->
   <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy-dark/30 to-transparent pointer-events-none"></div>
 </div>

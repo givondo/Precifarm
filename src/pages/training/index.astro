@@ -1,0 +1,571 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import NarrativeSection from '../../components/NarrativeSection.astro';
+import FAQ from '../../components/FAQ.astro';
+import CTASection from '../../components/CTASection.astro';
+import Callout from '../../components/Callout.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { cities } from '../../data/cities';
+import { company } from '../../data/company';
+
+const success = Astro.url.searchParams.get('success') === 'true';
+const cityOptions = cities.map((c) => c.name);
+
+type Tier = {
+  code: 'T1' | 'T2' | 'T3';
+  title: string;
+  scope: string;
+  systems: string;
+  audience: string;
+  prereq: string;
+  hours: string;
+};
+
+const tiers: Tier[] = [
+  {
+    code: 'T1',
+    title: 'Solar PV Technician, Class T1',
+    scope: 'Small DC systems up to 100 Wp.',
+    systems: 'Single-battery solar lanterns, pico systems, basic DC lighting kits.',
+    audience: 'Entry-level technicians, last-mile distributors, solar product vendors moving into installation.',
+    prereq: 'KCSE or equivalent. No prior solar field experience required, though basic electrical familiarity helps.',
+    hours: 'Lecture and laboratory time, plus structured eLearning. Cohort schedule confirmed on registration.',
+  },
+  {
+    code: 'T2',
+    title: 'Solar PV Technician, Class T2',
+    scope: 'Medium systems with multiple batteries and inverters.',
+    systems: 'Off-grid home systems, SME backup, school and clinic standalone installations, residential rooftop with storage.',
+    audience: 'Practising installers, electricians moving into solar, technical staff at SME-tier solar contractors.',
+    prereq: 'KCSE with a Certificate or Diploma in Electrical or Electronic Engineering, or equivalent trade-test progression, plus documented solar field experience as required for the EPRA licence application.',
+    hours: 'Lecture and hands-on time, plus structured eLearning. Cohort schedule confirmed on registration.',
+  },
+  {
+    code: 'T3',
+    title: 'Solar PV Technician, Class T3',
+    scope: 'Advanced systems including grid-tied and hybrid PV.',
+    systems: 'Grid-tied rooftop and ground-mount, hybrid commercial and industrial, anchor-site BESS-coupled installations, EV-ready commercial.',
+    audience: 'Senior installers, design engineers, project leads working on Commercial and Commercial Plus deployments.',
+    prereq: 'Diploma or degree in Electrical, Electronic, or related engineering, plus documented intermediate or advanced solar experience as required for the EPRA T3 application.',
+    hours: 'Lecture and hands-on time, plus structured eLearning, with separate streams for grid-tie and hybrid. Cohort schedule confirmed on registration.',
+  },
+];
+
+const learningOutcomes = [
+  {
+    eyebrow: 'Design',
+    title: 'Site-sized engineering, not catalogue picking.',
+    body: 'Load assessment, irradiance estimation, head and lift calculation for pumping loads, sizing of array and storage against measured demand. The same methodology Precifarm uses on live commissions.',
+  },
+  {
+    eyebrow: 'Install',
+    title: 'Mechanical, electrical, and safety to the standard the licence assumes.',
+    body: 'Roof mounting, DC and AC cabling, earthing, surge protection, battery commissioning, inverter configuration, and the safety protocols an EPRA inspector expects to see on site.',
+  },
+  {
+    eyebrow: 'Operate',
+    title: 'Commissioning reports, fault diagnosis, and warranty handling.',
+    body: 'Producing the commissioning documentation that customers and financiers actually use, diagnosing common faults in the field, and managing component warranties without losing weeks.',
+  },
+  {
+    eyebrow: 'License',
+    title: 'Application pathway to EPRA T1, T2, or T3.',
+    body: 'A walkthrough of the EPRA application portal, the supporting documents required, and the experience evidence that holds up under review. We do not issue the licence; EPRA does. We prepare you for the application.',
+  },
+];
+
+const whoShouldAttend = [
+  'Practising technicians who have been installing without a formal EPRA licence and want to regularise.',
+  'Electricians and electrical engineering graduates moving into the solar sector.',
+  'Engineering students in final year or recently graduated, preparing for the field.',
+  'Staff at solar distribution and SME-tier installation companies who need accredited credentials to bid on tendered work.',
+  'In-house facilities and operations teams at schools, clinics, and cooperatives that want internal capacity to maintain their own systems.',
+];
+
+const trainingFaqs = [
+  {
+    q: 'What is the difference between T1, T2, and T3?',
+    a: 'EPRA classifies solar PV technicians into three classes. T1 covers small DC systems up to 100 Wp (single-battery lantern level). T2 covers medium systems with multiple batteries and inverters. T3 covers advanced systems including grid-tied and hybrid PV. The licence you need is determined by the largest system class you intend to design, install, or maintain.',
+  },
+  {
+    q: 'Do I need a separate T3 licence for grid-tie versus hybrid?',
+    a: 'T3 has two streams: T3 Grid Tie and T3 Hybrid. Most senior practitioners take both over time. Our T3 cohort is structured so candidates can sit either stream individually or both in sequence.',
+  },
+  {
+    q: 'Who issues the licence at the end?',
+    a: 'The Energy and Petroleum Regulatory Authority (EPRA) issues the licence on a successful application. Precifarm delivers the training and prepares your application pack. We do not, and cannot, issue the EPRA licence itself. Application fees are paid directly to EPRA per their current schedule (KSh 250 for T1, KSh 500 for T2, KSh 750 for T3 at the time of writing).',
+  },
+  {
+    q: 'Is the training NITA-accredited?',
+    a: 'EPRA recognises training delivered at NITA-accredited institutions. Where Precifarm’s training is delivered in partnership with a NITA-accredited centre, that pathway is documented in the registration follow-up. Where you have already taken training at an accredited centre such as the Strathmore Energy Research Centre (SERC) and need supplementary practitioner-led field preparation before applying, we will confirm which streams are open to you on registration.',
+  },
+  {
+    q: 'How much does the training cost?',
+    a: 'Cohort fees are confirmed on registration. For reference, comparable T1/T2 courses at the Strathmore Energy Research Centre are advertised around KSh 50,000 per participant and the T3 streams around KSh 60,000, each across five days of contact time plus an eLearning component. Precifarm sets its own fees against cohort size, venue, and stream.',
+  },
+  {
+    q: 'How long does it take?',
+    a: 'Each tier runs as a short-cohort programme combining classroom, laboratory, and supervised site work, with an eLearning component between contact days. Exact duration is published with each cohort schedule. You should expect a multi-week commitment for T2 and T3 once site work is counted.',
+  },
+  {
+    q: 'Where is the training delivered?',
+    a: 'Cohorts run from Precifarm regional hubs. Nairobi is the default; Mombasa, Kisumu, Eldoret, Nakuru, and Nyeri host cohorts where registration numbers justify a local run. Specify your preferred hub on the registration form so we group you with the nearest cohort.',
+  },
+  {
+    q: 'Can my employer sponsor a closed cohort for our staff?',
+    a: 'Yes. Where a distributor, contractor, SACCO, or institutional employer wants a closed cohort for at least eight to twelve staff, we run the programme on a bespoke schedule at a venue you nominate. Send the enquiry through the registration form and tick the institutional sponsor box.',
+  },
+];
+---
+<BaseLayout
+  title="EPRA T1, T2, T3 solar PV technician training"
+  description="Practitioner-led training for solar PV technicians and engineers preparing for the EPRA T1, T2, and T3 licence application. Curriculum mapped to the EPRA classification and the NITA solar PV competency framework. Registration of interest open."
+  canonicalPath="/training/"
+  keywords={[
+    'EPRA T1 training Kenya',
+    'EPRA T2 training Kenya',
+    'EPRA T3 solar training Kenya',
+    'solar PV technician licence Kenya',
+    'NITA solar PV training',
+    'Strathmore SERC alternative',
+    'solar installer course Nairobi',
+  ]}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Training', href: '/training/' },
+  ]}
+>
+  <StructuredData
+    slot="head"
+    schema="service"
+    service={{
+      name: 'EPRA T1, T2, T3 Solar PV Technician Training',
+      description: 'Practitioner-led training programme for solar PV technicians and engineers preparing for the EPRA T1, T2, and T3 licence application. Curriculum mapped to the EPRA classification and the NITA solar PV competency framework.',
+      serviceType: 'Vocational training, solar photovoltaic installation',
+      areaServed: 'Kenya',
+    }}
+  />
+  <StructuredData slot="head" schema="faqPage" faqs={trainingFaqs} />
+
+  <Hero
+    eyebrow="Training"
+    headline="EPRA T1, T2, T3 solar PV technician training, taught by working engineers."
+    subhead="A short-cohort programme that prepares technicians and engineers for the EPRA solar PV licence application, delivered by the same field team that designs and operates Precifarm’s Commercial and Commercial Plus installations."
+    primaryCta={{ href: '#register', label: 'Register interest' }}
+    secondaryCta={{ href: '#tiers', label: 'Compare the three tiers' }}
+  />
+
+  <!-- WHY THIS TRAINING EXISTS -->
+  <NarrativeSection
+    background="white"
+    eyebrow="Why this exists"
+    headline="The licence is a regulatory floor. The competence is a practical one."
+    lede="EPRA licensing is the legal precondition to working as a solar PV technician in Kenya. The harder question is whether a licensed technician can actually commission a system that performs for ten years. Precifarm’s training programme is structured around that second question, mapped to the EPRA classification so the licence application follows naturally from the work."
+    maxWidth="prose"
+  >
+    <div class="max-w-3xl space-y-5 mt-6 text-lg text-text-mid leading-relaxed">
+      <p>
+        The National Industrial Training Authority (NITA) curriculum for solar PV technicians is the reference framework. Accredited institutions such as the Strathmore Energy Research Centre (SERC) deliver this framework in classroom and laboratory form. Precifarm’s contribution is a practitioner-led overlay: the same engineers running live commercial commissions teach the field methodology behind a system that has to keep running long after the install crew has left.
+      </p>
+      <p>
+        Cohorts are intentionally small. Curriculum is mapped to EPRA T1, T2, and T3 so that on completion you have both the competence and the documentation to apply for the licence at the level appropriate to the work you intend to do.
+      </p>
+    </div>
+  </NarrativeSection>
+
+  <!-- THREE TIERS COMPARISON -->
+  <section id="tiers" class="bg-paper">
+    <div class="container-page py-20 md:py-28">
+      <div class="max-w-3xl mb-12">
+        <p class="eyebrow text-green mb-4">The three EPRA classifications</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1] mb-5">
+          T1, T2, T3. Pick the tier that matches the work you intend to do.
+        </h2>
+        <p class="text-lg text-text-mid leading-relaxed">
+          The class of licence determines the scope of system you are authorised to design, install, and maintain. The table below summarises EPRA’s classification and the Precifarm cohort that prepares you for each application.
+        </p>
+      </div>
+
+      <div class="overflow-x-auto -mx-5 md:mx-0 px-5 md:px-0">
+        <table class="w-full min-w-[900px] border-collapse text-sm">
+          <caption class="sr-only">EPRA solar PV technician licence classifications T1, T2, T3</caption>
+          <thead>
+            <tr class="border-b-2 border-navy">
+              <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider align-bottom">Tier</th>
+              <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider align-bottom">System scope</th>
+              <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider align-bottom">Typical installations</th>
+              <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider align-bottom">Who it’s for</th>
+              <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider align-bottom">Prerequisite reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tiers.map((tier, i) => (
+              <tr class={i % 2 === 0 ? 'bg-white' : 'bg-row-alt'}>
+                <th scope="row" class="text-left p-4 align-top whitespace-nowrap">
+                  <p class="eyebrow text-amber">{tier.code}</p>
+                  <p class="mt-1 text-navy-dark font-semibold leading-tight">{tier.title}</p>
+                </th>
+                <td class="p-4 align-top text-text-mid">{tier.scope}</td>
+                <td class="p-4 align-top text-text-mid">{tier.systems}</td>
+                <td class="p-4 align-top text-text-mid">{tier.audience}</td>
+                <td class="p-4 align-top text-text-mid text-xs leading-relaxed">{tier.prereq}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mt-6 text-xs text-text-muted max-w-3xl leading-relaxed">
+        Prerequisite reference summarises typical EPRA application pathways. The Authority maintains the authoritative requirements; verify against the current EPRA Electricity and Renewable Energy Licensing schedule before submitting your application.
+      </p>
+    </div>
+  </section>
+
+  <!-- LEARNING OUTCOMES -->
+  <NarrativeSection
+    background="white"
+    eyebrow="What you will be able to do"
+    headline="Four outcomes, common to every tier."
+    lede="The depth and complexity differs by tier; the structure is consistent. Every Precifarm cohort, T1 through T3, covers the same four outcomes."
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12 max-w-5xl">
+      {learningOutcomes.map((item) => (
+        <div>
+          <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-3">{item.eyebrow}</p>
+          <h3 class="text-h3 text-navy-dark mb-3 leading-tight">{item.title}</h3>
+          <p class="text-text-mid leading-relaxed">{item.body}</p>
+        </div>
+      ))}
+    </div>
+  </NarrativeSection>
+
+  <!-- WHO SHOULD ATTEND -->
+  <NarrativeSection
+    background="paper"
+    eyebrow="Who should attend"
+    headline="Practitioners, graduates, and institutional teams."
+    maxWidth="prose"
+  >
+    <ul class="mt-8 space-y-5 max-w-3xl">
+      {whoShouldAttend.map((item) => (
+        <li class="flex gap-4 text-lg text-text-mid leading-relaxed">
+          <span aria-hidden="true" class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber"></span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </NarrativeSection>
+
+  <!-- REGISTRATION FORM -->
+  <section id="register" class="bg-white">
+    <div class="container-page py-20 md:py-28">
+      <div class="max-w-3xl mb-10">
+        <p class="eyebrow text-green mb-4">Register interest</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1] mb-5">
+          Tell us your tier, your hub, and your experience. We schedule a call.
+        </h2>
+        <p class="text-lg text-text-mid leading-relaxed">
+          Registration captures interest in an upcoming cohort. We will confirm cohort dates, the venue, the published fee, and the supporting documents you should prepare for the EPRA application. Registration does not commit you to enrolment.
+        </p>
+      </div>
+
+      <div class="max-w-4xl">
+        {success ? (
+          <Callout variant="green" eyebrow="Registration received">
+            <p class="text-navy-dark font-semibold">Thanks. We will contact you within two business days to confirm the next available cohort matching your tier and hub, and to share the published fee and prerequisite checklist.</p>
+          </Callout>
+        ) : (
+          <form
+            name="training-registration"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="company-website"
+            action="/training/?success=true"
+            class="space-y-5"
+          >
+            <input type="hidden" name="form-name" value="training-registration" />
+            {/* Canonical, derived fields populated by JS at submit time. Kept separate
+                from the raw phone input so the raw value is still captured if JS fails. */}
+            <input type="hidden" name="phone_e164" value="" />
+            <input type="hidden" name="page_path" value="" />
+            <input type="hidden" name="submitted_at" value="" />
+            <p class="hidden">
+              <label>
+                Leave this field blank if you are human:
+                <input name="company-website" tabindex="-1" autocomplete="off" />
+              </label>
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label for="t-name" class="block text-sm font-semibold text-text-mid mb-1.5">
+                  Your name <span aria-hidden="true" class="text-navy">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="t-name"
+                  name="name"
+                  required
+                  autocomplete="name"
+                  class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+                />
+              </div>
+              <div>
+                <label for="t-email" class="block text-sm font-semibold text-text-mid mb-1.5">
+                  Email <span aria-hidden="true" class="text-navy">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="t-email"
+                  name="email"
+                  required
+                  autocomplete="email"
+                  class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label for="t-phone" class="block text-sm font-semibold text-text-mid mb-1.5">
+                  Phone <span aria-hidden="true" class="text-navy">*</span>
+                </label>
+                <div class="flex">
+                  <span aria-hidden="true" class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-hairline bg-paper text-text-mid text-sm font-medium">+254</span>
+                  <input
+                    type="tel"
+                    id="t-phone"
+                    name="phone"
+                    required
+                    autocomplete="tel-national"
+                    inputmode="numeric"
+                    pattern="[0-9 ]{9,12}"
+                    placeholder="794 702 768"
+                    class="flex-1 px-4 py-3 rounded-r-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+                  />
+                </div>
+              </div>
+              <div>
+                <label for="t-hub" class="block text-sm font-semibold text-text-mid mb-1.5">
+                  Preferred regional hub <span aria-hidden="true" class="text-navy">*</span>
+                </label>
+                <select
+                  id="t-hub"
+                  name="preferred_hub"
+                  required
+                  class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+                >
+                  <option value="">Select a hub</option>
+                  {cityOptions.map((c) => (
+                    <option value={c}>{c}</option>
+                  ))}
+                  <option value="Elsewhere">Elsewhere in Kenya</option>
+                </select>
+              </div>
+            </div>
+
+            <fieldset>
+              <legend class="block text-sm font-semibold text-text-mid mb-2">
+                Target tier <span aria-hidden="true" class="text-navy">*</span>
+              </legend>
+              <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+                {[
+                  { v: 'T1', l: 'T1' },
+                  { v: 'T2', l: 'T2' },
+                  { v: 'T3 Grid Tie', l: 'T3 Grid Tie' },
+                  { v: 'T3 Hybrid', l: 'T3 Hybrid' },
+                  { v: 'Not sure', l: 'Not sure' },
+                ].map((opt) => (
+                  <label class="inline-flex items-center gap-2 px-3 py-2.5 rounded-md border border-hairline bg-white cursor-pointer hover:border-navy has-[:checked]:border-navy has-[:checked]:bg-paper text-sm">
+                    <input type="radio" name="target_tier" value={opt.v} class="accent-navy" required />
+                    <span>{opt.l}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label for="t-role" class="block text-sm font-semibold text-text-mid mb-1.5">
+                  Current role <span aria-hidden="true" class="text-navy">*</span>
+                </label>
+                <select
+                  id="t-role"
+                  name="current_role"
+                  required
+                  class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+                >
+                  <option value="">Select your current role</option>
+                  <option value="Practising solar technician">Practising solar technician</option>
+                  <option value="Electrician">Electrician</option>
+                  <option value="Engineer">Engineer (electrical, electronic, or related)</option>
+                  <option value="Engineering student">Engineering student</option>
+                  <option value="Distributor or vendor">Distributor or vendor staff</option>
+                  <option value="Institutional team">In-house institutional team</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label for="t-experience" class="block text-sm font-semibold text-text-mid mb-1.5">
+                  Solar field experience <span aria-hidden="true" class="text-navy">*</span>
+                </label>
+                <select
+                  id="t-experience"
+                  name="experience_years"
+                  required
+                  class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+                >
+                  <option value="">Select your experience level</option>
+                  <option value="None">None yet</option>
+                  <option value="Under 1 year">Under 1 year</option>
+                  <option value="1 to 2 years">1 to 2 years</option>
+                  <option value="2 to 4 years">2 to 4 years</option>
+                  <option value="4+ years">4+ years</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="t-qualification" class="block text-sm font-semibold text-text-mid mb-1.5">
+                Highest qualification <span class="text-text-muted font-normal">(optional)</span>
+              </label>
+              <input
+                type="text"
+                id="t-qualification"
+                name="qualification"
+                placeholder="e.g. KCSE, Government Trade Test 2, Diploma in Electrical Engineering, BSc Electrical"
+                class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40"
+              />
+            </div>
+
+            <fieldset>
+              <legend class="block text-sm font-semibold text-text-mid mb-2">Sponsorship</legend>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {[
+                  { v: 'Self', l: 'I am self-sponsored' },
+                  { v: 'Employer', l: 'My employer will sponsor a closed cohort' },
+                ].map((opt) => (
+                  <label class="inline-flex items-center gap-2 px-3 py-2.5 rounded-md border border-hairline bg-white cursor-pointer hover:border-navy has-[:checked]:border-navy has-[:checked]:bg-paper text-sm">
+                    <input type="radio" name="sponsorship" value={opt.v} class="accent-navy" />
+                    <span>{opt.l}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div>
+              <label for="t-notes" class="block text-sm font-semibold text-text-mid mb-1.5">
+                Anything else we should know <span class="text-text-muted font-normal">(optional)</span>
+              </label>
+              <textarea
+                id="t-notes"
+                name="notes"
+                rows="4"
+                placeholder="Prior training (e.g. SERC, NITA institution), specific systems you want to learn, preferred cohort timing."
+                class="w-full px-4 py-3 rounded-md border border-hairline bg-white text-ink focus:border-navy focus:outline-none focus:ring-2 focus:ring-amber/40 resize-y"
+              ></textarea>
+            </div>
+
+            <div class="pt-2">
+              <label class="flex items-start gap-3 text-sm text-text-mid cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="consent"
+                  value="yes"
+                  required
+                  class="mt-1 h-4 w-4 accent-navy shrink-0"
+                />
+                <span>
+                  I agree to be contacted by Precifarm about this training registration.
+                  See our <a href="/privacy/" class="text-navy-dark underline decoration-amber decoration-2 underline-offset-2 hover:text-amber transition-colors">privacy policy</a> for how your details are used.
+                  <span aria-hidden="true" class="text-navy">*</span>
+                </span>
+              </label>
+            </div>
+
+            <div class="pt-2 flex flex-col sm:flex-row sm:items-center gap-4">
+              <button type="submit" class="btn btn-primary">Register interest</button>
+              <p class="text-sm text-text-muted">
+                We reply within two business days. Registration does not commit you to enrolment.
+              </p>
+            </div>
+          </form>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT HAPPENS NEXT -->
+  <NarrativeSection
+    background="white"
+    eyebrow="What happens after you register"
+    headline="A short, structured cadence from interest to cohort."
+  >
+    <div class="max-w-3xl">
+      <ol class="relative space-y-10">
+        <div aria-hidden="true" class="absolute top-2 left-5 bottom-2 w-px bg-hairline"></div>
+        {[
+          { n: 1, t: 'Acknowledgement within two business days', b: 'We log your registration against the regional hub you selected and share the prerequisite checklist for your target tier.' },
+          { n: 2, t: 'Short qualification call', b: 'A brief conversation confirms your prior training, your documented experience, and which Precifarm cohort and tier is the right next step.' },
+          { n: 3, t: 'Cohort offer with dates, venue, and published fee', b: 'You receive the next available cohort schedule for your tier and hub, with the published fee and any prerequisite documents to prepare.' },
+          { n: 4, t: 'Enrolment and pre-cohort onboarding', b: 'On confirmation, you receive the eLearning access, the contact-day schedule, and the EPRA application document pack to begin assembling.' },
+          { n: 5, t: 'Cohort delivery, then EPRA application support', b: 'Lecture, laboratory, and supervised site work; on completion, we support your EPRA T1, T2, or T3 application submission.' },
+        ].map((step) => (
+          <li class="relative pl-16">
+            <span class="absolute left-0 top-0 z-10 h-10 w-10 rounded-full bg-amber text-navy-dark flex items-center justify-center font-bold">{step.n}</span>
+            <h3 class="text-h3 text-navy-dark mb-2">{step.t}</h3>
+            <p class="text-text-mid leading-relaxed">{step.b}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </NarrativeSection>
+
+  <!-- FAQ -->
+  <NarrativeSection
+    background="paper"
+    eyebrow="Common questions"
+    headline="Direct answers on tiers, accreditation, fees, and the EPRA pathway."
+  >
+    <div class="max-w-4xl">
+      <FAQ items={trainingFaqs} />
+    </div>
+  </NarrativeSection>
+
+  <CTASection
+    variant="dark"
+    headline="The licence is the floor. Build the competence on top of it."
+    body={`Register for a Precifarm T1, T2, or T3 cohort. Or contact us at ${company.email} with any prior questions before you register.`}
+    primaryCta={{ href: '#register', label: 'Register interest' }}
+    secondaryCta={{ href: '/about/', label: 'About Precifarm' }}
+  />
+
+  <script>
+    (function () {
+      const form = document.querySelector<HTMLFormElement>('form[name="training-registration"]');
+      if (!form) return;
+      const pathField = form.querySelector<HTMLInputElement>('input[name="page_path"]');
+      const tsField = form.querySelector<HTMLInputElement>('input[name="submitted_at"]');
+      const phoneField = form.querySelector<HTMLInputElement>('input[name="phone"]');
+      const phoneE164Field = form.querySelector<HTMLInputElement>('input[name="phone_e164"]');
+
+      if (pathField) pathField.value = window.location.pathname + window.location.search;
+
+      function normaliseKenyanPhone(raw: string): string {
+        const digits = String(raw || '').replace(/\D/g, '');
+        let core = digits;
+        if (core.startsWith('254')) core = core.slice(3);
+        if (core.startsWith('0')) core = core.slice(1);
+        return core ? '+254' + core : '';
+      }
+
+      form.addEventListener('submit', () => {
+        if (tsField) tsField.value = new Date().toISOString();
+        if (phoneField && phoneE164Field) {
+          phoneE164Field.value = normaliseKenyanPhone(phoneField.value);
+        }
+      });
+    })();
+  </script>
+</BaseLayout>

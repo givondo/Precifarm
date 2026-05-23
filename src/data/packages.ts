@@ -122,6 +122,10 @@ export const packages: Package[] = [
       src: '/images/packages/family-rooftop.jpg',
       alt: 'A Precifarm installer in a high-visibility orange safety vest walks across the red corrugated iron roof of a typical Kenyan home, having just finished commissioning the array of solar panels mounted across the rooftop alongside the chimney. The Family package sits on roofs like this across the country, sized to keep a two-to-three bedroom household running independently of the grid, with the same engineer returning to service the system across each year of the five-year commitment.',
     },
+    cardImage: {
+      src: '/images/packages/family-card.jpg',
+      alt: 'The Precifarm Family solar PV and storage system: a wall-mounted modular lithium battery stack of stacked modules paired with an adjacent rooftop solar PV array on a clean residential exterior, sized for a 2-to-3 bedroom household.',
+    },
     whatYouGet: [
       'Two 450 W solar panels, mounted on roof or ground frame',
       'Neura Pod 5 lithium storage (5 kWh, expandable)',

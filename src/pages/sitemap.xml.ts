@@ -13,8 +13,11 @@ type Entry = {
 const staticEntries: Entry[] = [
   { loc: '/', changefreq: 'weekly', priority: 1.0 },
   { loc: '/products/', changefreq: 'monthly', priority: 0.9 },
+  { loc: '/products/solar-irrigation/', changefreq: 'monthly', priority: 0.85 },
   { loc: '/how-we-work/', changefreq: 'monthly', priority: 0.8 },
   { loc: '/about/', changefreq: 'monthly', priority: 0.7 },
+  { loc: '/careers/', changefreq: 'weekly', priority: 0.7 },
+  { loc: '/training/', changefreq: 'weekly', priority: 0.8 },
   { loc: '/financing/', changefreq: 'monthly', priority: 0.8 },
   { loc: '/cities/', changefreq: 'monthly', priority: 0.8 },
   { loc: '/contact/', changefreq: 'yearly', priority: 0.9 },

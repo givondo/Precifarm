@@ -4,14 +4,29 @@ import { getStartingPriceDisplay } from '../data/packages';
 import { company } from '../data/company';
 import { cities } from '../data/cities';
 
+export interface InstallationItem {
+  slug: string;
+  customer: string;
+  title: string;
+  package: string;
+  region: string;
+  capacity: string;
+  loadProfile: string;
+  description: string;
+  image: string;
+}
+
 export interface Props {
-  schema: 'organization' | 'localBusiness' | 'product' | 'faqPage' | 'service';
+  schema: 'organization' | 'localBusiness' | 'product' | 'faqPage' | 'service' | 'itemList';
   pkg?: Package;
   faqs?: { q: string; a: string }[];
   service?: { name: string; description: string; serviceType: string; areaServed?: string };
+  installations?: InstallationItem[];
+  itemListName?: string;
+  itemListPath?: string;
 }
 
-const { schema, pkg, faqs, service } = Astro.props;
+const { schema, pkg, faqs, service, installations, itemListName, itemListPath } = Astro.props;
 const site = company.website;
 
 let data: Record<string, unknown> | Record<string, unknown>[] = {};
@@ -114,6 +129,55 @@ if (schema === 'organization') {
       name: company.name,
       url: site,
     },
+  };
+} else if (schema === 'itemList' && installations && installations.length > 0) {
+  const path = itemListPath ?? '/';
+  data = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: itemListName ?? 'Representative Precifarm installations',
+    itemListOrder: 'https://schema.org/ItemListOrderAscending',
+    numberOfItems: installations.length,
+    itemListElement: installations.map((inst, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `${site}${path}#${inst.slug}`,
+      item: {
+        '@type': 'CreativeWork',
+        '@id': `${site}${path}#${inst.slug}`,
+        name: `${inst.customer}, ${inst.package} package solar installation`,
+        headline: inst.title,
+        alternateName: inst.customer,
+        description: inst.description,
+        about: {
+          '@type': 'Thing',
+          name: `${inst.package} solar PV and storage installation`,
+          description: `${inst.capacity}. Load: ${inst.loadProfile}.`,
+        },
+        image: `${site}${inst.image}`,
+        contentLocation: {
+          '@type': 'Place',
+          name: inst.region,
+          address: {
+            '@type': 'PostalAddress',
+            addressRegion: inst.region,
+            addressCountry: 'KE',
+          },
+        },
+        creator: {
+          '@type': 'Organization',
+          name: company.name,
+          url: site,
+        },
+        keywords: [
+          'solar Kenya',
+          `${inst.package} solar package`,
+          'EPC and O&M',
+          'distributed solar',
+          inst.region,
+        ].join(', '),
+      },
+    })),
   };
 }
 ---

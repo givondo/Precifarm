@@ -1,0 +1,250 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import NarrativeSection from '../../../components/NarrativeSection.astro';
+import FAQ from '../../../components/FAQ.astro';
+import CTASection from '../../../components/CTASection.astro';
+import StructuredData from '../../../components/StructuredData.astro';
+
+const irrigationFaqs = [
+  {
+    q: 'How is the system sized for my farm?',
+    a: 'Sizing follows a written site assessment. Our engineer measures your daily water requirement, the head (vertical lift) from the water source to the highest delivery point, the horizontal pump distance, the available solar irradiance at the site, and your peak irrigation hours. The array, controller, pump, and storage are then specified against those measurements rather than against a generic spec sheet.',
+  },
+  {
+    q: 'What size of farm does this work for?',
+    a: 'From a single-acre smallholder plot to commercial parcels over 100 acres. Standard configurations cover 1, 2, 3, 4, 10, and 45 acres. Larger commercial deployments are designed bespoke against the irrigation plan, water source, and crop schedule.',
+  },
+  {
+    q: 'Is the pump included in the package?',
+    a: 'For Starter and Family residential packages, the pump is not included by default. For Commercial-tier solar irrigation systems and the dedicated solar irrigation system line, the pump is part of the engineered scope. Submersible borehole pumps, surface centrifugal pumps, and solar pump controllers are all specified by us against the water source and head requirement.',
+  },
+  {
+    q: 'What pump brands and types do you specify?',
+    a: 'We specify stainless-steel submersible borehole pumps for boreholes of varying depth, surface centrifugal pumps for shallow lift and pressure boosting, and dedicated solar pump controllers (PV-direct or hybrid with storage). Brand selection follows availability, warranty support in Kenya, and the operating profile of the specific site.',
+  },
+  {
+    q: 'Can I run the pump only on solar, or do I need storage?',
+    a: 'PV-direct pumping (no battery) works well for daytime irrigation cycles where the water tank or reservoir is the storage medium. Where you need irrigation outside daylight hours, or you have variable demand through the day, we specify a hybrid configuration with lithium storage. The site assessment determines which is the right architecture for your operating profile.',
+  },
+  {
+    q: 'What happens during cloudy days or low-sun periods?',
+    a: 'PV-direct systems will pump at reduced rate during low irradiance and resume normal rate when the sun returns. Hybrid systems with storage continue to pump at full rate from battery during short cloud cover. For irrigation seasons that overlap with sustained low-sun periods, the engineering assessment sizes the storage accordingly.',
+  },
+  {
+    q: 'How does the five-year service commitment work for irrigation?',
+    a: 'Same as every other Precifarm system. The engineering crew that designs and installs your irrigation system services it through the next five years from the regional hub responsible for your area. Scheduled preventive maintenance, fault response, and warranty management are included.',
+  },
+];
+---
+<BaseLayout
+  title="Solar irrigation systems for agricultural pumps"
+  description="Precision-engineered solar pumping systems for irrigation across Kenya. Submersible borehole pumps, surface centrifugal pumps, and solar pump controllers, sized from 1-acre smallholder plots to 100-acre commercial farms on a site-assessment basis."
+  canonicalPath="/products/solar-irrigation/"
+  keywords={['solar irrigation Kenya', 'solar water pump Kenya', 'submersible solar pump', 'agricultural solar pumping', 'solar borehole pump Kenya', 'precision irrigation']}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Products', href: '/products/' },
+    { name: 'Solar irrigation', href: '/products/solar-irrigation/' },
+  ]}
+>
+  <StructuredData slot="head" schema="service" service={{
+    name: 'Precifarm Solar Irrigation Systems',
+    description: 'Precision-engineered solar pumping systems for agricultural irrigation across Kenya. Submersible borehole pumps, surface centrifugal pumps, controllers, and complete pump-set assemblies. Sized 1 acre to 100+ acres on a written site-assessment basis. EPRA-licensed installation with a five-year EPC and O&M commitment.',
+    serviceType: 'Solar irrigation pumping system installation, engineering and service',
+    areaServed: 'Kenya'
+  }} />
+  <StructuredData slot="head" schema="faqPage" faqs={irrigationFaqs} />
+
+  <!-- HERO — full-bleed navy editorial -->
+  <section class="relative bg-navy-dark text-white overflow-hidden">
+    <div class="absolute inset-0">
+      <img
+        src="/images/products/solar-irrigation-pumps.jpg"
+        alt=""
+        width="2400"
+        height="1200"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+        class="w-full h-full object-contain opacity-15"
+      />
+      <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-b from-navy-dark via-navy-dark/95 to-navy-dark/80 lg:bg-gradient-to-r lg:from-navy-dark lg:via-navy-dark/90 lg:to-navy-dark/70"></div>
+    </div>
+    <div class="relative container-page py-20 md:py-28 lg:py-32">
+      <div class="max-w-3xl">
+        <p class="text-xs uppercase tracking-[0.18em] font-semibold text-amber mb-5">Solar irrigation systems</p>
+        <h1 class="text-h1-sm md:text-display text-white leading-[1.05]">
+          Solar-powered irrigation, engineered for every acre of Kenyan farmland.
+        </h1>
+        <p class="mt-6 text-lg sm:text-xl md:text-2xl text-white/90 leading-snug font-medium max-w-2xl">
+          From a single-acre smallholder plot to a 100-acre commercial farm, Precifarm engineers and installs solar pumping systems sized to your land, your water demand, and your terrain.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row flex-wrap gap-3">
+          <a href="/contact/" class="btn btn-accent justify-center sm:justify-start">Get a site assessment</a>
+          <a href="/products/" class="btn btn-secondary border-white text-white hover:bg-white hover:text-navy-dark justify-center sm:justify-start">Other packages</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IT IS — editorial split with the pump family image -->
+  <section class="bg-white">
+    <div class="container-page py-20 md:py-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="lg:col-span-6">
+          <div class="relative overflow-hidden rounded-card bg-paper">
+            <img
+              src="/images/products/solar-irrigation-pumps.jpg"
+              alt="The family of solar-pumping hardware Precifarm specifies for agricultural irrigation: stainless-steel submersible borehole pumps for varying borehole depth, surface centrifugal pumps for shallow lift and pressure boosting, dedicated solar pump controllers, and complete pump-set assemblies with motor and PV-direct drive."
+              width="1600"
+              height="1200"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-contain aspect-[4/3] p-6 md:p-10"
+            />
+          </div>
+        </div>
+        <div class="lg:col-span-6">
+          <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">What it is</p>
+          <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1] mb-6">
+            Precision-engineered solar pumping for agricultural irrigation.
+          </h2>
+          <div class="space-y-5 text-lg text-text-mid leading-relaxed">
+            <p>
+              Submersible borehole pumps for boreholes of varying depth. Surface centrifugal pumps for shallow lift and pressure boosting. Solar pump controllers, PV-direct or hybrid with storage. Each deployment is sized against the farm's actual water requirement, head, and pump distance from source.
+            </p>
+            <p class="text-navy-dark font-semibold">
+              Every system is designed and quoted on a written site-assessment basis. The array, controller, pump, and storage match the load profile rather than a generic spec sheet.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIZING RANGE — clean metadata band -->
+  <section class="bg-paper">
+    <div class="container-page py-20 md:py-28">
+      <div class="max-w-3xl mb-12">
+        <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">Sizing range</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1]">
+          From a single acre to a hundred-acre commercial parcel.
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-hairline max-w-5xl">
+        <div class="py-8 md:py-0 md:pr-8 first:md:pl-0">
+          <p class="text-xs uppercase tracking-wider text-amber font-semibold mb-3">Smallholder</p>
+          <p class="text-3xl font-bold text-navy-dark mb-3 leading-tight">1 to 4 acres</p>
+          <p class="text-text-mid leading-relaxed">
+            Single-acre subsistence plots through to four-acre smallholdings. Typical configurations cover 1, 2, 3, and 4 acres on standard PV-direct or hybrid pumping architectures.
+          </p>
+        </div>
+        <div class="py-8 md:py-0 md:px-8">
+          <p class="text-xs uppercase tracking-wider text-amber font-semibold mb-3">Mid-scale farms</p>
+          <p class="text-3xl font-bold text-navy-dark mb-3 leading-tight">5 to 45 acres</p>
+          <p class="text-text-mid leading-relaxed">
+            Cooperatives, schools, clinics with agricultural plots, and commercial smallholder consolidations. Pumping infrastructure paired with storage where evening or low-sun pumping is needed.
+          </p>
+        </div>
+        <div class="py-8 md:py-0 md:pl-8 last:md:pr-0">
+          <p class="text-xs uppercase tracking-wider text-amber font-semibold mb-3">Commercial parcels</p>
+          <p class="text-3xl font-bold text-navy-dark mb-3 leading-tight">45 to 100+ acres</p>
+          <p class="text-text-mid leading-relaxed">
+            Commercial farms, agricultural estates, and large irrigation schemes. Engineered bespoke against the irrigation plan, water source profile, and crop schedule.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HARDWARE FAMILY -->
+  <NarrativeSection
+    background="white"
+    eyebrow="Hardware family"
+    headline="Submersible pumps, surface pumps, solar controllers, complete pump-sets."
+    lede="The catalogue Precifarm specifies for agricultural irrigation. Brand and exact model selection follows site requirements (head, distance, daily volume, voltage) and Kenya-resident warranty support."
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 max-w-5xl">
+      <article>
+        <h3 class="text-h3 text-navy-dark mb-3">Submersible borehole pumps</h3>
+        <p class="text-text-mid leading-relaxed">
+          Stainless-steel submersible pumps for boreholes from shallow domestic wells through to deep production boreholes. Sized to match the borehole yield, the static and dynamic water levels, and the target daily delivery volume.
+        </p>
+      </article>
+      <article>
+        <h3 class="text-h3 text-navy-dark mb-3">Surface centrifugal pumps</h3>
+        <p class="text-text-mid leading-relaxed">
+          Surface and centrifugal pumps for shallow lift from open water sources (rivers, ponds, surface tanks) and for pressure-boosting irrigation networks. Available across a range of flow rates and pressure ratings to match field-distribution networks.
+        </p>
+      </article>
+      <article>
+        <h3 class="text-h3 text-navy-dark mb-3">Solar pump controllers</h3>
+        <p class="text-text-mid leading-relaxed">
+          Dedicated solar pump controllers for both PV-direct and hybrid-with-storage architectures. Variable-frequency operation matches pump output to available solar irradiance, with dry-run protection, soft-start, and remote monitoring where specified.
+        </p>
+      </article>
+      <article>
+        <h3 class="text-h3 text-navy-dark mb-3">Complete pump-set assemblies</h3>
+        <p class="text-text-mid leading-relaxed">
+          Engineered pump-sets where the pump, motor, controller, and PV-direct drive are specified and commissioned as one assembly. Reduces field complexity and aligns warranty across the whole pumping line.
+        </p>
+      </article>
+    </div>
+  </NarrativeSection>
+
+  <!-- VALUE PROPS — hairline-divided strip -->
+  <section class="bg-paper">
+    <div class="container-page py-20 md:py-28">
+      <div class="max-w-3xl mb-12 md:mb-16">
+        <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">Why it works</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1]">
+          The same engineering discipline applied to irrigation.
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-hairline">
+        <article class="py-8 md:py-0 md:pr-8 first:md:pl-0">
+          <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-3">01 · Independence</p>
+          <h3 class="text-h3 text-navy-dark mb-3 leading-tight">Energy independence for the growing season.</h3>
+          <p class="text-text-mid leading-relaxed">
+            Diesel costs and grid outages stop dictating irrigation cycles. The pump runs on sun, the storage carries it through cloud cover and evening watering, and the operating budget becomes predictable for the first time.
+          </p>
+        </article>
+        <article class="py-8 md:py-0 md:px-8">
+          <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-3">02 · Scalable</p>
+          <h3 class="text-h3 text-navy-dark mb-3 leading-tight">From smallholder to commercial, on one platform.</h3>
+          <p class="text-text-mid leading-relaxed">
+            One engineering platform, sized from a one-acre subsistence plot to a hundred-acre commercial farm. Add solar capacity or storage as the farm grows; the pumping infrastructure does not have to be rebuilt.
+          </p>
+        </article>
+        <article class="py-8 md:py-0 md:pl-8 last:md:pr-0">
+          <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-3">03 · Site-engineered</p>
+          <h3 class="text-h3 text-navy-dark mb-3 leading-tight">Site-engineered, not catalogue-fit.</h3>
+          <p class="text-text-mid leading-relaxed">
+            Every quote follows a written site assessment that measures water demand, head, and pump distance from source. The system matches the farm, not the spec sheet.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <NarrativeSection
+    background="white"
+    eyebrow="Frequently asked"
+    headline="Solar irrigation questions, answered."
+  >
+    <div class="max-w-3xl">
+      <FAQ items={irrigationFaqs} />
+    </div>
+  </NarrativeSection>
+
+  <CTASection
+    variant="dark"
+    headline="Tell us about the farm. We will return a written design and quote."
+    body="An on-site engineering assessment, a written design with the array / controller / pump / storage specified, and a firm quote within two business days of the assessment. Bundled with the standard Precifarm five-year EPC and O&M commitment."
+    primaryCta={{ href: '/contact/', label: 'Get a site assessment' }}
+    secondaryCta={{ href: '/financing/', label: 'See financing' }}
+  />
+</BaseLayout>

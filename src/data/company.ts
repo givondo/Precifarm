@@ -22,27 +22,6 @@ export const company = {
   },
 } as const;
 
-export const team = [
-  {
-    name: 'Sayia David Givondo',
-    role: 'Lead Engineer and Co-Founder',
-    bio: 'Registered Graduate Engineer (EBK B25264). B.Eng Agricultural and Biosystems Engineering, University of Eldoret (2021). Field Engineer at SunCulture Kenya 2023 to 2026, leading deployments across Kenya\'s arid and semi-arid lands. YALI Fellow. Designer of Precifarm\'s engineering operating model.',
-    verified: true,
-  },
-  {
-    name: 'Wycliffe Wabaye',
-    role: 'CTO and Co-Founder',
-    bio: 'Embedded firmware lead. Architect of Neura Pod control firmware and the over-the-air (OTA) update infrastructure operating across the six-city fleet, ensuring every installed system remains maintainable on a single firmware track.',
-    verified: true,
-  },
-  {
-    name: 'Amon Kipchirchir',
-    role: 'Head of Operations and Co-Founder',
-    bio: 'Water and civil infrastructure engineer. Leads borehole assessment, hydraulic system design, and the coordination of city-resident technical crews across all six operating hubs and the five Commercial Plus deployment archetypes.',
-    verified: true,
-  },
-] as const;
-
 export const beliefs = [
   {
     title: 'We stay after the install.',
@@ -96,35 +75,41 @@ export const deploymentSteps = [
 
 export const exampleInstallations = [
   {
+    slug: 'kitui-secondary-school',
     customer: 'Kitui Secondary School',
+    title: 'Digital classrooms and dry-season water, on one solar system.',
     package: 'Commercial',
     region: 'Kitui County, Eastern region',
     capacity: '2.75 kWp PV · 15 kWh storage',
     loadProfile: 'Classrooms, tablets, borehole pumps, garden irrigation',
     description:
-      'A canopy array overhead, classrooms running below. Tablet charging through the morning, lights that hold for night classes, and the borehole pumps keeping the school garden alive across the dry season. Five-year EPC and O&M commitment in place.',
+      'A 2.75 kWp solar system keeps tablets, classroom lighting, and the borehole running through grid outages and the dry season, with the overhead PV array doubling as a shaded teaching bay underneath. Designed, installed, and maintained by the same regional engineering crew under the five-year EPC and O&M commitment.',
     image: '/images/installations/school-kitui.jpg',
-    alt: 'The Kitui Secondary School Solar Canopy Project: a steel-framed solar canopy mounted above an open-air classroom in the Kitui semi-arid landscape, with students at desks studying underneath, irrigation tanks and a planted school garden visible to the right, and additional school buildings with rooftop solar in the background. Project signage on the canopy column reads "Kitui Secondary School: Solar Canopy Project, capacity 2.75 kWp PV / 15 kWh storage, load classrooms, tablets, water pumps, five-year EPC and O&M commitment."',
+    alt: 'The Kitui Secondary School Solar PV Installation: a steel-framed overhead solar PV array mounted above an open-air classroom in the Kitui semi-arid landscape, with students at desks studying underneath, irrigation tanks and a planted school garden visible to the right, and additional school buildings with rooftop solar in the background. Project signage on the support column reads "Kitui Secondary School: Solar PV Installation, capacity 2.75 kWp PV / 15 kWh storage, load classrooms, tablets, water pumps, five-year EPC and O&M commitment."',
   },
   {
+    slug: 'eldo-shine-salon',
     customer: 'Eldo Shine Salon',
+    title: 'Cuts that never stop mid-customer.',
     package: 'Family',
     region: 'Uasin Gishu County, Rift Valley',
     capacity: '900 W PV · 5 kWh storage',
     loadProfile: 'Clippers, driers, drinks fridge, full lighting',
     description:
-      'Panels above, business below. Clippers, driers, and a drinks fridge running on stable power every working day, while the rest of the strip waits out the next blackout. Branded shopfront signage advertises the install to walk-in customers.',
+      'Five kWh of storage keeps the clippers, driers, drinks fridge, and lighting running across every grid outage, so the salon trades and earns while the rest of the strip waits for power. The same Precifarm crew on design, install, and five-year O&M.',
     image: '/images/installations/salon-eldoret.jpg',
     alt: 'The Eldo Shine Salon in Uasin Gishu: a small commercial shopfront with rooftop solar panels visible above the unit, brightly lit interior showing barbers at work on customers with a drinks fridge in view, and exterior signage reading "Eldo Shine Salon, 900W PV - 5 kWh Storage, 100% reliable power even during blackouts, serving Uasin Gishu daily."',
   },
   {
+    slug: 'mombasa-boda-system',
     customer: 'Mombasa Integrated Solar and EV Boda System',
+    title: 'Petrol off the boda balance sheet.',
     package: 'Starter',
     region: 'Mombasa County, Coast',
     capacity: '1.5 kWh storage · EV charging',
     loadProfile: 'Boda boda charging, evening lighting, phone charging',
     description:
-      'A shared solar canopy with charging point for electric boda boda motorbikes, paired with 1.5 kWh of battery storage for evening lighting and routine site loads. EV-ready architecture in operation, not in spec.',
+      'A shared solar PV and storage system charges the electric boda fleet at near-zero fuel cost, while 1.5 kWh of evening storage keeps the stage safely lit after sunset and powers a paid phone-charging line. EV-ready architecture in operation, on the five-year EPC and O&M commitment.',
     image: '/images/installations/boda-mombasa.jpg',
     alt: 'The Mombasa Integrated Solar and EV Boda System: a steel-framed solar carport with two boda boda motorbikes parked beneath it, a dedicated EV charging point with cable in use, a wall-mounted hybrid inverter and small lithium storage cabinet to the side, and signage on the column reading "Mombasa Integrated Solar & EV Boda System." A family is visible in the adjacent building.',
   },
