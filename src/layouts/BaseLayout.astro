@@ -10,6 +10,8 @@ export interface Props {
   ogImage?: string;
   ogType?: 'website' | 'article';
   noindex?: boolean;
+  breadcrumbs?: { name: string; href: string }[];
+  keywords?: string[];
 }
 
 const {
@@ -19,27 +21,56 @@ const {
   ogImage = '/og-default.png',
   ogType = 'website',
   noindex = false,
+  breadcrumbs,
+  keywords,
 } = Astro.props;
 
 const siteUrl = 'https://precifarm.com';
 const canonical = new URL(canonicalPath, siteUrl).toString();
 const ogImageUrl = new URL(ogImage, siteUrl).toString();
+
+// Standard title format: "<page> | Precifarm" for all pages. Homepage gets
+// the full brand line. Keeps total length ~60 chars on most pages for SERP
+// fit; the BaseLayout no longer enforces this so per-page titles can be
+// fully tuned upstream.
 const fullTitle = title.includes('Precifarm') ? title : `${title} | Precifarm`;
+
+// BreadcrumbList structured data when breadcrumbs are supplied.
+const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs.map((b, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: b.name,
+    item: new URL(b.href, siteUrl).toString(),
+  })),
+} : null;
 ---
 <!doctype html>
 <html lang="en-KE">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {!noindex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
+    {keywords && keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+    <meta name="author" content="Precifarm AI Ltd" />
+    <meta name="publisher" content="Precifarm AI Ltd" />
+    <meta name="geo.region" content="KE" />
+    <meta name="geo.placename" content="Nairobi" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/favicon.svg" color="#1F4E5F" />
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Precifarm AI Ltd" />
@@ -49,15 +80,28 @@ const fullTitle = title.includes('Precifarm') ? title : `${title} | Precifarm`;
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Precifarm: distributed solar and battery storage infrastructure built for Kenya" />
     <meta property="og:locale" content="en_KE" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content="Precifarm: distributed solar and battery storage infrastructure built for Kenya" />
 
     <meta name="theme-color" content="#1F4E5F" />
     <meta name="color-scheme" content="light" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Precifarm" />
+    <meta name="format-detection" content="telephone=yes" />
+
+    {breadcrumbSchema && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    )}
+
+    <!-- Preconnect to third-party origins for faster first-load -->
+    <link rel="preconnect" href="https://plausible.io" />
 
     <!-- Plausible Analytics — precifarm.com -->
     <script is:inline defer data-domain="precifarm.com" src="https://plausible.io/js/script.js"></script>

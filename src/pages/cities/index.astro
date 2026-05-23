@@ -8,9 +8,14 @@ import CTASection from '../../components/CTASection.astro';
 import { cities } from '../../data/cities';
 ---
 <BaseLayout
-  title="Six cities, one engineering team"
-  description="Precifarm operates from Nairobi HQ plus field hubs in Mombasa, Kisumu, Eldoret, Kitui, and Nakuru. Resident engineering teams and regional spare-parts depots in every city."
+  title="Six operating cities across Kenya"
+  description="Precifarm operates from Nairobi HQ plus regional engineering hubs in Mombasa, Kisumu, Eldoret, Kitui, and Nakuru. Resident engineering teams and stocked spare-parts depots in every city, with same-day drive coverage to every install."
   canonicalPath="/cities/"
+  keywords={['solar installer Nairobi', 'solar installer Mombasa', 'solar installer Kisumu', 'solar installer Eldoret', 'solar installer Kitui', 'solar installer Nakuru']}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Cities', href: '/cities/' },
+  ]}
 >
   <Hero
     eyebrow="Cities"

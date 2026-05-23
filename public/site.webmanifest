@@ -1,0 +1,32 @@
+{
+  "name": "Precifarm",
+  "short_name": "Precifarm",
+  "description": "Reliable solar energy storage built to scale with your future energy needs.",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "background_color": "#FFFFFF",
+  "theme_color": "#1F4E5F",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "lang": "en-KE",
+  "dir": "ltr",
+  "orientation": "portrait-primary"
+}

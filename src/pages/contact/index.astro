@@ -10,9 +10,14 @@ const success = Astro.url.searchParams.get('success') === 'true';
 const whatsappHref = `${company.whatsappLink}?text=${encodeURIComponent(company.whatsappMessage)}`;
 ---
 <BaseLayout
-  title="Contact Precifarm"
-  description="Get a sized recommendation and a written quote within two business days. Email, phone, WhatsApp, or contact form. Anywhere in Kenya, HQ in Nairobi."
+  title="Contact Precifarm: get a solar site assessment"
+  description="Get a sized recommendation and a written engineering quote within two business days. Email sales@precifarm.com, call +254 794 702 768, or message us on WhatsApp. Service across six Kenyan cities, HQ in Nairobi."
   canonicalPath="/contact/"
+  keywords={['Precifarm contact', 'solar quote Kenya', 'solar site assessment', 'EPRA-licensed solar contractor']}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Contact', href: '/contact/' },
+  ]}
 >
   <Hero
     eyebrow="Contact"

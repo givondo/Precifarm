@@ -4,12 +4,13 @@ import { company } from '../data/company';
 import { cities } from '../data/cities';
 
 export interface Props {
-  schema: 'organization' | 'localBusiness' | 'product' | 'faqPage';
+  schema: 'organization' | 'localBusiness' | 'product' | 'faqPage' | 'service';
   pkg?: Package;
   faqs?: { q: string; a: string }[];
+  service?: { name: string; description: string; serviceType: string; areaServed?: string };
 }
 
-const { schema, pkg, faqs } = Astro.props;
+const { schema, pkg, faqs, service } = Astro.props;
 const site = company.website;
 
 let data: Record<string, unknown> | Record<string, unknown>[] = {};
@@ -98,6 +99,20 @@ if (schema === 'organization') {
       name: f.q,
       acceptedAnswer: { '@type': 'Answer', text: f.a },
     })),
+  };
+} else if (schema === 'service' && service) {
+  data = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.name,
+    description: service.description,
+    serviceType: service.serviceType,
+    areaServed: service.areaServed ?? { '@type': 'Country', name: 'Kenya' },
+    provider: {
+      '@type': 'Organization',
+      name: company.name,
+      url: site,
+    },
   };
 }
 ---

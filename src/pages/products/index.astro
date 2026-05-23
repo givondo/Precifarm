@@ -4,13 +4,25 @@ import Hero from '../../components/Hero.astro';
 import PackageCard from '../../components/PackageCard.astro';
 import NarrativeSection from '../../components/NarrativeSection.astro';
 import CTASection from '../../components/CTASection.astro';
+import StructuredData from '../../components/StructuredData.astro';
 import { packages } from '../../data/packages';
 ---
 <BaseLayout
-  title="Four packages, one Neura Pod platform"
-  description="The Neura Pod is a modular battery and inverter unit. Four configurations ship today: Starter, Family, Commercial, and Commercial Plus. EV-ready from day one."
+  title="Solar packages and Neura Pod platform"
+  description="Four standardised solar and battery storage packages (Starter, Family, Commercial, Commercial Plus) on the Neura Pod platform. Plus solar irrigation systems, BESS consultancy and EPC, and EV-ready charging. Built for Kenya."
   canonicalPath="/products/"
+  keywords={['solar packages Kenya', 'Neura Pod', 'battery storage', 'EV-ready solar', 'solar irrigation pumps Kenya', 'BESS Kenya']}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Products', href: '/products/' },
+  ]}
 >
+  <StructuredData slot="head" schema="service" service={{
+    name: 'Precifarm Solar Irrigation Systems',
+    description: 'Precision-engineered solar pumping systems for agricultural irrigation across Kenya and East Africa, sized from 1 acre smallholder plots to 100-acre commercial farms on a site-assessment basis.',
+    serviceType: 'Solar irrigation pumping system installation and service',
+    areaServed: 'Kenya'
+  }} />
   <Hero
     eyebrow="Products"
     headline="Four systems built on one Neura Pod platform."

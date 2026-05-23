@@ -24,9 +24,15 @@ const otherPackages = packages.filter((p) => p.slug !== pkg.slug);
 const isCommercialPlus = pkg.slug === 'commercial-plus';
 ---
 <BaseLayout
-  title={`${pkg.name}: ${pkg.tagline}`}
-  description={`${pkg.name}: ${pkg.capacity}. ${pkg.targetCustomer.split('.')[0]}. Five-year service commitment, same engineering team.`}
+  title={`${pkg.name}: ${pkg.capacity}`}
+  description={`${pkg.name}: ${pkg.capacity}. ${pkg.targetCustomer.split('.')[0]}. Five-year service commitment from the same regional engineering team. EPRA-licensed throughout.`}
   canonicalPath={`/products/${pkg.slug}/`}
+  keywords={[pkg.name, pkg.shortName + ' solar Kenya', 'Neura Pod', 'solar battery storage', 'EPRA-licensed solar contractor']}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Products', href: '/products/' },
+    { name: pkg.shortName, href: `/products/${pkg.slug}/` },
+  ]}
 >
   <StructuredData slot="head" schema="product" pkg={pkg} />
   <StructuredData slot="head" schema="faqPage" faqs={pkg.faqs} />
@@ -44,36 +50,37 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
         fetchpriority="high"
         class="w-full h-full object-cover opacity-30"
       />
-      <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-r from-navy-dark via-navy-dark/85 to-navy-dark/40"></div>
+      <!-- Stronger gradient on mobile (vertical, near-opaque at top) so text reads cleanly. Horizontal gradient on lg+ where copy is in a left-half column. -->
+      <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-b from-navy-dark via-navy-dark/95 to-navy-dark/80 lg:bg-gradient-to-r lg:from-navy-dark lg:via-navy-dark/85 lg:to-navy-dark/40"></div>
     </div>
-    <div class="relative container-page pt-24 pb-20 md:pt-32 md:pb-28">
+    <div class="relative container-page pt-20 pb-16 md:pt-28 md:pb-24 lg:pt-32 lg:pb-28">
       <div class="max-w-2xl">
         <p class="text-xs uppercase tracking-[0.18em] font-semibold text-amber mb-5">{pkg.shortName} package</p>
         <h1 class="text-h1-sm md:text-display text-white leading-[1.05]">{pkg.name}.</h1>
-        <p class="mt-6 text-xl md:text-2xl text-white/85 leading-snug font-medium max-w-xl">
+        <p class="mt-6 text-lg sm:text-xl md:text-2xl text-white/90 leading-snug font-medium max-w-xl">
           {pkg.tagline}
         </p>
-        <dl class="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 max-w-md">
+        <dl class="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 max-w-md">
           <div>
             <dt class="text-xs uppercase tracking-wider text-amber font-semibold">Capacity</dt>
-            <dd class="mt-1.5 text-lg font-bold text-white">{pkg.capacity}</dd>
+            <dd class="mt-1.5 text-base sm:text-lg font-bold text-white">{pkg.capacity}</dd>
           </div>
           <div>
             <dt class="text-xs uppercase tracking-wider text-amber font-semibold">Starting</dt>
-            <dd class="mt-1.5 text-lg font-bold text-white">{pkg.startingPrice}</dd>
+            <dd class="mt-1.5 text-base sm:text-lg font-bold text-white">{pkg.startingPrice}</dd>
           </div>
           <div>
             <dt class="text-xs uppercase tracking-wider text-amber font-semibold">Service tier</dt>
-            <dd class="mt-1.5 text-lg font-bold text-white">{pkg.serviceTier}</dd>
+            <dd class="mt-1.5 text-base sm:text-lg font-bold text-white">{pkg.serviceTier}</dd>
           </div>
           <div>
             <dt class="text-xs uppercase tracking-wider text-amber font-semibold">Commitment</dt>
-            <dd class="mt-1.5 text-lg font-bold text-white">Five years</dd>
+            <dd class="mt-1.5 text-base sm:text-lg font-bold text-white">Five years</dd>
           </div>
         </dl>
-        <div class="mt-10 flex flex-wrap gap-3">
-          <a href="/contact/" class="btn btn-accent">{isCommercialPlus ? 'Brief an engineer' : 'Get a quote'}</a>
-          <a href="/products/" class="btn btn-secondary border-white text-white hover:bg-white hover:text-navy-dark">Compare all packages</a>
+        <div class="mt-10 flex flex-col sm:flex-row flex-wrap gap-3">
+          <a href="/contact/" class="btn btn-accent justify-center sm:justify-start">{isCommercialPlus ? 'Brief an engineer' : 'Get a quote'}</a>
+          <a href="/products/" class="btn btn-secondary border-white text-white hover:bg-white hover:text-navy-dark justify-center sm:justify-start">Compare all packages</a>
         </div>
       </div>
     </div>

@@ -22,22 +22,28 @@ const otherCities = cities.filter((c) => c.slug !== city.slug);
 const isHq = city.role === 'HQ';
 ---
 <BaseLayout
-  title={`Precifarm in ${city.name}: ${city.role}`}
-  description={`Precifarm ${city.role.toLowerCase()} in ${city.name}, ${city.region} region. Resident engineering team and regional spare-parts depot. All four packages available.`}
+  title={`Solar contractor in ${city.name}, Kenya`}
+  description={`Precifarm ${city.role.toLowerCase()} in ${city.name}, ${city.region} region. Resident engineering team and regional spare-parts depot. All four Neura Pod packages plus solar irrigation systems available.`}
   canonicalPath={`/cities/${city.slug}/`}
+  keywords={[`solar installer ${city.name}`, `Neura Pod ${city.name}`, `EPRA-licensed solar ${city.region}`, 'distributed solar Kenya']}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Cities', href: '/cities/' },
+    { name: city.name, href: `/cities/${city.slug}/` },
+  ]}
 >
   <!-- HERO — navy editorial, no card chrome -->
   <section class="bg-navy-dark text-white">
-    <div class="container-page py-24 md:py-32">
+    <div class="container-page py-20 md:py-28 lg:py-32">
       <div class="max-w-3xl">
         <p class="text-xs uppercase tracking-[0.18em] font-semibold text-amber mb-5">{city.region} region · {city.role}</p>
         <h1 class="text-h1-sm md:text-display text-white leading-[1.05]">Precifarm in {city.name}.</h1>
-        <p class="mt-6 text-xl md:text-2xl text-white/85 leading-snug font-medium max-w-xl">
+        <p class="mt-6 text-lg sm:text-xl md:text-2xl text-white/90 leading-snug font-medium max-w-xl">
           {city.shortNote}
         </p>
-        <div class="mt-10 flex flex-wrap gap-3">
-          <a href="/contact/" class="btn btn-accent">Get a quote</a>
-          <a href="/cities/" class="btn btn-secondary border-white text-white hover:bg-white hover:text-navy-dark">All six cities</a>
+        <div class="mt-10 flex flex-col sm:flex-row flex-wrap gap-3">
+          <a href="/contact/" class="btn btn-accent justify-center sm:justify-start">Get a quote</a>
+          <a href="/cities/" class="btn btn-secondary border-white text-white hover:bg-white hover:text-navy-dark justify-center sm:justify-start">All six cities</a>
         </div>
       </div>
     </div>

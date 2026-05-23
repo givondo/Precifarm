@@ -12,6 +12,10 @@ const posts: { slug: string; title: string; excerpt: string; date: string }[] = 
   title="Blog: notes from the field"
   description="Notes from the field. Engineering write-ups, project debriefs, and operating-discipline thinking from the Precifarm team."
   canonicalPath="/blog/"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Blog', href: '/blog/' },
+  ]}
 >
   <Hero
     eyebrow="Blog"
