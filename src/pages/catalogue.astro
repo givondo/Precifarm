@@ -1,52 +1,85 @@
 ---
 import { packages, getStartingPriceDisplay, isQuoteOnly } from '../data/packages';
-import { company, beliefs, deploymentSteps } from '../data/company';
-
-const site = company.website;
-const catalogueYear = 2026;
+import { company } from '../data/company';
 
 const packageMap = Object.fromEntries(packages.map((p) => [p.slug, p]));
-const starter = packageMap['starter'];
-const family = packageMap['family'];
-const commercial = packageMap['commercial'];
-const commercialPlus = packageMap['commercial-plus'];
+const order: Array<{ slug: string; tier: string; profile: string; uses: string; system: string; why: string; financing?: string }> = [
+  {
+    slug: 'starter',
+    tier: 'Starter',
+    profile: 'Renters, single-room households, boda riders, kiosks',
+    uses: 'Lights, Wi-Fi, TV, phone charging, 1 fan (8–12 hrs/day)',
+    system: '550 W solar · 1.5 kWh storage',
+    why: 'Independence from blackouts, on a single panel',
+    financing: 'or KSh 5,472/mo (Lipa Pole Pole, 24 months)',
+  },
+  {
+    slug: 'family',
+    tier: 'Family',
+    profile: 'Two-to-three bedroom off-grid homes',
+    uses: 'Full-house lighting, fridge, TV, fans, Wi-Fi, small appliances',
+    system: '2.2 kWp solar · 5 kWh storage',
+    why: 'Zero KPLC bills, full-house comfort',
+    financing: 'or partner-bank financing (Equity, KCB, Co-op, SACCO)',
+  },
+  {
+    slug: 'commercial',
+    tier: 'Commercial',
+    profile: 'Schools, clinics, SMEs, cooperatives',
+    uses: 'Classrooms, refrigeration, pumps, full business operations',
+    system: 'Sized to site after written assessment',
+    why: 'Operational continuity, designed for your loads',
+  },
+  {
+    slug: 'commercial-plus',
+    tier: 'Commercial Plus',
+    profile: 'Multi-site institutional, industrial, hospitality, EV fleet ops',
+    uses: 'Whole-site loads + EV charging, across multiple buildings',
+    system: 'Sized to site, EV-ready architecture, BESS-coupled',
+    why: 'Coordinated multi-site rollout with anchor-grade service',
+  },
+];
 
-const renderablePackages = [starter, family, commercial, commercialPlus];
+const rows = order.map((r) => {
+  const pkg = packageMap[r.slug];
+  return {
+    ...r,
+    pricing: getStartingPriceDisplay(pkg),
+    quoteOnly: isQuoteOnly(pkg),
+    highlighted: pkg?.isHighlighted ?? false,
+  };
+});
 ---
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Precifarm Product Catalogue {catalogueYear}</title>
+  <title>Precifarm Product Catalogue 2026</title>
   <meta name="robots" content="noindex" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --navy: #1F4E5F;
       --navy-dark: #0F2832;
       --amber: #C99800;
+      --amber-light: #F4E5B7;
       --green: #1F6F4A;
-      --flame: #E37E32;
       --paper: #FAFAF7;
-      --hairline: #E2E2DD;
-      --ink: #1C1F22;
-      --text-mid: #4A5158;
-      --text-muted: #6A7079;
-      --row-alt: #F7F5EF;
+      --row-alt: #F4F1E8;
+      --hairline: #D6D2C4;
+      --ink: #0F2832;
+      --text-mid: #3A4147;
+      --text-muted: #5E646B;
     }
 
-    @page {
-      size: A4;
-      margin: 0;
-    }
+    @page { size: A4; margin: 0; }
 
     @media print {
       body { background: white; }
-      .page { page-break-after: always; box-shadow: none; margin: 0; }
-      .page:last-child { page-break-after: auto; }
+      .page { box-shadow: none; }
       .screen-only { display: none !important; }
     }
 
@@ -54,430 +87,363 @@ const renderablePackages = [starter, family, commercial, commercialPlus];
       body { background: #d8d8d0; padding: 20px 0; }
       .page {
         width: 210mm;
-        min-height: 297mm;
-        margin: 0 auto 16px;
+        height: 297mm;
+        margin: 0 auto;
         background: white;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        box-shadow: 0 4px 30px rgba(0,0,0,0.15);
       }
     }
 
     * { box-sizing: border-box; }
-    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; color: var(--ink); margin: 0; line-height: 1.5; font-size: 10.5pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .page { position: relative; padding: 18mm 20mm 22mm; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--ink); margin: 0; line-height: 1.4;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      font-feature-settings: 'ss01' on, 'cv11' on;
+    }
+    .page {
+      width: 210mm; height: 297mm;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
 
-    h1, h2, h3, h4 { color: var(--navy-dark); margin: 0; letter-spacing: -0.005em; }
-    h1 { font-size: 36pt; font-weight: 800; line-height: 1.05; }
-    h2 { font-size: 22pt; font-weight: 700; line-height: 1.15; margin-bottom: 8pt; }
-    h3 { font-size: 13pt; font-weight: 700; margin-bottom: 4pt; }
-    h4 { font-size: 10pt; font-weight: 700; }
-    p { margin: 0 0 8pt; color: var(--text-mid); }
-    a { color: var(--navy-dark); text-decoration: underline; text-decoration-color: var(--amber); text-decoration-thickness: 1.5pt; text-underline-offset: 2pt; }
-
-    .eyebrow { font-size: 8pt; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; color: var(--green); margin-bottom: 8pt; }
-    .eyebrow.amber { color: var(--amber); }
-    .eyebrow.muted { color: var(--text-muted); }
-
-    .brand-mark { font-size: 18pt; font-weight: 800; letter-spacing: -0.02em; color: var(--navy-dark); }
+    /* ==== TOP BRAND BAND ==== */
+    .brand-band {
+      background: var(--navy-dark);
+      color: white;
+      padding: 9mm 14mm 8mm;
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 4pt solid var(--amber);
+    }
+    .brand-mark {
+      font-size: 22pt; font-weight: 900; letter-spacing: -0.025em;
+      color: white; line-height: 1;
+    }
     .brand-mark span { color: var(--amber); }
+    .brand-tag {
+      text-align: right;
+      font-size: 8pt; text-transform: uppercase; letter-spacing: 0.18em;
+      font-weight: 700; color: var(--amber);
+    }
+    .brand-tag .year {
+      display: block; font-size: 9pt; color: rgba(255,255,255,0.6);
+      margin-top: 2pt; letter-spacing: 0.14em;
+    }
 
-    .page-footer { position: absolute; bottom: 10mm; left: 20mm; right: 20mm; display: flex; justify-content: space-between; align-items: center; font-size: 8pt; color: var(--text-muted); border-top: 1pt solid var(--hairline); padding-top: 4mm; }
-    .page-footer .brand-mark { font-size: 10pt; }
+    /* ==== HEADLINE ==== */
+    .hero {
+      padding: 8mm 14mm 6mm;
+      background: white;
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: 26pt; font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.02em; color: var(--navy-dark);
+      max-width: 165mm;
+    }
+    .hero h1 span { color: var(--amber); }
+    .hero .sub {
+      margin: 3mm 0 0; font-size: 10.5pt; line-height: 1.45;
+      color: var(--text-mid); max-width: 170mm;
+    }
 
-    /* === Cover === */
-    .cover { display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: calc(297mm - 40mm); padding-top: 6mm; }
-    .cover-top { display: flex; justify-content: space-between; align-items: baseline; }
-    .cover-top .brand-mark { font-size: 22pt; }
-    .cover-top .year { font-size: 10pt; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; }
-    .cover-center { margin-top: 38mm; }
-    .cover-eyebrow { font-size: 10pt; text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700; color: var(--amber); margin-bottom: 14pt; }
-    .cover-headline { font-size: 46pt; font-weight: 800; line-height: 1.02; color: var(--navy-dark); max-width: 160mm; letter-spacing: -0.015em; }
-    .cover-headline .accent { color: var(--amber); }
-    .cover-sub { font-size: 13pt; color: var(--text-mid); margin-top: 12mm; max-width: 145mm; line-height: 1.45; }
-    .cover-bottom { border-top: 2pt solid var(--navy-dark); padding-top: 7mm; display: grid; grid-template-columns: repeat(4, 1fr); gap: 7mm; }
-    .cover-bottom .label { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; color: var(--text-muted); margin-bottom: 3pt; }
-    .cover-bottom .value { font-size: 10.5pt; color: var(--navy-dark); font-weight: 600; }
+    /* ==== TRUST STRIP ==== */
+    .trust {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; padding: 0 14mm; margin: 4mm 0 5mm;
+    }
+    .trust > div {
+      border-left: 3pt solid var(--amber);
+      padding: 0 5mm;
+    }
+    .trust > div:first-child { padding-left: 4mm; }
+    .trust .label {
+      font-size: 7pt; text-transform: uppercase; letter-spacing: 0.16em;
+      font-weight: 700; color: var(--green); margin: 0 0 1mm 0;
+    }
+    .trust .value {
+      font-size: 10pt; font-weight: 700; color: var(--navy-dark);
+      margin: 0; line-height: 1.3;
+    }
 
-    /* === About page === */
-    .page-header { border-bottom: 2pt solid var(--navy); padding-bottom: 5mm; margin-bottom: 10mm; display: flex; justify-content: space-between; align-items: baseline; }
-    .page-header .brand-mark { font-size: 12pt; }
-    .page-title { font-size: 28pt; font-weight: 800; line-height: 1.1; color: var(--navy-dark); margin-bottom: 8mm; max-width: 150mm; letter-spacing: -0.01em; }
-    .page-lede { font-size: 12pt; color: var(--text-mid); max-width: 150mm; margin-bottom: 10mm; line-height: 1.5; }
-    .principles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8mm; margin-top: 8mm; }
-    .principle { background: var(--paper); padding: 7mm; border-top: 3pt solid var(--amber); }
-    .principle h3 { color: var(--navy-dark); margin-bottom: 3mm; font-size: 12pt; line-height: 1.2; }
-    .principle p { font-size: 9.5pt; line-height: 1.5; margin: 0; }
-    .summary-table { width: 100%; border-collapse: collapse; margin-top: 12mm; font-size: 9.5pt; }
-    .summary-table th { text-align: left; padding: 4mm 3mm; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 700; border-bottom: 1.5pt solid var(--navy); }
-    .summary-table td { padding: 4mm 3mm; border-bottom: 1pt solid var(--hairline); vertical-align: top; }
-    .summary-table tr:nth-child(even) td { background: var(--row-alt); }
-    .summary-table .pkg-name { color: var(--navy-dark); font-weight: 700; }
+    /* ==== TABLE ==== */
+    .table-wrap {
+      padding: 0 14mm; flex: 1; display: flex; flex-direction: column;
+    }
+    .table-eyebrow {
+      font-size: 8pt; text-transform: uppercase; letter-spacing: 0.18em;
+      font-weight: 700; color: var(--green); margin: 0 0 2mm 0;
+    }
+    .table-title {
+      font-size: 13pt; font-weight: 700; color: var(--navy-dark);
+      margin: 0 0 4mm; line-height: 1.2;
+    }
+    table.cat {
+      width: 100%; border-collapse: collapse; font-size: 8.2pt;
+      table-layout: fixed;
+    }
+    table.cat thead th {
+      background: var(--navy-dark);
+      color: white;
+      padding: 4mm 3mm 3mm;
+      text-align: left;
+      vertical-align: top;
+      border-right: 1pt solid rgba(255,255,255,0.1);
+      font-weight: 700;
+    }
+    table.cat thead th:last-child { border-right: none; }
+    table.cat thead th.highlight {
+      background: var(--amber);
+      color: var(--navy-dark);
+    }
+    table.cat thead th .pkg-name {
+      font-size: 11pt; font-weight: 800; line-height: 1; display: block;
+      letter-spacing: -0.01em;
+    }
+    table.cat thead th .pkg-sub {
+      font-size: 7pt; text-transform: uppercase; letter-spacing: 0.14em;
+      font-weight: 700; margin-top: 2pt; opacity: 0.7; display: block;
+    }
+    table.cat thead th.highlight .pkg-sub { opacity: 0.9; }
+    table.cat thead th.spec-col {
+      background: var(--navy);
+      width: 22mm;
+    }
 
-    /* === Package page === */
-    .pkg-page { display: flex; flex-direction: column; height: 100%; }
-    .pkg-hero { background: var(--paper); padding: 8mm; border-left: 4pt solid var(--amber); margin-bottom: 8mm; display: flex; gap: 8mm; align-items: flex-start; }
-    .pkg-hero-text { flex: 1; }
-    .pkg-hero-text .eyebrow { color: var(--green); margin-bottom: 4pt; }
-    .pkg-hero-text h2 { font-size: 26pt; color: var(--navy-dark); margin-bottom: 4mm; line-height: 1.05; }
-    .pkg-hero-text .tagline { font-size: 12pt; color: var(--text-mid); font-style: italic; line-height: 1.4; margin: 0; }
-    .pkg-image-thumb { width: 70mm; height: 50mm; object-fit: cover; background: var(--paper); flex-shrink: 0; }
-    .pkg-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm 8mm; margin-bottom: 8mm; }
-    .pkg-specs dt { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 700; margin-bottom: 2pt; }
-    .pkg-specs dd { margin: 0; font-size: 11pt; color: var(--ink); font-weight: 600; line-height: 1.3; }
-    .pkg-section { margin-bottom: 7mm; }
-    .pkg-section h3 { color: var(--navy-dark); font-size: 11pt; margin-bottom: 4mm; padding-bottom: 2mm; border-bottom: 1pt solid var(--hairline); }
-    .pkg-list { list-style: none; padding: 0; margin: 0; }
-    .pkg-list li { padding-left: 6mm; position: relative; margin-bottom: 2mm; color: var(--text-mid); font-size: 9.5pt; line-height: 1.45; }
-    .pkg-list li::before { content: ''; position: absolute; left: 0; top: 5pt; width: 4pt; height: 4pt; background: var(--green); border-radius: 50%; }
-    .pkg-best-for { background: var(--paper); padding: 5mm 6mm; border-left: 3pt solid var(--green); margin-bottom: 6mm; }
-    .pkg-best-for h4 { color: var(--navy-dark); font-size: 9pt; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2mm; color: var(--green); }
-    .pkg-best-for p { margin: 0; color: var(--ink); font-size: 10pt; }
-    .pkg-pricing-band { background: var(--navy-dark); color: white; padding: 6mm 7mm; margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
-    .pkg-pricing-band .label { font-size: 8pt; text-transform: uppercase; letter-spacing: 0.14em; color: var(--amber); font-weight: 700; margin-bottom: 2pt; }
-    .pkg-pricing-band .value { font-size: 16pt; font-weight: 700; color: white; }
-    .pkg-pricing-band .financing { font-size: 9pt; color: rgba(255,255,255,0.75); margin: 2mm 0 0 0; }
-    .pkg-ev { display: inline-block; background: var(--amber); color: var(--navy-dark); padding: 2pt 8pt; font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-left: 8pt; vertical-align: middle; }
+    table.cat tbody th.row-label {
+      background: var(--paper);
+      padding: 4mm 3mm; vertical-align: top; text-align: left;
+      font-size: 7pt; text-transform: uppercase; letter-spacing: 0.14em;
+      font-weight: 700; color: var(--text-muted);
+      border-right: 1pt solid var(--hairline);
+      border-bottom: 1pt solid var(--hairline);
+      width: 22mm;
+    }
+    table.cat tbody td {
+      padding: 4mm 3mm; vertical-align: top;
+      border-right: 1pt solid var(--hairline);
+      border-bottom: 1pt solid var(--hairline);
+      font-size: 8pt; color: var(--text-mid); line-height: 1.4;
+    }
+    table.cat tbody td:last-child { border-right: none; }
+    table.cat tbody tr:nth-child(odd) td { background: white; }
+    table.cat tbody tr:nth-child(even) td { background: var(--row-alt); }
+    table.cat tbody tr:nth-child(odd) td.highlight { background: rgba(244, 229, 183, 0.45); }
+    table.cat tbody tr:nth-child(even) td.highlight { background: rgba(244, 229, 183, 0.85); }
+    table.cat tbody tr.pricing-row td {
+      font-size: 9pt; font-weight: 700; color: var(--navy-dark); padding-top: 5mm; padding-bottom: 5mm;
+    }
+    table.cat tbody tr.pricing-row td .financing {
+      display: block; font-size: 7pt; font-weight: 500; color: var(--text-muted);
+      margin-top: 1mm; line-height: 1.3;
+    }
+    table.cat tbody tr.pricing-row td.highlight {
+      color: var(--navy-dark);
+    }
+    table.cat tbody tr.why-row {
+      background: var(--navy-dark);
+    }
+    table.cat tbody tr.why-row th.row-label {
+      background: var(--navy-dark); color: var(--amber);
+      border-bottom: none;
+    }
+    table.cat tbody tr.why-row td {
+      background: var(--navy-dark); color: white;
+      font-size: 8.5pt; font-weight: 600; border-bottom: none;
+      border-right: 1pt solid rgba(255,255,255,0.1);
+    }
+    table.cat tbody tr.why-row td:last-child { border-right: none; }
+    table.cat tbody tr.why-row td.highlight {
+      background: var(--amber); color: var(--navy-dark);
+    }
 
-    /* === Plain content page === */
-    .content-page { padding-top: 0; }
-    .content-block { margin-bottom: 10mm; }
-    .content-block p { font-size: 10.5pt; line-height: 1.55; max-width: 165mm; }
-    .content-list { list-style: none; padding: 0; margin: 6mm 0 0 0; }
-    .content-list li { padding-left: 8mm; position: relative; margin-bottom: 4mm; font-size: 10pt; color: var(--text-mid); line-height: 1.5; }
-    .content-list li::before { content: ''; position: absolute; left: 0; top: 6pt; width: 5pt; height: 5pt; background: var(--amber); border-radius: 50%; }
-    .steps { list-style: none; padding: 0; margin: 8mm 0 0 0; }
-    .steps li { padding-left: 16mm; position: relative; margin-bottom: 8mm; }
-    .steps li .step-num { position: absolute; left: 0; top: 0; width: 11mm; height: 11mm; border-radius: 50%; background: var(--amber); color: var(--navy-dark); font-weight: 800; font-size: 14pt; display: flex; align-items: center; justify-content: center; }
-    .steps li h3 { color: var(--navy-dark); margin-bottom: 2mm; font-size: 12pt; }
-    .steps li p { margin: 0; font-size: 9.5pt; line-height: 1.5; }
+    .ev-badge {
+      display: inline-block; background: var(--amber); color: var(--navy-dark);
+      font-size: 6pt; font-weight: 800; padding: 1pt 4pt; border-radius: 1pt;
+      text-transform: uppercase; letter-spacing: 0.1em; vertical-align: middle;
+      margin-left: 3pt;
+    }
 
-    /* === Contact page === */
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin-top: 10mm; }
-    .contact-card { border: 1pt solid var(--hairline); padding: 8mm; }
-    .contact-card .eyebrow { color: var(--green); }
-    .contact-card .channel { font-size: 14pt; color: var(--navy-dark); font-weight: 700; margin: 3mm 0; word-break: break-word; }
-    .contact-card p { font-size: 9pt; color: var(--text-mid); margin: 0; }
-    .contact-cta { background: var(--navy-dark); color: white; padding: 12mm; margin-top: 14mm; text-align: center; }
-    .contact-cta h2 { color: white; font-size: 22pt; margin-bottom: 5mm; max-width: 140mm; margin-left: auto; margin-right: auto; }
-    .contact-cta p { color: rgba(255,255,255,0.85); font-size: 11pt; max-width: 140mm; margin: 0 auto 8mm; }
-    .contact-cta .cta-url { display: inline-block; background: var(--amber); color: var(--navy-dark); padding: 4mm 10mm; font-weight: 700; font-size: 11pt; text-decoration: none; }
+    /* ==== ALSO FROM PRECIFARM ==== */
+    .also {
+      margin: 5mm 14mm 0;
+      padding: 5mm 6mm;
+      background: var(--paper);
+      border-left: 4pt solid var(--green);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6mm;
+    }
+    .also-item .lbl {
+      font-size: 7pt; text-transform: uppercase; letter-spacing: 0.16em;
+      font-weight: 700; color: var(--green); margin: 0 0 1mm 0;
+    }
+    .also-item .ttl {
+      font-size: 9.5pt; font-weight: 700; color: var(--navy-dark);
+      margin: 0 0 1mm 0; line-height: 1.2;
+    }
+    .also-item .desc {
+      font-size: 7.5pt; color: var(--text-mid); margin: 0; line-height: 1.4;
+    }
+
+    /* ==== BOTTOM CTA BAND ==== */
+    .cta-band {
+      margin-top: auto;
+      background: var(--amber);
+      color: var(--navy-dark);
+      padding: 6mm 14mm 5mm;
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 8mm;
+      align-items: center;
+      border-top: 4pt solid var(--navy-dark);
+    }
+    .cta-band .pitch {
+      font-size: 11pt; font-weight: 700; line-height: 1.25;
+      margin: 0; letter-spacing: -0.01em;
+    }
+    .cta-band .pitch .em {
+      display: block; font-size: 8pt; font-weight: 600;
+      color: var(--navy); text-transform: uppercase; letter-spacing: 0.12em;
+      margin-bottom: 1.5mm;
+    }
+    .cta-band .channels {
+      font-size: 8pt; color: var(--navy-dark); text-align: right;
+      line-height: 1.5;
+    }
+    .cta-band .channels a {
+      color: var(--navy-dark); text-decoration: none; font-weight: 700;
+    }
+    .cta-band .channels strong { display: block; font-size: 9pt; font-weight: 800; }
+
+    /* ==== FOOTER MICROCOPY ==== */
+    .micro {
+      background: var(--navy-dark);
+      color: rgba(255,255,255,0.6);
+      padding: 3mm 14mm;
+      font-size: 6.5pt; letter-spacing: 0.04em;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .micro .brand-mark { font-size: 9pt; color: rgba(255,255,255,0.85); }
+    .micro .brand-mark span { color: var(--amber); }
   </style>
 </head>
 <body>
-
-<!-- ===================== PAGE 1: COVER ===================== -->
-<section class="page cover">
-  <div class="cover-top">
-    <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div class="year">Catalogue {catalogueYear}</div>
-  </div>
-  <div class="cover-center">
-    <p class="cover-eyebrow">Solar PV · Energy Storage · EV Charging</p>
-    <h1 class="cover-headline">Built for <span class="accent">Kenya</span>.<br/>Engineered to last.</h1>
-    <p class="cover-sub">Four standardised packages on one modular hardware platform. Designed, installed, and maintained by the same regional engineering team, with a five-year EPC and O&amp;M commitment on every install.</p>
-  </div>
-  <div class="cover-bottom">
-    <div>
-      <p class="label">EPRA licensed</p>
-      <p class="value">EPC + O&amp;M contractor</p>
-    </div>
-    <div>
-      <p class="label">Operating hubs</p>
-      <p class="value">Six Kenyan cities</p>
-    </div>
-    <div>
-      <p class="label">Founded</p>
-      <p class="value">{company.incorporated}</p>
-    </div>
-    <div>
-      <p class="label">Headquarters</p>
-      <p class="value">{company.headquarters}</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== PAGE 2: ABOUT + 4 PACKAGES OVERVIEW ===================== -->
 <section class="page">
-  <div class="page-header">
+  <!-- BRAND BAND -->
+  <div class="brand-band">
     <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div class="eyebrow muted">01 · About</div>
+    <div class="brand-tag">
+      Product Catalogue
+      <span class="year">2026 · Issue 01</span>
+    </div>
   </div>
-  <p class="eyebrow">Who we are</p>
-  <h2 class="page-title">An engineering company that intends to still be servicing its first installations in 2045.</h2>
-  <p class="page-lede">Precifarm AI Ltd is an EPRA-licensed EPC and O&amp;M contractor delivering distributed solar PV and lithium energy storage systems across Kenya. We size every system against a written load assessment, install with our own crews from regional hubs in six cities, and carry a five-year service commitment on every deployment.</p>
-  <div class="principles">
-    {beliefs.map((b) => (
-      <div class="principle">
-        <h3>{b.title}</h3>
-        <p>{b.body}</p>
-      </div>
-    ))}
+
+  <!-- HEADLINE -->
+  <div class="hero">
+    <h1>Power that <span>doesn't quit</span>, built for the way Kenya actually uses it.</h1>
+    <p class="sub">Four standardised solar + storage packages on one modular platform. Designed, installed, and maintained by the same regional engineering team for five years. Pick the tier your loads need, not the tier the brochure pushes.</p>
   </div>
-  <table class="summary-table">
-    <thead>
-      <tr>
-        <th>Package</th>
-        <th>Capacity</th>
-        <th>Best for</th>
-        <th>Pricing</th>
-      </tr>
-    </thead>
-    <tbody>
-      {renderablePackages.map((pkg) => (
+
+  <!-- TRUST STRIP -->
+  <div class="trust">
+    <div>
+      <p class="label">Licensed</p>
+      <p class="value">EPRA EPC + O&amp;M contractor</p>
+    </div>
+    <div>
+      <p class="label">On the ground</p>
+      <p class="value">Engineering hubs in six cities</p>
+    </div>
+    <div>
+      <p class="label">Commitment</p>
+      <p class="value">Five-year service on every install</p>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <p class="table-eyebrow">The line-up</p>
+    <p class="table-title">Find your package by who you are and what you run.</p>
+
+    <table class="cat">
+      <thead>
         <tr>
-          <td class="pkg-name">{pkg.shortName}{pkg.isHighlighted && <span class="pkg-ev">EV-ready</span>}</td>
-          <td>{pkg.capacity}</td>
-          <td>{pkg.bestFor}</td>
-          <td>{getStartingPriceDisplay(pkg)}</td>
+          <th class="spec-col"></th>
+          {rows.map((r) => (
+            <th class={r.highlighted ? 'highlight' : ''}>
+              <span class="pkg-name">{r.tier}{r.highlighted && <span class="ev-badge">EV</span>}</span>
+              <span class="pkg-sub">{r.tier === 'Commercial Plus' ? 'Anchor-grade' : r.tier === 'Commercial' ? 'Sized to site' : r.tier === 'Family' ? 'Whole-house' : 'Entry'}</span>
+            </th>
+          ))}
         </tr>
-      ))}
-    </tbody>
-  </table>
-  <div class="page-footer">
+      </thead>
+      <tbody>
+        <tr>
+          <th class="row-label">If you are</th>
+          {rows.map((r) => (
+            <td class={r.highlighted ? 'highlight' : ''}>{r.profile}</td>
+          ))}
+        </tr>
+        <tr>
+          <th class="row-label">You can run</th>
+          {rows.map((r) => (
+            <td class={r.highlighted ? 'highlight' : ''}>{r.uses}</td>
+          ))}
+        </tr>
+        <tr>
+          <th class="row-label">The system</th>
+          {rows.map((r) => (
+            <td class={r.highlighted ? 'highlight' : ''}>{r.system}</td>
+          ))}
+        </tr>
+        <tr class="pricing-row">
+          <th class="row-label">Investment</th>
+          {rows.map((r) => (
+            <td class={r.highlighted ? 'highlight' : ''}>
+              {r.pricing}
+              {r.financing && <span class="financing">{r.financing}</span>}
+            </td>
+          ))}
+        </tr>
+        <tr class="why-row">
+          <th class="row-label">Why this tier</th>
+          {rows.map((r) => (
+            <td class={r.highlighted ? 'highlight' : ''}>{r.why}</td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ALSO FROM PRECIFARM -->
+  <div class="also">
+    <div class="also-item">
+      <p class="lbl">Sub-product</p>
+      <p class="ttl">Solar Irrigation Systems</p>
+      <p class="desc">Submersible borehole pumps, surface pumps, and solar controllers. Sized from 1-acre smallholder to 100+ acre commercial farms on a site-assessment basis.</p>
+    </div>
+    <div class="also-item">
+      <p class="lbl">Training</p>
+      <p class="ttl">EPRA T1, T2, T3 Technician Cohorts</p>
+      <p class="desc">Practitioner-led short-cohort programmes that prepare technicians and engineers for the EPRA solar PV licence application. Mapped to the NITA competency framework.</p>
+    </div>
+  </div>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <p class="pitch">
+      <span class="em">The next step</span>
+      Send us your site. Receive a written design and quote within two business days.
+    </p>
+    <div class="channels">
+      <strong>{company.email}</strong>
+      <a href={`tel:${company.phoneE164}`}>{company.phone}</a><br/>
+      <a href={company.website}>precifarm.com</a>
+    </div>
+  </div>
+
+  <!-- MICRO -->
+  <div class="micro">
     <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div>Page 2 · precifarm.com</div>
+    <div>Precifarm AI Ltd · Nairobi HQ · Mombasa · Kisumu · Eldoret · Nakuru · Nyeri · EPRA-licensed</div>
   </div>
 </section>
-
-<!-- ===================== PAGES 3-6: ONE PER PACKAGE ===================== -->
-{renderablePackages.map((pkg, i) => (
-  <section class="page pkg-page">
-    <div class="page-header">
-      <div class="brand-mark">PRECI<span>FARM</span></div>
-      <div class="eyebrow muted">{String(i + 2).padStart(2, '0')} · Package</div>
-    </div>
-
-    <div class="pkg-hero">
-      <div class="pkg-hero-text">
-        <p class="eyebrow">{pkg.shortName} package{pkg.isHighlighted ? '  ·  EV-READY' : ''}</p>
-        <h2>{pkg.name}</h2>
-        <p class="tagline">{pkg.tagline}</p>
-      </div>
-      <img class="pkg-image-thumb" src={(pkg.cardImage ?? pkg.image).src} alt="" />
-    </div>
-
-    <div class="pkg-best-for">
-      <h4>Best for</h4>
-      <p>{pkg.bestFor}</p>
-    </div>
-
-    <dl class="pkg-specs">
-      <div>
-        <dt>Capacity</dt>
-        <dd>{pkg.capacity}</dd>
-      </div>
-      <div>
-        <dt>Daily load</dt>
-        <dd>{pkg.dailyLoad}</dd>
-      </div>
-      <div>
-        <dt>Inverter</dt>
-        <dd>{pkg.inverter}</dd>
-      </div>
-      <div>
-        <dt>Panels</dt>
-        <dd>{pkg.panels}</dd>
-      </div>
-      <div>
-        <dt>Service tier</dt>
-        <dd>{pkg.serviceTier}</dd>
-      </div>
-      <div>
-        <dt>Warranty</dt>
-        <dd>{pkg.warranty}</dd>
-      </div>
-    </dl>
-
-    {pkg.powers && (
-      <div class="pkg-section">
-        <h3>What it powers</h3>
-        <p style="font-size: 9.5pt; line-height: 1.5; margin: 0;">{pkg.powers}</p>
-      </div>
-    )}
-
-    {pkg.irrigationSupport && (
-      <div class="pkg-section">
-        <h3>Irrigation support</h3>
-        <p style="font-size: 9.5pt; line-height: 1.5; margin: 0;">{pkg.irrigationSupport}</p>
-        {pkg.irrigationNote && <p style="font-size: 8.5pt; font-style: italic; color: var(--text-muted); margin-top: 2mm;">{pkg.irrigationNote}</p>}
-      </div>
-    )}
-
-    <div class="pkg-section">
-      <h3>What you get</h3>
-      <ul class="pkg-list">
-        {pkg.whatYouGet.slice(0, 6).map((item) => (
-          <li>{item}</li>
-        ))}
-      </ul>
-    </div>
-
-    <div class="pkg-pricing-band">
-      <div>
-        <p class="label">{isQuoteOnly(pkg) ? 'Pricing' : 'Starting'}</p>
-        <p class="value">{getStartingPriceDisplay(pkg)}</p>
-        {!isQuoteOnly(pkg) && <p class="financing">{pkg.financing}</p>}
-      </div>
-      <div style="text-align: right;">
-        <p class="label" style="margin-bottom: 2pt;">Commitment</p>
-        <p class="value" style="font-size: 11pt;">Five-year EPC + O&amp;M</p>
-      </div>
-    </div>
-
-    <div class="page-footer">
-      <div class="brand-mark">PRECI<span>FARM</span></div>
-      <div>Page {i + 3} · precifarm.com/products/{pkg.slug}/</div>
-    </div>
-  </section>
-))}
-
-<!-- ===================== PAGE 7: SOLAR IRRIGATION ===================== -->
-<section class="page content-page">
-  <div class="page-header">
-    <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div class="eyebrow muted">06 · Sub-product</div>
-  </div>
-  <p class="eyebrow">Solar irrigation systems</p>
-  <h2 class="page-title">Solar-powered irrigation, engineered for every acre of Kenyan farmland.</h2>
-  <p class="page-lede">Precision-engineered solar pumping systems sized from 1-acre smallholder plots to 100+ acre commercial farms. Submersible borehole pumps, surface centrifugal pumps, and solar pump controllers, specified against the measured water requirement, head, and irrigation schedule of each site.</p>
-
-  <div class="content-block">
-    <h3 style="font-size: 14pt; margin-bottom: 4mm;">Standard sizing range</h3>
-    <ul class="content-list">
-      <li><strong style="color: var(--navy-dark);">Smallholder (1 to 4 acres)</strong> — approximately 10,000 to 40,000 litres per day. Submersible or surface pump depending on water source.</li>
-      <li><strong style="color: var(--navy-dark);">Medium farm (5 to 45 acres)</strong> — approximately 50,000 to 450,000 litres per day. Hybrid PV with storage for irrigation outside daylight hours.</li>
-      <li><strong style="color: var(--navy-dark);">Commercial (45 to 100+ acres)</strong> — bespoke design against the irrigation plan, water source, and crop schedule. Multi-pump arrangements where required.</li>
-    </ul>
-  </div>
-
-  <div class="content-block">
-    <h3 style="font-size: 14pt; margin-bottom: 4mm;">Hardware family</h3>
-    <ul class="content-list">
-      <li>Stainless-steel submersible borehole pumps for boreholes of varying depth</li>
-      <li>Surface centrifugal pumps for shallow lift and pressure boosting</li>
-      <li>Dedicated solar pump controllers (PV-direct or hybrid with storage)</li>
-      <li>Brand selection by availability, warranty support in Kenya, and operating profile of the site</li>
-    </ul>
-  </div>
-
-  <div class="page-footer">
-    <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div>Page 7 · precifarm.com/products/solar-irrigation/</div>
-  </div>
-</section>
-
-<!-- ===================== PAGE 8: TRAINING ===================== -->
-<section class="page content-page">
-  <div class="page-header">
-    <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div class="eyebrow muted">07 · Training</div>
-  </div>
-  <p class="eyebrow">EPRA T1, T2, T3 Technician Training</p>
-  <h2 class="page-title">Practitioner-led training for solar PV technicians and engineers.</h2>
-  <p class="page-lede">A short-cohort programme that prepares technicians and engineers for the EPRA T1, T2, or T3 solar PV licence application. Curriculum mapped to the EPRA classification and the NITA solar PV competency framework. Delivered by the same field team that designs and operates Precifarm's Commercial and Commercial Plus installations.</p>
-
-  <table class="summary-table">
-    <thead>
-      <tr>
-        <th>Tier</th>
-        <th>System scope</th>
-        <th>Best for</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="pkg-name">T1</td>
-        <td>Small DC systems up to 100 Wp</td>
-        <td>Entry technicians, vendors, last-mile distributors</td>
-      </tr>
-      <tr>
-        <td class="pkg-name">T2</td>
-        <td>Medium systems with multiple batteries and inverters</td>
-        <td>Practising installers, electricians moving into solar</td>
-      </tr>
-      <tr>
-        <td class="pkg-name">T3 (Grid Tie / Hybrid)</td>
-        <td>Advanced grid-tied and hybrid PV systems</td>
-        <td>Senior installers, design engineers, project leads</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="content-block" style="margin-top: 10mm;">
-    <h3 style="font-size: 14pt; margin-bottom: 4mm;">What every cohort covers</h3>
-    <ul class="content-list">
-      <li><strong style="color: var(--navy-dark);">Design</strong> — site-sized engineering, not catalogue picking. Load assessment, irradiance estimation, sizing methodology.</li>
-      <li><strong style="color: var(--navy-dark);">Install</strong> — mechanical, electrical, and safety to the standard the EPRA inspector expects on site.</li>
-      <li><strong style="color: var(--navy-dark);">Operate</strong> — commissioning reports, fault diagnosis, warranty handling.</li>
-      <li><strong style="color: var(--navy-dark);">Licence</strong> — application pathway to EPRA T1, T2, or T3, including documentation preparation.</li>
-    </ul>
-  </div>
-
-  <div class="page-footer">
-    <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div>Page 8 · precifarm.com/training/</div>
-  </div>
-</section>
-
-<!-- ===================== PAGE 9: HOW WE WORK ===================== -->
-<section class="page content-page">
-  <div class="page-header">
-    <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div class="eyebrow muted">08 · Process</div>
-  </div>
-  <p class="eyebrow">How we work</p>
-  <h2 class="page-title">From site audit to year-five service, on one engineering team.</h2>
-  <p class="page-lede">Every Precifarm install moves through the same four-stage process, delivered by the regional engineering team responsible for your area. No subcontractors, no handoffs at year one.</p>
-
-  <ol class="steps">
-    {deploymentSteps.map((step) => (
-      <li>
-        <span class="step-num">{step.number}</span>
-        <h3>{step.title}</h3>
-        <p>{step.body}</p>
-      </li>
-    ))}
-  </ol>
-
-  <div class="page-footer">
-    <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div>Page 9 · precifarm.com/how-we-work/</div>
-  </div>
-</section>
-
-<!-- ===================== PAGE 10: CONTACT + CTA ===================== -->
-<section class="page content-page">
-  <div class="page-header">
-    <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div class="eyebrow muted">09 · Get in touch</div>
-  </div>
-  <p class="eyebrow">Talk to an engineer</p>
-  <h2 class="page-title">A written design and quote within two business days of your site assessment.</h2>
-  <p class="page-lede">Anywhere in Kenya. Headquartered in Nairobi. Resident engineering teams in Mombasa, Kisumu, Eldoret, Kitui, Nakuru, and Nyeri.</p>
-
-  <div class="contact-grid">
-    <div class="contact-card">
-      <p class="eyebrow">Email</p>
-      <p class="channel">{company.email}</p>
-      <p>Reply within one business day.</p>
-    </div>
-    <div class="contact-card">
-      <p class="eyebrow">Phone &amp; WhatsApp</p>
-      <p class="channel">{company.phone}</p>
-      <p>Mon to Sat, business hours EAT. WhatsApp for fastest response.</p>
-    </div>
-  </div>
-
-  <div class="contact-cta">
-    <h2>Reliable solar energy storage built to scale with your future energy needs.</h2>
-    <p>Get a quote at precifarm.com/contact/ or send a site brief to {company.email} with the subject line "Quote enquiry".</p>
-    <a class="cta-url" href={`${site}/contact/`}>precifarm.com/contact/</a>
-  </div>
-
-  <div class="page-footer">
-    <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div>{company.copyright}</div>
-  </div>
-</section>
-
 </body>
 </html>
