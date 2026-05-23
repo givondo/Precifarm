@@ -4,7 +4,7 @@ import Hero from '../../components/Hero.astro';
 import NarrativeSection from '../../components/NarrativeSection.astro';
 import MetricBand from '../../components/MetricBand.astro';
 import CTASection from '../../components/CTASection.astro';
-import { team, beliefs, company } from '../../data/company';
+import { beliefs, company } from '../../data/company';
 import { cities } from '../../data/cities';
 ---
 <BaseLayout
@@ -217,54 +217,6 @@ import { cities } from '../../data/cities';
       </table>
     </div>
   </NarrativeSection>
-
-  <!-- FOUNDING TEAM — editorial layout, no card chrome -->
-  <section class="bg-paper">
-    <div class="container-page py-20 md:py-28">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start mb-12 md:mb-16">
-        <div class="lg:col-span-7">
-          <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">The founding team</p>
-          <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1] mb-6">
-            The three engineers who founded the company still share one workshop and one accountability standard.
-          </h2>
-          <p class="text-lg text-text-mid leading-relaxed">
-            Precifarm was founded by three engineers who agreed that a solar contractor designed to stay after the install must be built that way from day one. We share a workshop, a hiring bar, and a five-year obligation to every customer whose system we commission.
-          </p>
-        </div>
-        <div class="lg:col-span-5">
-          <div class="relative overflow-hidden rounded-card">
-            <img
-              src="/images/context/engineer-portrait.jpg"
-              alt="A finished installation of black monocrystalline solar panels arranged across the tiled roof of a Kenyan home, with the rooftops of the surrounding neighbourhood and a hillside ridge visible in the background."
-              width="1600"
-              height="1067"
-              loading="lazy"
-              decoding="async"
-              class="w-full h-full object-cover aspect-[4/3]"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div class="space-y-12 md:space-y-16">
-        {team.map((member, i) => (
-          <article class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 pt-8 border-t border-hairline">
-            <div class="md:col-span-4">
-              <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-3">{String(i + 1).padStart(2, '0')}</p>
-              <h3 class="text-h2-sm text-navy-dark leading-tight">{member.name}</h3>
-              <p class="mt-2 text-green font-semibold">{member.role}</p>
-            </div>
-            <div class="md:col-span-8">
-              <p class="text-text-mid leading-relaxed">{member.bio}</p>
-              {!member.verified && (
-                <p class="mt-3 text-xs text-text-muted italic">Full bio pending confirmation.</p>
-              )}
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
 
   <!-- SIX CITIES — minimal pill row, link out to map on /cities/ -->
   <NarrativeSection
