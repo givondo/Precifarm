@@ -50,25 +50,23 @@ import { packages } from '../../data/packages';
         </p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-16 md:mb-20">
-        <div class="lg:col-span-7 space-y-5 text-lg text-text-mid leading-relaxed">
-          <p>
-            Precifarm Solar Irrigation Systems deliver precision-engineered solar pumping for irrigation across Kenya and East Africa. Each deployment is sized against the farm's actual water requirement, head, and pump distance from source, with configurations spanning 1, 2, 3, 4, 10, 45 acres and larger commercial parcels.
-          </p>
-          <p>
-            Systems are designed and quoted on a site-assessment basis, so the array, controller, pump, and storage match the load profile rather than a generic spec sheet. The same EPRA-licensed engineering team that designs the system installs it and services it under the standard Precifarm five-year service commitment.
-          </p>
-          <p>
-            <a href="/contact/" class="inline-flex items-center gap-1.5 font-semibold text-navy hover:underline">
-              Get a site assessment for the farm
-              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 16 16" fill="none">
-                <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </p>
+      <!-- Pump family photograph: image-left editorial split, no card chrome -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center mb-16 md:mb-20">
+        <div class="lg:col-span-6">
+          <div class="relative overflow-hidden rounded-card bg-white">
+            <img
+              src="/images/products/solar-irrigation-pumps.jpg"
+              alt="A family of solar-pumping hardware Precifarm specifies for agricultural irrigation: stainless-steel submersible borehole pumps for boreholes of varying depth, surface centrifugal pumps for shallow lift and pressure boosting, dedicated solar pump controllers, and complete pump-set assemblies with motor and PV-direct drive."
+              width="1600"
+              height="1200"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-contain aspect-[4/3] p-6 md:p-10"
+            />
+          </div>
         </div>
 
-        <dl class="lg:col-span-5 space-y-6 lg:border-l lg:border-hairline lg:pl-10">
+        <dl class="lg:col-span-6 space-y-6">
           <div>
             <dt class="text-xs uppercase tracking-wider text-text-muted font-semibold">Farm sizing range</dt>
             <dd class="mt-1 text-navy-dark font-semibold text-lg">1 acre to 100+ acres</dd>
@@ -86,6 +84,24 @@ import { packages } from '../../data/packages';
             <dd class="mt-1 text-navy-dark font-semibold text-lg">Five-year EPC and O&amp;M commitment</dd>
           </div>
         </dl>
+      </div>
+
+      <!-- Long-form description below the image+spec block -->
+      <div class="max-w-3xl space-y-5 text-lg text-text-mid leading-relaxed mb-16 md:mb-20">
+        <p>
+          Precifarm Solar Irrigation Systems deliver precision-engineered solar pumping for irrigation across Kenya and East Africa. Each deployment is sized against the farm's actual water requirement, head, and pump distance from source, with configurations spanning 1, 2, 3, 4, 10, 45 acres and larger commercial parcels.
+        </p>
+        <p>
+          Systems are designed and quoted on a site-assessment basis, so the array, controller, pump, and storage match the load profile rather than a generic spec sheet. The same EPRA-licensed engineering team that designs the system installs it and services it under the standard Precifarm five-year service commitment.
+        </p>
+        <p>
+          <a href="/contact/" class="inline-flex items-center gap-1.5 font-semibold text-navy hover:underline">
+            Get a site assessment for the farm
+            <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 16 16" fill="none">
+              <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </p>
       </div>
 
       <!-- Three value propositions as editorial rows -->
