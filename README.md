@@ -70,6 +70,7 @@ Build budget: total `dist/` should stay under ~1.5 MB. Largest single HTML page 
 | `npm run preview` | Serve the built `dist/` locally for sanity-checking the output                                     |
 | `npm run check`   | Type-check Astro files only (no build)                                                             |
 | `npm run assets`  | Regenerate favicons (`.svg`/`.ico`/`.png`) and `og-default.png` from `public/favicon.svg` via sharp |
+| `npm run catalogue` | Render `/catalogue/` to `public/docs/precifarm-catalogue.pdf` via puppeteer + system Chrome. Requires `npm run preview` running on port 4321 first. |
 
 ---
 
