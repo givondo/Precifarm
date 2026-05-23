@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
-import CityCard from '../../components/CityCard.astro';
+import NarrativeSection from '../../components/NarrativeSection.astro';
+import KenyaMap from '../../components/KenyaMap.astro';
+import MetricBand from '../../components/MetricBand.astro';
 import CTASection from '../../components/CTASection.astro';
 import { cities } from '../../data/cities';
 ---
@@ -13,52 +15,64 @@ import { cities } from '../../data/cities';
   <Hero
     eyebrow="Cities"
     headline="One engineering team operating from six city-resident hubs."
-    subhead="Headquarters in Nairobi. Resident engineering teams and regional spare-parts depots in Mombasa, Kisumu, Eldoret, Kitui, and Nakuru."
+    subhead="Headquarters in Nairobi. Resident engineering teams and regional spare-parts depots in Mombasa, Kisumu, Eldoret, Kitui, and Nakuru. Every installed system sits within a same-day drive of an engineer who has worked on it before."
     primaryCta={{ href: '/contact/', label: 'Get a quote' }}
     secondaryCta={{ href: '/how-we-work/', label: 'How we work' }}
   />
 
-  <section class="bg-white">
-    <div class="container-page section">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-        {cities.map((city) => (
-          <CityCard city={city} />
-        ))}
+  <!-- MAP — Kenya outline with 6 markers -->
+  <section class="bg-paper">
+    <div class="container-page py-20 md:py-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-7">
+          <KenyaMap />
+        </div>
+        <div class="lg:col-span-5">
+          <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">Operating footprint</p>
+          <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1] mb-6">Distributed engineering across the country.</h2>
+          <p class="text-lg text-text-mid leading-relaxed mb-8">
+            Every Precifarm field hub is a resident engineering team plus a stocked depot. Inverters, panels, Neura Pods, and consumables are held locally. Fault response, scheduled maintenance, and warranty visits dispatch from the same hub that installed the system.
+          </p>
+          <ul class="space-y-3">
+            {cities.map((city) => (
+              <li>
+                <a href={`/cities/${city.slug}/`} class="group flex items-baseline justify-between gap-4 py-2 border-b border-hairline hover:border-navy transition-colors">
+                  <div>
+                    <span class="text-navy-dark font-semibold group-hover:text-navy transition-colors">{city.name}</span>
+                    {city.role === 'HQ' && <span class="ml-2 text-xs uppercase tracking-wider font-bold text-amber">HQ</span>}
+                  </div>
+                  <span class="text-sm text-text-muted">{city.region}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="bg-paper">
-    <div class="container-page section">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-        <div class="lg:col-span-6">
-          <p class="eyebrow mb-3">Coverage</p>
-          <h2 class="text-h2-sm md:text-h1 text-navy-dark mb-6">No customer waits for an engineer from Nairobi.</h2>
-          <div class="prose-precifarm">
-            <p>
-              Every Precifarm field hub is a resident team plus a stocked depot. Inverters, panels, Neura Pods, and consumables are held locally. Fault response, scheduled maintenance, and warranty visits all dispatch from the same hub that installed the system. Same-day drive coverage is the default, not the exception.
-            </p>
-            <p>
-              All four packages are available in every city. Whether you are sizing a Starter in Kitui or a Commercial Plus mini-grid in an industrial corridor outside Eldoret, the same engineering team, hardware platform, and service commitment apply.
-            </p>
-          </div>
-        </div>
-        <div class="lg:col-span-6">
-          <div class="relative overflow-hidden rounded-card shadow-xl ring-1 ring-black/5">
-            <img
-              src="/images/context/solar-farm-aerial.jpg"
-              alt="Solar panels span the corrugated iron roof of a rural Kenyan home at golden hour, with acacia trees scattered across the savannah, a dirt road curving toward a water tower in the middle distance, and the Precifarm service vehicle parked nearby. This is the operating environment that defines our regional footprint: six city-resident hubs covering every distributed system across the country, so that no installed customer ever sits more than a same-day drive from an engineer who has worked on their system before."
-              width="1600"
-              height="1067"
-              loading="lazy"
-              decoding="async"
-              class="w-full h-full object-cover aspect-[4/3]"
-            />
-          </div>
-        </div>
-      </div>
+  <!-- COVERAGE METRICS -->
+  <section class="bg-white">
+    <div class="container-page py-16 md:py-20">
+      <MetricBand
+        size="md"
+        metrics={[
+          { value: '6', label: 'City-resident engineering hubs', context: 'Nairobi headquarters plus five regional field hubs.' },
+          { value: '6', label: 'Regional spare-parts depots', context: 'Inverters, panels, Neura Pods, consumables held locally.' },
+          { value: 'Same-day', label: 'Drive coverage to every install', context: 'No customer waits for an engineer to travel from Nairobi.' },
+        ]}
+      />
     </div>
   </section>
+
+  <!-- WHAT EVERY CITY OFFERS — prose, not card grid -->
+  <NarrativeSection
+    background="paper"
+    eyebrow="Standard across every city"
+    headline="All four packages are available in every operating city."
+    lede="Whether you are sizing a Starter in Kitui or a Commercial Plus mini-grid in an industrial corridor outside Eldoret, the same engineering team, the same Neura Pod platform, and the same five-year service commitment apply."
+    maxWidth="wide"
+  />
 
   <CTASection
     variant="dark"

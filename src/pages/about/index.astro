@@ -1,11 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
-import Stat from '../../components/Stat.astro';
-import TeamCard from '../../components/TeamCard.astro';
-import CityCard from '../../components/CityCard.astro';
+import NarrativeSection from '../../components/NarrativeSection.astro';
+import MetricBand from '../../components/MetricBand.astro';
 import CTASection from '../../components/CTASection.astro';
-import Callout from '../../components/Callout.astro';
 import { team, beliefs, company } from '../../data/company';
 import { cities } from '../../data/cities';
 ---
@@ -22,92 +20,88 @@ import { cities } from '../../data/cities';
     secondaryCta={{ href: '/how-we-work/', label: 'How we work' }}
   />
 
-  <!-- Key facts -->
+  <!-- KEY FACTS — MetricBand replacing 4 Stat cards -->
   <section class="bg-paper">
-    <div class="container-page py-10 md:py-14">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
-        <Stat value="2025" label="Incorporated" />
-        <Stat value="6" label="Operating cities" />
-        <Stat value="4" label="Package tiers" />
-        <Stat value="0" label="Outside investors" />
-      </div>
+    <div class="container-page py-16 md:py-20">
+      <MetricBand
+        size="md"
+        metrics={[
+          { value: '2025', label: 'Incorporated', context: 'Bootstrapped from launch, no outside investors.' },
+          { value: '6', label: 'Operating cities', context: 'Resident engineering teams in every region.' },
+          { value: '4', label: 'Package tiers', context: 'On the same Neura Pod platform.' },
+          { value: '0', label: 'Outside investors', context: 'Revenue-financed through 2027.' },
+        ]}
+      />
     </div>
   </section>
 
-  <!-- What we believe -->
-  <section class="bg-white">
-    <div class="container-page section">
-      <div class="max-w-3xl mb-10 md:mb-12">
-        <p class="eyebrow mb-3">What we believe</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Three things we will not compromise on.</h2>
-      </div>
-      <div class="space-y-5">
-        {beliefs.map((belief, i) => (
-          <article class="rounded-card border border-hairline bg-white p-6 md:p-8">
-            <div class="flex items-start gap-5">
-              <span class="text-navy font-bold text-2xl shrink-0 w-10">{String(i + 1).padStart(2, '0')}</span>
-              <div class="flex-1">
-                <h3 class="text-h3 text-navy-dark">{belief.title}</h3>
-                <p class="mt-3 text-text-mid leading-relaxed">{belief.body}</p>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
+  <!-- WHAT WE BELIEVE — editorial numbered list, no card chrome -->
+  <NarrativeSection
+    background="white"
+    eyebrow="What we believe"
+    headline="Three operating principles we will not compromise on."
+  >
+    <div class="space-y-12 md:space-y-16 max-w-5xl">
+      {beliefs.map((belief, i) => (
+        <article class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-8 border-t border-hairline">
+          <div class="lg:col-span-3">
+            <p class="text-6xl font-bold text-amber leading-none tracking-tight">{String(i + 1).padStart(2, '0')}</p>
+          </div>
+          <div class="lg:col-span-9">
+            <h3 class="text-h2-sm text-navy-dark mb-4 leading-tight">{belief.title}</h3>
+            <p class="text-lg text-text-mid leading-relaxed">{belief.body}</p>
+          </div>
+        </article>
+      ))}
     </div>
-  </section>
+  </NarrativeSection>
 
-  <!-- Why now: three structural curves -->
+  <!-- WHY NOW — three structural curves as horizontal timeline -->
   <section class="bg-paper">
-    <div class="container-page section">
-      <div class="max-w-3xl mb-10 md:mb-12">
-        <p class="eyebrow mb-3">Why now</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Three structural curves crossed in 2024.</h2>
-        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+    <div class="container-page py-20 md:py-28">
+      <div class="max-w-3xl mb-12 md:mb-16">
+        <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">Why now</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1]">Three structural curves crossed in 2024.</h2>
+        <p class="mt-5 text-lg text-text-mid leading-relaxed">
           Precifarm exists at this moment because three independent shifts converged. Any one of them would matter on its own. All three together is why we launched.
         </p>
       </div>
-      <div class="space-y-4">
-        <article class="rounded-card bg-white p-6 md:p-7">
-          <div class="flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-6">
-            <p class="text-3xl font-bold text-navy shrink-0 w-24">2024</p>
-            <div class="flex-1">
-              <h3 class="text-h3 text-navy-dark">EV vehicles deployed at scale</h3>
-              <p class="mt-2 text-text-mid leading-relaxed">
-                BasiGo electric buses on Nairobi routes. Roam and Spiro electric motorbikes in fleet service. Ampersand swap stations live. ARC Ride scaling rapidly. The vehicles exist on Kenyan roads today. Distributed high-capacity charging infrastructure does not. Commercial Plus is built directly into that gap.
-              </p>
-            </div>
-          </div>
-        </article>
-        <article class="rounded-card bg-white p-6 md:p-7">
-          <div class="flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-6">
-            <p class="text-3xl font-bold text-navy shrink-0 w-24">2024</p>
-            <div class="flex-1">
-              <h3 class="text-h3 text-navy-dark">LFP battery price crossed $100 per kWh</h3>
-              <p class="mt-2 text-text-mid leading-relaxed">
-                Lithium iron phosphate pack prices crossed below the $100/kWh threshold. A 1.5 kWh Starter Pod becomes financeable at KSh 5,472 per month on Lipa Pole Pole. A 1 MWh Commercial Plus block becomes commercially mortgageable. The economics that used to require a grant now run on customer revenue.
-              </p>
-            </div>
-          </div>
-        </article>
-        <article class="rounded-card bg-white p-6 md:p-7">
-          <div class="flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-6">
-            <p class="text-3xl font-bold text-navy shrink-0 w-24">2024</p>
-            <div class="flex-1">
-              <h3 class="text-h3 text-navy-dark">Kenya Net Metering Regulations gazetted</h3>
-              <p class="mt-2 text-text-mid leading-relaxed">
-                Together with the National Energy Compact targeting 1.8 GW of wind and solar by 2030, this is the most enabling regulatory environment Kenya's distributed energy sector has seen. EPRA licensing, net-metering rules, and the policy framework around grid interconnection are all aligned at the same moment.
-              </p>
-            </div>
-          </div>
-        </article>
+
+      <div class="relative">
+        <div aria-hidden="true" class="hidden md:block absolute top-12 left-[8%] right-[8%] h-px bg-hairline"></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-12">
+          <article class="relative">
+            <p class="text-3xl font-bold text-amber mb-6">2024</p>
+            <div class="relative z-10 h-3 w-3 rounded-full bg-amber mb-6 hidden md:block"></div>
+            <h3 class="text-h3 text-navy-dark mb-3">EV vehicles deployed at scale</h3>
+            <p class="text-text-mid leading-relaxed">
+              BasiGo electric buses on Nairobi routes. Roam and Spiro electric motorbikes in fleet service. Ampersand swap stations live. ARC Ride scaling rapidly. The vehicles exist on Kenyan roads today. Distributed high-capacity charging infrastructure does not. Commercial Plus is built directly into that gap.
+            </p>
+          </article>
+          <article class="relative">
+            <p class="text-3xl font-bold text-amber mb-6">2024</p>
+            <div class="relative z-10 h-3 w-3 rounded-full bg-amber mb-6 hidden md:block"></div>
+            <h3 class="text-h3 text-navy-dark mb-3">LFP battery price crossed $100 per kWh</h3>
+            <p class="text-text-mid leading-relaxed">
+              Lithium iron phosphate pack prices crossed below the $100/kWh threshold. A 1.5 kWh Starter Pod becomes financeable at KSh 5,472 per month on Lipa Pole Pole. A 1 MWh Commercial Plus block becomes commercially mortgageable. The economics that used to require a grant now run on customer revenue.
+            </p>
+          </article>
+          <article class="relative">
+            <p class="text-3xl font-bold text-amber mb-6">2024</p>
+            <div class="relative z-10 h-3 w-3 rounded-full bg-amber mb-6 hidden md:block"></div>
+            <h3 class="text-h3 text-navy-dark mb-3">Kenya Net Metering Regulations gazetted</h3>
+            <p class="text-text-mid leading-relaxed">
+              Together with the National Energy Compact targeting 1.8 GW of wind and solar by 2030, this is the most enabling regulatory environment Kenya's distributed energy sector has seen. EPRA licensing, net-metering rules, and the policy framework around grid interconnection are all aligned at the same moment.
+            </p>
+          </article>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Strategic roadmap: three operating phases + 2030 targets -->
+  <!-- STRATEGIC ROADMAP — kept (already editorial), tightened spacing -->
   <section class="bg-navy-dark text-white">
-    <div class="container-page section">
+    <div class="container-page py-20 md:py-28">
       <div class="max-w-3xl mb-12 md:mb-16">
         <p class="text-xs uppercase tracking-[0.18em] font-semibold text-amber mb-4">Strategic roadmap</p>
         <h2 class="text-h2-sm md:text-h1 text-white leading-[1.1]">Three operating phases. One distributed-infrastructure thesis.</h2>
@@ -116,140 +110,127 @@ import { cities } from '../../data/cities';
         </p>
       </div>
 
-      <div class="space-y-px bg-white/10 border border-white/10 rounded-card overflow-hidden">
-        <article class="bg-navy-dark p-8 md:p-10">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div class="lg:col-span-3">
-              <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-2">Phase 1</p>
-              <p class="text-2xl font-bold text-white">2024 to 2027</p>
-            </div>
-            <div class="lg:col-span-9">
-              <h3 class="text-h3 text-white mb-3">Distributed solar plus battery storage.</h3>
-              <p class="text-white/80 leading-relaxed">
-                The Neura Pod ships across four standardised tiers, from a 550 W Starter to a 13.2 kWp Commercial system with borehole capability to 3 km. Battery energy storage system consultancy and EPC runs alongside, sized up to approximately 10 MWh of installed capacity for commercial and industrial sites with backup, peak-shaving, or solar-integration requirements.
-              </p>
-            </div>
+      <div class="space-y-10 md:space-y-12 max-w-5xl">
+        <article class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-8 border-t border-white/15">
+          <div class="lg:col-span-3">
+            <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-2">Phase 1</p>
+            <p class="text-3xl font-bold text-white">2024 to 2027</p>
+          </div>
+          <div class="lg:col-span-9">
+            <h3 class="text-h3 text-white mb-3">Distributed solar plus battery storage.</h3>
+            <p class="text-white/80 leading-relaxed">
+              The Neura Pod ships across four standardised tiers, from a 550 W Starter to a 13.2 kWp Commercial system with borehole capability to 3 km. Battery energy storage system consultancy and EPC runs alongside, sized up to approximately 10 MWh of installed capacity for commercial and industrial sites with backup, peak-shaving, or solar-integration requirements.
+            </p>
           </div>
         </article>
 
-        <article class="bg-navy-dark p-8 md:p-10">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div class="lg:col-span-3">
-              <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-2">Phase 2</p>
-              <p class="text-2xl font-bold text-white">2027 to 2029</p>
-            </div>
-            <div class="lg:col-span-9">
-              <h3 class="text-h3 text-white mb-3">Neura Pod plus Starlink connectivity bundles.</h3>
-              <p class="text-white/80 leading-relaxed">
-                Connectivity becomes part of the unit. The Neura Pod ships with managed satellite internet pre-integrated, so a remote site operates as a combined power-and-connectivity node from a single installation. The same regional engineering team continues to service the system across its life.
-              </p>
-            </div>
+        <article class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-8 border-t border-white/15">
+          <div class="lg:col-span-3">
+            <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-2">Phase 2</p>
+            <p class="text-3xl font-bold text-white">2027 to 2029</p>
+          </div>
+          <div class="lg:col-span-9">
+            <h3 class="text-h3 text-white mb-3">Neura Pod plus Starlink connectivity bundles.</h3>
+            <p class="text-white/80 leading-relaxed">
+              Connectivity becomes part of the unit. The Neura Pod ships with managed satellite internet pre-integrated, so a remote site operates as a combined power-and-connectivity node from a single installation. The same regional engineering team continues to service the system across its life.
+            </p>
           </div>
         </article>
 
-        <article class="bg-navy-dark p-8 md:p-10">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div class="lg:col-span-3">
-              <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-2">Phase 3</p>
-              <p class="text-2xl font-bold text-white">2029 to 2031</p>
-            </div>
-            <div class="lg:col-span-9">
-              <h3 class="text-h3 text-white mb-3">PowerPod and MegaPod for distributed compute.</h3>
-              <p class="text-white/80 leading-relaxed">
-                The Neura Pod architecture extends into edge compute infrastructure. PowerPod and MegaPod serve as compute and storage nodes in distributed locations where grid stability and connectivity have historically constrained where workloads can run. Power, connectivity, and compute, on the same installation footprint.
-              </p>
-            </div>
+        <article class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-8 border-t border-white/15">
+          <div class="lg:col-span-3">
+            <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-2">Phase 3</p>
+            <p class="text-3xl font-bold text-white">2029 to 2031</p>
+          </div>
+          <div class="lg:col-span-9">
+            <h3 class="text-h3 text-white mb-3">PowerPod and MegaPod for distributed compute.</h3>
+            <p class="text-white/80 leading-relaxed">
+              The Neura Pod architecture extends into edge compute infrastructure. PowerPod and MegaPod serve as compute and storage nodes in distributed locations where grid stability and connectivity have historically constrained where workloads can run. Power, connectivity, and compute, on the same installation footprint.
+            </p>
           </div>
         </article>
       </div>
 
-      <div class="mt-12 md:mt-16">
-        <p class="text-xs uppercase tracking-[0.18em] font-semibold text-amber mb-6">2030 targets</p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <p class="text-4xl md:text-5xl font-bold text-white leading-none tracking-tight">1,000,000<span class="text-amber">+</span></p>
-            <p class="mt-3 text-white/80 leading-relaxed">Kenyans powered on Neura Pod storage.</p>
-          </div>
-          <div>
-            <p class="text-4xl md:text-5xl font-bold text-white leading-none tracking-tight">47</p>
-            <p class="mt-3 text-white/80 leading-relaxed">Counties under Precifarm operating presence.</p>
-          </div>
-          <div>
-            <p class="text-4xl md:text-5xl font-bold text-white leading-none tracking-tight">500,000<span class="text-amber">+</span></p>
-            <p class="mt-3 text-white/80 leading-relaxed">Tonnes of CO2 avoided across the installed fleet.</p>
-          </div>
-        </div>
+      <div class="mt-16 md:mt-20 pt-10 border-t border-white/15">
+        <p class="text-xs uppercase tracking-[0.18em] font-semibold text-amber mb-8">2030 targets</p>
+        <MetricBand
+          variant="navy"
+          size="lg"
+          metrics={[
+            { value: '1,000,000+', label: 'Kenyans powered on Neura Pod storage.' },
+            { value: '47', label: 'Counties under Precifarm operating presence.' },
+            { value: '500,000+', label: 'Tonnes of CO2 avoided across the installed fleet.' },
+          ]}
+        />
       </div>
     </div>
   </section>
 
-  <!-- Who we serve (market context) -->
-  <section class="bg-white">
-    <div class="container-page section">
-      <div class="max-w-3xl mb-10 md:mb-12">
-        <p class="eyebrow mb-3">Who we serve</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Every Kenyan household, SME, institution, and EV fleet.</h2>
-        <p class="mt-4 text-lg text-text-mid leading-relaxed">
-          Four packages mapped to four market segments. KNBS data sets the bottom-up scale; our operating footprint sets the path.
-        </p>
-      </div>
-      <div class="overflow-x-auto -mx-5 md:mx-0 px-5 md:px-0">
-        <table class="w-full min-w-[640px] border-collapse text-sm">
-          <thead>
-            <tr>
-              <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider border-b-2 border-navy">Segment</th>
-              <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider border-b-2 border-navy">Scale</th>
-              <th scope="col" class="text-left p-4 font-semibold text-text-muted text-xs uppercase tracking-wider border-b-2 border-navy">Precifarm package</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="bg-row-alt">
-              <th scope="row" class="text-left p-4 font-semibold text-navy-dark align-top">Off-grid and grid-unreliable households</th>
-              <td class="p-4 text-text-mid align-top">12.1 million households<br /><span class="text-xs text-text-muted">KNBS</span></td>
-              <td class="p-4 text-text-mid align-top">Starter and Family</td>
-            </tr>
-            <tr class="bg-white">
-              <th scope="row" class="text-left p-4 font-semibold text-navy-dark align-top">Kenyan MSMEs</th>
-              <td class="p-4 text-text-mid align-top">1.56 million enterprises<br /><span class="text-xs text-text-muted">KNBS</span></td>
-              <td class="p-4 text-text-mid align-top">Family and Commercial</td>
-            </tr>
-            <tr class="bg-row-alt">
-              <th scope="row" class="text-left p-4 font-semibold text-navy-dark align-top">Schools, clinics, agricultural cooperatives</th>
-              <td class="p-4 text-text-mid align-top">Tens of thousands of sites</td>
-              <td class="p-4 text-text-mid align-top">Commercial and Commercial Plus</td>
-            </tr>
-            <tr class="bg-white">
-              <th scope="row" class="text-left p-4 font-semibold text-navy-dark align-top">Hospitality and fuel retail</th>
-              <td class="p-4 text-text-mid align-top">Hundreds of EV-ready sites</td>
-              <td class="p-4 text-text-mid align-top">Commercial Plus</td>
-            </tr>
-            <tr class="bg-row-alt">
-              <th scope="row" class="text-left p-4 font-semibold text-navy-dark align-top">EV fleet operators and charging hubs</th>
-              <td class="p-4 text-text-mid align-top">Rapidly expanding fleets</td>
-              <td class="p-4 text-text-mid align-top">Commercial Plus</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <!-- WHO WE SERVE — clean table, no boxes -->
+  <NarrativeSection
+    background="white"
+    eyebrow="Who we serve"
+    headline="Every Kenyan household, SME, institution, and EV fleet."
+    lede="Four packages mapped to four market segments. KNBS data sets the bottom-up scale; our operating footprint sets the path."
+  >
+    <div class="overflow-x-auto -mx-5 md:mx-0 px-5 md:px-0">
+      <table class="w-full min-w-[640px] text-base">
+        <thead>
+          <tr class="border-b border-navy">
+            <th scope="col" class="text-left py-4 font-semibold text-text-muted text-xs uppercase tracking-wider">Segment</th>
+            <th scope="col" class="text-left py-4 font-semibold text-text-muted text-xs uppercase tracking-wider">Scale</th>
+            <th scope="col" class="text-left py-4 font-semibold text-text-muted text-xs uppercase tracking-wider">Precifarm package</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-hairline">
+          <tr>
+            <th scope="row" class="text-left py-5 pr-6 font-semibold text-navy-dark align-top">Off-grid and grid-unreliable households</th>
+            <td class="py-5 pr-6 text-text-mid align-top">12.1 million households<br /><span class="text-xs text-text-muted">KNBS</span></td>
+            <td class="py-5 text-text-mid align-top">Starter and Family</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left py-5 pr-6 font-semibold text-navy-dark align-top">Kenyan MSMEs</th>
+            <td class="py-5 pr-6 text-text-mid align-top">1.56 million enterprises<br /><span class="text-xs text-text-muted">KNBS</span></td>
+            <td class="py-5 text-text-mid align-top">Family and Commercial</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left py-5 pr-6 font-semibold text-navy-dark align-top">Schools, clinics, agricultural cooperatives</th>
+            <td class="py-5 pr-6 text-text-mid align-top">Tens of thousands of sites</td>
+            <td class="py-5 text-text-mid align-top">Commercial and Commercial Plus</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left py-5 pr-6 font-semibold text-navy-dark align-top">Hospitality and fuel retail</th>
+            <td class="py-5 pr-6 text-text-mid align-top">Hundreds of EV-ready sites</td>
+            <td class="py-5 text-text-mid align-top">Commercial Plus</td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-left py-5 pr-6 font-semibold text-navy-dark align-top">EV fleet operators and charging hubs</th>
+            <td class="py-5 pr-6 text-text-mid align-top">Rapidly expanding fleets</td>
+            <td class="py-5 text-text-mid align-top">Commercial Plus</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </section>
+  </NarrativeSection>
 
-  <!-- Founding team -->
+  <!-- FOUNDING TEAM — editorial layout, no card chrome -->
   <section class="bg-paper">
-    <div class="container-page section">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center mb-12 md:mb-16">
+    <div class="container-page py-20 md:py-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start mb-12 md:mb-16">
         <div class="lg:col-span-7">
-          <p class="eyebrow mb-3">The founding team</p>
-          <h2 class="text-h2-sm md:text-h1 text-navy-dark">The three engineers who founded the company still share one workshop and one accountability standard.</h2>
-          <p class="mt-4 text-lg text-text-mid leading-relaxed">
+          <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">The founding team</p>
+          <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1] mb-6">
+            The three engineers who founded the company still share one workshop and one accountability standard.
+          </h2>
+          <p class="text-lg text-text-mid leading-relaxed">
             Precifarm was founded by three engineers who agreed that a solar contractor designed to stay after the install must be built that way from day one. We share a workshop, a hiring bar, and a five-year obligation to every customer whose system we commission.
           </p>
         </div>
         <div class="lg:col-span-5">
-          <div class="relative overflow-hidden rounded-card shadow-xl ring-1 ring-black/5">
+          <div class="relative overflow-hidden rounded-card">
             <img
               src="/images/context/engineer-portrait.jpg"
-              alt="A finished installation of black monocrystalline solar panels arranged across the tiled roof of a Kenyan home, with the rooftops of the surrounding neighbourhood and a hillside ridge visible in the background. Photographs like this one are what we mean when we talk about 'distributed solar': individual systems on individual buildings across the country, each one carrying the same engineering standard and the same five-year service commitment as the largest projects Precifarm operates."
+              alt="A finished installation of black monocrystalline solar panels arranged across the tiled roof of a Kenyan home, with the rooftops of the surrounding neighbourhood and a hillside ridge visible in the background."
               width="1600"
               height="1067"
               loading="lazy"
@@ -259,55 +240,69 @@ import { cities } from '../../data/cities';
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {team.map((member) => (
-          <TeamCard
-            name={member.name}
-            role={member.role}
-            bio={member.bio}
-            verified={member.verified}
-          />
+
+      <div class="space-y-12 md:space-y-16">
+        {team.map((member, i) => (
+          <article class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 pt-8 border-t border-hairline">
+            <div class="md:col-span-4">
+              <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-3">{String(i + 1).padStart(2, '0')}</p>
+              <h3 class="text-h2-sm text-navy-dark leading-tight">{member.name}</h3>
+              <p class="mt-2 text-green font-semibold">{member.role}</p>
+            </div>
+            <div class="md:col-span-8">
+              <p class="text-text-mid leading-relaxed">{member.bio}</p>
+              {!member.verified && (
+                <p class="mt-3 text-xs text-text-muted italic">Full bio pending confirmation.</p>
+              )}
+            </div>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Six cities -->
-  <section class="bg-white">
-    <div class="container-page section">
-      <div class="max-w-3xl mb-10 md:mb-12">
-        <p class="eyebrow mb-3">Six cities, one team</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Resident engineering, regional depots.</h2>
-        <p class="mt-4 text-lg text-text-mid leading-relaxed">
-          Nairobi headquarters plus five regional field hubs. Every installed system sits within a same-day drive of its regional depot.
-        </p>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {cities.map((city) => (
-          <CityCard city={city} />
-        ))}
-      </div>
+  <!-- SIX CITIES — minimal pill row, link out to map on /cities/ -->
+  <NarrativeSection
+    background="white"
+    eyebrow="Six cities, one team"
+    headline="Resident engineering teams, regional spare-parts depots."
+    lede="Nairobi headquarters plus five regional field hubs. Every installed system sits within a same-day drive of its regional depot."
+  >
+    <div class="flex flex-wrap gap-3 mb-8">
+      {cities.map((city) => (
+        <a href={`/cities/${city.slug}/`} class={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold border transition-colors ${city.role === 'HQ' ? 'border-amber bg-callout-amber text-navy-dark hover:bg-amber hover:text-navy-dark' : 'border-hairline bg-white text-navy hover:bg-navy hover:text-white'}`}>
+          {city.name}
+          {city.role === 'HQ' && <span class="text-xs uppercase tracking-wider opacity-70">·HQ</span>}
+        </a>
+      ))}
     </div>
-  </section>
+    <p>
+      <a href="/cities/" class="inline-flex items-center gap-1.5 font-semibold text-navy hover:underline">
+        See the operating footprint on a map
+        <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 16 16" fill="none">
+          <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </p>
+  </NarrativeSection>
 
-  <!-- Operating principle prose -->
-  <section class="bg-paper">
-    <div class="container-page section">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
-        <div class="lg:col-span-1">
-          <Callout variant="navy" eyebrow="The operating principle" asQuote={true}>
-            {company.operatingPrinciple}
-          </Callout>
-        </div>
-        <div class="lg:col-span-2 prose-precifarm">
+  <!-- OPERATING PRINCIPLE — closing prose moment with the navy quote -->
+  <section class="bg-navy-dark text-white">
+    <div class="container-page py-24 md:py-32">
+      <div class="max-w-4xl">
+        <p class="text-xs uppercase tracking-[0.18em] font-semibold text-amber mb-8">In closing</p>
+        <blockquote class="text-2xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-white">
+          {company.operatingPrinciple}
+        </blockquote>
+        <div class="mt-10 max-w-3xl space-y-5 text-lg text-white/80 leading-relaxed">
           <p>
-            Kenya's electrical infrastructure is becoming distributed. Households are stepping out from under unreliable grid supply. Schools and clinics are adopting solar because the grid alone is no longer a credible base-load promise. SMEs and cooperatives are sizing systems against productive loads they could never run before. EV operators are building charging mini-grids ahead of the curve. The country is wiring itself differently, and the contractors who carry that wiring forward will determine whether it stays running for the next decade.
+            Kenya's electrical infrastructure is becoming distributed. Households are stepping out from under unreliable grid supply. Schools and clinics are adopting solar because the grid alone is no longer a credible base-load promise. SMEs and cooperatives are sizing systems against productive loads they could never run before. EV operators are building charging mini-grids ahead of the curve. The country is wiring itself differently.
           </p>
           <p>
             We started Precifarm because the contractor density Kenya needs has not yet been built. The country has plenty of installers; what it needs is operators. Engineering teams that show up after the install. Depots stocked in the regions where systems actually live. Five-year service commitments backed by the same hands that built the system. That is the gap we are filling.
           </p>
-          <p>
-            The operational capacity is what scales us, not the cap table. Every additional Precifarm city is an additional resident engineering team in a region where there was no service infrastructure before, with the institutional knowledge of having carried real systems through years of operation rather than transferring them to a third party at commissioning. We grow on revenue, not on capital. We answer to the customers who pay our bills. That is the discipline that turns a five-year service commitment from a marketing promise into a credible operational standard.
+          <p class="text-white font-semibold">
+            The operational capacity is what scales us, not the cap table. Every additional Precifarm city is an additional resident engineering team in a region where there was no service infrastructure before. We grow on revenue, not on capital. We answer to the customers who pay our bills.
           </p>
         </div>
       </div>
@@ -315,7 +310,7 @@ import { cities } from '../../data/cities';
   </section>
 
   <CTASection
-    variant="dark"
+    variant="default"
     headline="Send us your site. We will reply with a design."
     body="Two business days from your enquiry to a written design and quote. No commitment, no pressure."
     primaryCta={{ href: '/contact/', label: 'Get a quote' }}

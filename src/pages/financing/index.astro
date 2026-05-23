@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
+import NarrativeSection from '../../components/NarrativeSection.astro';
 import FAQ from '../../components/FAQ.astro';
 import CTASection from '../../components/CTASection.astro';
-import Callout from '../../components/Callout.astro';
 import StructuredData from '../../components/StructuredData.astro';
 
 const financingFaqs = [
@@ -36,6 +36,15 @@ const financingFaqs = [
     a: 'Yes. The Neura Pod platform is the same across all four packages, so the upgrade path is straightforward. We will price the upgrade against the new design when you are ready.',
   },
 ];
+
+const banks = [
+  { name: 'Equity Bank', segment: 'Family tier, six-city coverage' },
+  { name: 'KCB', segment: 'Family and Commercial' },
+  { name: 'Co-op Bank', segment: 'SACCO-adjacent and cooperative-sector lending' },
+  { name: 'SACCO partners', segment: 'Member-based lending across regions' },
+  { name: 'KCB Clean Energy', segment: 'Dedicated clean-energy facility for Commercial' },
+  { name: 'Stanbic Solar PV', segment: 'Solar-PV product, Commercial and Commercial Plus' },
+];
 ---
 <BaseLayout
   title="Financing: how customers pay for Precifarm"
@@ -43,6 +52,7 @@ const financingFaqs = [
   canonicalPath="/financing/"
 >
   <StructuredData slot="head" schema="faqPage" faqs={financingFaqs} />
+
   <Hero
     eyebrow="Financing"
     headline="How customers pay for Precifarm."
@@ -51,48 +61,50 @@ const financingFaqs = [
     secondaryCta={{ href: '/products/', label: 'See the packages' }}
   />
 
-  <!-- Lipa Pole Pole -->
+  <!-- LIPA POLE POLE — editorial split, no card chrome -->
   <section class="bg-white">
-    <div class="container-page section">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
-        <div class="lg:col-span-2">
-          <p class="eyebrow mb-3">Starter tier</p>
-          <h2 class="text-h2-sm md:text-h1 text-navy-dark mb-5">Lipa Pole Pole.</h2>
-          <div class="prose-precifarm">
+    <div class="container-page py-20 md:py-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-7">
+          <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">Starter tier · Lipa Pole Pole</p>
+          <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1] mb-6">
+            A structured monthly-payment plan, paid in M-Pesa, owned at the end.
+          </h2>
+          <div class="space-y-5 text-lg text-text-mid leading-relaxed">
             <p>
               Lipa Pole Pole is the structured monthly-payment plan for the Precifarm Starter package. It is built for households and renters who want immediate independence from blackouts without paying KSh 95,000 in one go.
             </p>
             <p>
               The terms are straightforward. You pay a deposit of KSh 12,500. The Starter system is installed on site. You then pay KSh 5,472 per month over 24 months via M-Pesa. After 24 months, the system is fully yours and the payments stop.
             </p>
-            <p>
+            <p class="text-navy-dark font-semibold">
               No remote shut-off. No hidden fees. If you miss a payment, we call before anything else.
             </p>
           </div>
         </div>
 
-        <aside class="rounded-card bg-callout-amber border border-amber p-6 md:p-7 self-start">
-          <p class="eyebrow text-navy-dark mb-3">Lipa Pole Pole terms</p>
-          <dl class="space-y-4 text-sm">
+        <aside class="lg:col-span-5 lg:border-l lg:border-hairline lg:pl-10">
+          <p class="text-xs uppercase tracking-[0.14em] font-semibold text-amber mb-6">Lipa Pole Pole terms</p>
+          <dl class="space-y-6">
             <div>
-              <dt class="text-text-mid text-xs uppercase tracking-wider font-semibold">Deposit</dt>
-              <dd class="mt-1 text-navy-dark font-semibold text-lg">KSh 12,500</dd>
+              <dt class="text-sm text-text-muted font-semibold">Deposit</dt>
+              <dd class="mt-1 text-2xl font-bold text-navy-dark">KSh 12,500</dd>
             </div>
             <div>
-              <dt class="text-text-mid text-xs uppercase tracking-wider font-semibold">Monthly</dt>
-              <dd class="mt-1 text-navy-dark font-semibold text-lg">KSh 5,472</dd>
+              <dt class="text-sm text-text-muted font-semibold">Monthly</dt>
+              <dd class="mt-1 text-2xl font-bold text-navy-dark">KSh 5,472</dd>
             </div>
             <div>
-              <dt class="text-text-mid text-xs uppercase tracking-wider font-semibold">Term</dt>
-              <dd class="mt-1 text-navy-dark font-semibold text-lg">24 months</dd>
+              <dt class="text-sm text-text-muted font-semibold">Term</dt>
+              <dd class="mt-1 text-2xl font-bold text-navy-dark">24 months</dd>
             </div>
             <div>
-              <dt class="text-text-mid text-xs uppercase tracking-wider font-semibold">Collection</dt>
-              <dd class="mt-1 text-navy-dark font-semibold text-lg">M-Pesa</dd>
+              <dt class="text-sm text-text-muted font-semibold">Collection</dt>
+              <dd class="mt-1 text-2xl font-bold text-navy-dark">M-Pesa</dd>
             </div>
-            <div class="pt-3 border-t border-amber/40">
-              <dt class="text-text-mid text-xs uppercase tracking-wider font-semibold">Total over term</dt>
-              <dd class="mt-1 text-navy-dark font-semibold text-lg">~ KSh 143,800</dd>
+            <div class="pt-5 border-t border-hairline">
+              <dt class="text-sm text-text-muted font-semibold">Total over term</dt>
+              <dd class="mt-1 text-2xl font-bold text-amber">~ KSh 143,800</dd>
             </div>
           </dl>
         </aside>
@@ -100,75 +112,71 @@ const financingFaqs = [
     </div>
   </section>
 
-  <!-- Bank partner financing -->
-  <section class="bg-paper">
-    <div class="container-page section">
-      <div class="max-w-3xl mb-10 md:mb-12">
-        <p class="eyebrow mb-3">Family, Commercial, Commercial Plus</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Bank partner financing.</h2>
-        <p class="mt-4 text-lg text-text-mid leading-relaxed">
-          Family, Commercial, and Commercial Plus customers typically arrange their financing through a partner bank. Precifarm does not lend and does not take a margin on the loan.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {[
-          { name: 'Equity Bank', note: 'Family-tier loans, common across all six operating cities.' },
-          { name: 'KCB', note: 'General financing across Family and Commercial.' },
-          { name: 'Co-op Bank', note: 'SACCO-adjacent financing and cooperative-sector lending.' },
-          { name: 'SACCO partners', note: 'Member-based lending common for Family and small Commercial.' },
-          { name: 'KCB Clean Energy', note: 'Dedicated clean-energy financing window for Commercial.' },
-          { name: 'Stanbic Solar PV', note: 'Stanbic\'s solar-PV financing product, sized for Commercial and Commercial Plus.' },
-        ].map((bank) => (
-          <article class="rounded-card border border-hairline bg-white p-5">
-            <h3 class="text-h3 text-navy-dark">{bank.name}</h3>
-            <p class="mt-2 text-sm text-text-mid leading-relaxed">{bank.note}</p>
-          </article>
-        ))}
-      </div>
-
-      <Callout variant="green" eyebrow="How it works">
-        <ol class="list-decimal pl-5 space-y-2 text-text-mid leading-relaxed">
-          <li>You contact us and we run a site assessment.</li>
-          <li>You receive a written design and a firm quote.</li>
-          <li>You take the quote to the partner bank of your choice and arrange the loan.</li>
-          <li>The bank disburses to Precifarm. We install the system on your schedule.</li>
-          <li>You repay the bank on the terms you agreed. Precifarm services the system for the next five years.</li>
-        </ol>
-      </Callout>
-    </div>
-  </section>
-
-  <!-- Cash and M-Pesa -->
-  <section class="bg-white">
-    <div class="container-page section">
-      <div class="max-w-3xl">
-        <p class="eyebrow mb-3">Other payment options</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark mb-6">Cash, M-Pesa, bank transfer.</h2>
-        <div class="prose-precifarm">
-          <p>
-            Any of the four packages can be paid cash up front. M-Pesa and bank transfer are both accepted, with the same written quote and the same five-year service commitment regardless of payment method.
-          </p>
-          <p>
-            For Commercial and Commercial Plus deployments, customers occasionally combine methods, for instance a 30% cash deposit with the balance from bank financing. We are flexible on structure provided the total is settled before commissioning.
-          </p>
+  <!-- PARTNER BANKS — inline list, no boxes -->
+  <NarrativeSection
+    background="paper"
+    eyebrow="Family, Commercial, Commercial Plus"
+    headline="Bank partner financing."
+    lede="Family, Commercial, and Commercial Plus customers typically arrange their financing through a partner bank. Precifarm does not lend and does not take a margin on the loan."
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3 max-w-4xl mb-12">
+      {banks.map((bank) => (
+        <div class="flex items-baseline justify-between gap-6 py-3 border-b border-hairline">
+          <span class="text-navy-dark font-semibold">{bank.name}</span>
+          <span class="text-sm text-text-mid text-right">{bank.segment}</span>
         </div>
-      </div>
+      ))}
     </div>
-  </section>
 
-  <!-- FAQs -->
-  <section class="bg-paper">
-    <div class="container-page section">
-      <div class="max-w-3xl mb-8 md:mb-10">
-        <p class="eyebrow mb-3">Financing questions</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark">Common questions, direct answers.</h2>
-      </div>
-      <div class="max-w-4xl">
-        <FAQ items={financingFaqs} />
-      </div>
+    <!-- 5-step process timeline for bank financing -->
+    <div class="max-w-5xl">
+      <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-6">How bank financing works</p>
+      <ol class="relative space-y-8">
+        <div aria-hidden="true" class="absolute top-2 left-4 bottom-2 w-px bg-hairline"></div>
+        {[
+          { n: 1, t: 'You contact us', b: 'A site assessment is scheduled and an engineer is assigned by city.' },
+          { n: 2, t: 'You receive the written design + quote', b: 'A sized recommendation and a firm cash price, issued within two business days of the assessment.' },
+          { n: 3, t: 'You take the quote to the partner bank', b: 'You arrange the loan directly with Equity, KCB, Co-op, KCB Clean Energy, Stanbic Solar PV, or your SACCO. We provide whatever supporting documentation the bank needs.' },
+          { n: 4, t: 'The bank disburses to Precifarm', b: 'We install the system on the schedule the bank has approved.' },
+          { n: 5, t: 'You repay the bank; we service the system', b: 'For the next five years, the same regional engineering team services the system. Repayment runs through the bank on the terms you agreed.' },
+        ].map((step) => (
+          <li class="relative pl-12">
+            <span class="absolute left-0 top-0 z-10 h-8 w-8 rounded-full bg-amber text-navy-dark flex items-center justify-center font-bold text-sm">{step.n}</span>
+            <h3 class="text-h3 text-navy-dark mb-1.5">{step.t}</h3>
+            <p class="text-text-mid leading-relaxed">{step.b}</p>
+          </li>
+        ))}
+      </ol>
     </div>
-  </section>
+  </NarrativeSection>
+
+  <!-- CASH / M-PESA / BANK TRANSFER -->
+  <NarrativeSection
+    background="white"
+    eyebrow="Other payment options"
+    headline="Cash, M-Pesa, or bank transfer."
+    maxWidth="prose"
+  >
+    <div class="max-w-2xl space-y-5 text-lg text-text-mid leading-relaxed">
+      <p>
+        Any of the four packages can be paid cash up front. M-Pesa and bank transfer are both accepted, with the same written quote and the same five-year service commitment regardless of payment method.
+      </p>
+      <p>
+        For Commercial and Commercial Plus deployments, customers occasionally combine methods, for instance a 30% cash deposit with the balance from bank financing. We are flexible on structure provided the total is settled before commissioning.
+      </p>
+    </div>
+  </NarrativeSection>
+
+  <!-- FAQ -->
+  <NarrativeSection
+    background="paper"
+    eyebrow="Financing questions"
+    headline="Common questions, direct answers."
+  >
+    <div class="max-w-4xl">
+      <FAQ items={financingFaqs} />
+    </div>
+  </NarrativeSection>
 
   <CTASection
     variant="dark"
