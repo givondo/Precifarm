@@ -22,6 +22,11 @@ export type Package = {
   whatYouGet: string[];
   faqs: { q: string; a: string }[];
   image: { src: string; alt: string };
+  // Optional override used on small card surfaces (PackageCard on the homepage
+  // and the /products/ overview grid). If unset, the card falls back to image.
+  // Used so a product can carry a clean studio kit shot on the card and a
+  // location-context photo on the detail-page hero.
+  cardImage?: { src: string; alt: string };
 };
 
 export const packages: Package[] = [
@@ -47,6 +52,10 @@ export const packages: Package[] = [
     image: {
       src: '/images/packages/starter-home.jpg',
       alt: 'Solar panels mounted on the corrugated iron roof of a rural Kenyan home at golden hour, with the Precifarm service vehicle parked along the dirt road behind and acacia trees scattered across the landscape. This is what the Starter package looks like in its real operating environment: small enough to fit on a single roof, sized to take a single-room household off-grid, and installed in a single working day by the regional engineering crew that will return to service the system for the next five years.',
+    },
+    cardImage: {
+      src: '/images/packages/starter-card.jpg',
+      alt: 'The complete Precifarm Starter kit assembled for delivery: a single high-efficiency monocrystalline solar panel standing upright, a Vestwoods by Haier Energy lithium power station, and a coiled set of red and black PV cables ready for the wall-mount installation.',
     },
     whatYouGet: [
       'One 550 W solar panel with mounting hardware',
