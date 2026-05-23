@@ -5,7 +5,7 @@ import EditorialSplit from '../../components/EditorialSplit.astro';
 import FAQ from '../../components/FAQ.astro';
 import CTASection from '../../components/CTASection.astro';
 import StructuredData from '../../components/StructuredData.astro';
-import { packages, commercialPlusArchetypes } from '../../data/packages';
+import { packages, commercialPlusArchetypes, getStartingPriceDisplay, getCashPriceDisplay, isQuoteOnly } from '../../data/packages';
 import type { Package } from '../../data/packages';
 
 export function getStaticPaths() {
@@ -22,6 +22,9 @@ interface Props {
 const { pkg } = Astro.props;
 const otherPackages = packages.filter((p) => p.slug !== pkg.slug);
 const isCommercialPlus = pkg.slug === 'commercial-plus';
+const quoteOnly = isQuoteOnly(pkg);
+const startingDisplay = getStartingPriceDisplay(pkg);
+const cashDisplay = getCashPriceDisplay(pkg);
 ---
 <BaseLayout
   title={`${pkg.name}: ${pkg.capacity}`}
@@ -66,8 +69,8 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
             <dd class="mt-1.5 text-base sm:text-lg font-bold text-white">{pkg.capacity}</dd>
           </div>
           <div>
-            <dt class="text-xs uppercase tracking-wider text-amber font-semibold">Starting</dt>
-            <dd class="mt-1.5 text-base sm:text-lg font-bold text-white">{pkg.startingPrice}</dd>
+            <dt class="text-xs uppercase tracking-wider text-amber font-semibold">{quoteOnly ? 'Pricing' : 'Starting'}</dt>
+            <dd class="mt-1.5 text-base sm:text-lg font-bold text-white">{startingDisplay}</dd>
           </div>
           <div>
             <dt class="text-xs uppercase tracking-wider text-amber font-semibold">Service tier</dt>
@@ -243,7 +246,7 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 max-w-5xl">
         <div>
           <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">Pricing</p>
-          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5 leading-[1.15]">{pkg.cashPrice}</h2>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5 leading-[1.15]">{cashDisplay}</h2>
           <p class="text-text-mid leading-relaxed">
             {isCommercialPlus
               ? 'Commercial Plus pricing is bespoke and is finalised in writing after the engineering site assessment. The principal variables are measured site load, charging infrastructure scope, storage sizing, the deployment archetype, and any grid-interconnection or net-metering requirements. Payment is accepted by bank transfer, M-Pesa enterprise, or via the partner-bank facility used for financing.'
@@ -332,7 +335,7 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
             <p class="text-xs uppercase tracking-wider font-semibold text-amber mb-2">{p.shortName}</p>
             <p class="text-h3 text-navy-dark group-hover:text-navy transition-colors">{p.name}</p>
             <p class="mt-2 text-sm text-text-mid">{p.tagline}</p>
-            <p class="mt-4 text-xs text-text-muted">{p.capacity} · {p.startingPrice}</p>
+            <p class="mt-4 text-xs text-text-muted">{p.capacity} · {getStartingPriceDisplay(p)}</p>
             <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-navy group-hover:underline">
               See {p.shortName}
               <svg aria-hidden="true" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none">

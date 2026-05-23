@@ -1,5 +1,5 @@
 ---
-import { packages } from '../data/packages';
+import { packages, getStartingPriceDisplay } from '../data/packages';
 
 type Row = {
   label: string;
@@ -16,7 +16,7 @@ const rows: Row[] = [
   { label: 'Inverter', resolve: (p) => p.inverter },
   { label: 'Panels', resolve: (p) => p.panels },
   { label: 'Service tier', resolve: (p) => p.serviceTier },
-  { label: 'Starting price', resolve: (p) => p.startingPrice, emphasis: true },
+  { label: 'Starting price', resolve: (p) => getStartingPriceDisplay(p), emphasis: true },
 ];
 
 // Check which packages have an irrigation note so we can render the caveat

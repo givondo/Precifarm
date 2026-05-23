@@ -332,3 +332,25 @@ export function getPackageBySlug(slug: PackageSlug): Package {
   if (!pkg) throw new Error(`Unknown package slug: ${slug}`);
   return pkg;
 }
+
+// Price display helpers. Only Starter and Family carry firm cash prices on
+// the public site; Commercial and Commercial Plus are sized at the site
+// assessment and the price is issued in writing afterwards. Surfacing a
+// "from" figure for those two tiers misleads on bigger configurations,
+// so they show "On quotation basis" everywhere a price would otherwise
+// render. Internal pricing remains in cashPrice / startingPrice on the
+// Package object for engineering reference and structured data.
+const QUOTE_ONLY_SLUGS: PackageSlug[] = ['commercial', 'commercial-plus'];
+const QUOTE_LABEL = 'On quotation basis';
+
+export function isQuoteOnly(pkg: Package): boolean {
+  return QUOTE_ONLY_SLUGS.includes(pkg.slug);
+}
+
+export function getStartingPriceDisplay(pkg: Package): string {
+  return isQuoteOnly(pkg) ? QUOTE_LABEL : pkg.startingPrice;
+}
+
+export function getCashPriceDisplay(pkg: Package): string {
+  return isQuoteOnly(pkg) ? QUOTE_LABEL : pkg.cashPrice;
+}

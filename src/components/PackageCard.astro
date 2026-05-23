@@ -1,5 +1,6 @@
 ---
 import type { Package } from '../data/packages';
+import { getStartingPriceDisplay, isQuoteOnly } from '../data/packages';
 
 export interface Props {
   pkg: Package;
@@ -17,6 +18,9 @@ const borderClass = highlight
 // Prefer the card-specific image (typically a clean studio kit shot) when set,
 // otherwise fall back to the package's main image (the location-context hero).
 const cardImg = pkg.cardImage ?? pkg.image;
+
+const priceDisplay = getStartingPriceDisplay(pkg);
+const quoteOnly = isQuoteOnly(pkg);
 ---
 <article class={`relative flex flex-col rounded-card bg-white ${borderClass} overflow-hidden transition-shadow hover:shadow-md`}>
   <a href={href} class="block aspect-[16/10] overflow-hidden bg-paper" tabindex="-1" aria-hidden="true">
@@ -50,8 +54,8 @@ const cardImg = pkg.cardImage ?? pkg.image;
         <dd class="mt-1 text-text-mid">{pkg.bestFor}</dd>
       </div>
       <div>
-        <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Starting</dt>
-        <dd class="mt-1 text-ink font-semibold">{pkg.startingPrice}</dd>
+        <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">{quoteOnly ? 'Pricing' : 'Starting'}</dt>
+        <dd class={`mt-1 font-semibold ${quoteOnly ? 'text-navy' : 'text-ink'}`}>{priceDisplay}</dd>
       </div>
     </dl>
 

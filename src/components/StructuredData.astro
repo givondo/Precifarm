@@ -1,5 +1,6 @@
 ---
 import type { Package } from '../data/packages';
+import { getStartingPriceDisplay } from '../data/packages';
 import { company } from '../data/company';
 import { cities } from '../data/cities';
 
@@ -80,7 +81,7 @@ if (schema === 'organization') {
       priceCurrency: 'KES',
       availability: 'https://schema.org/InStock',
       seller: { '@type': 'Organization', name: company.name },
-      description: pkg.startingPrice,
+      description: getStartingPriceDisplay(pkg),
     },
     additionalProperty: [
       { '@type': 'PropertyValue', name: 'Capacity', value: pkg.capacity },
