@@ -2,26 +2,27 @@
 
 The public marketing-and-lead-generation site for [precifarm.com](https://precifarm.com). Astro static build, no SSR, no backend services.
 
-Aligned to **Precifarm Master Brief v1.0** (May 2026). The brief is the source of truth for all content; this codebase is its implementation.
+Aligned to **Precifarm Master Brief v1.0** (May 2026). The brief is the source of truth for content; this codebase is its implementation. Where the codebase and the brief diverge, the codebase reflects later editorial decisions (recorded inline with `[VERIFY]` markers where unresolved).
 
 ---
 
 ## Stack
 
 - **[Astro 4.x](https://astro.build/)** with `output: 'static'` and `trailingSlash: 'always'`
-- **[Tailwind CSS](https://tailwindcss.com/)** via `@astrojs/tailwind`, brand palette and type ramp configured in [tailwind.config.mjs](./tailwind.config.mjs) and CSS custom properties in [src/styles/global.css](./src/styles/global.css)
+- **[Tailwind CSS](https://tailwindcss.com/)** via `@astrojs/tailwind`, brand palette and type ramp in [tailwind.config.mjs](./tailwind.config.mjs) and CSS custom properties in [src/styles/global.css](./src/styles/global.css)
 - **MDX** integration available via `@astrojs/mdx` (used by the blog index, ready for posts)
 - **TypeScript** strict mode with path aliases (`@components/*`, `@layouts/*`, `@data/*`)
 - **Sharp** for image processing and brand-asset generation
-- **Plausible Analytics** wired live for precifarm.com
+- **Plausible Analytics** wired live for `precifarm.com`
+- **Netlify Forms** for the contact and training-registration submissions, with HTML honeypot spam protection
 
-No JavaScript framework. No headless CMS. No serverless. The site is fully static and deployable to any static host.
+No JavaScript framework. No headless CMS. No serverless functions. The site is fully static and deployable to any static host.
 
 ---
 
 ## Prerequisites
 
-- **Node.js 20.x or later** (Astro 4 requires Node 18.17.1+, and the Netlify config pins `NODE_VERSION = "20"`)
+- **Node.js 20.x or later** (Astro 4 requires Node 18.17.1+, and `netlify.toml` pins `NODE_VERSION = "20"`)
 - **npm 10.x or later**
 - Git
 
@@ -43,7 +44,7 @@ npm install
 npm run dev
 ```
 
-This serves the site at `http://localhost:4321/` with hot module reload. Pass `--port` to use a different port:
+This serves at `http://localhost:4321/` with hot module reload. Pass `--port` to use a different port:
 
 ```bash
 npx astro dev --port 3000 --host
@@ -56,19 +57,19 @@ npm run build       # runs `astro check && astro build`
 npm run preview     # serves dist/ on localhost
 ```
 
-Build budget: total `dist/` should stay under ~1 MB. Largest single HTML page under 50 KB. CSS bundle under 30 KB.
+Build budget: total `dist/` should stay under ~1.5 MB. Largest single HTML page under 80 KB. CSS bundle under 30 KB.
 
 ---
 
 ## Scripts
 
-| Command           | What it does                                                    |
-| ----------------- | --------------------------------------------------------------- |
-| `npm run dev`     | Astro dev server with HMR                                       |
-| `npm run build`   | Run `astro check` then build static output to `dist/`           |
-| `npm run preview` | Serve the built `dist/` locally for sanity-checking the output  |
-| `npm run check`   | Type-check Astro files only (no build)                          |
-| `npm run assets`  | Regenerate favicons (`.svg`/`.ico`/`.png`) and `og-default.png` from `public/favicon.svg` using sharp |
+| Command           | What it does                                                                                       |
+| ----------------- | -------------------------------------------------------------------------------------------------- |
+| `npm run dev`     | Astro dev server with HMR                                                                          |
+| `npm run build`   | Run `astro check` then build static output to `dist/`                                              |
+| `npm run preview` | Serve the built `dist/` locally for sanity-checking the output                                     |
+| `npm run check`   | Type-check Astro files only (no build)                                                             |
+| `npm run assets`  | Regenerate favicons (`.svg`/`.ico`/`.png`) and `og-default.png` from `public/favicon.svg` via sharp |
 
 ---
 
@@ -80,23 +81,29 @@ Build budget: total `dist/` should stay under ~1 MB. Largest single HTML page un
 ├── tailwind.config.mjs           Brand theme extensions for Tailwind
 ├── tsconfig.json                 Strict TS + path aliases
 ├── netlify.toml                  Build command, headers, caching
+├── docs/
+│   └── investor-and-grant-memo.md  YC-format fund-raising and grant document
 ├── scripts/
 │   └── generate-assets.mjs       Brand-asset rasterisation (favicons, OG)
 ├── public/                       Served verbatim at site root
 │   ├── favicon.svg               Vector favicon (source of truth)
-│   ├── favicon.ico               Generated by `npm run assets`
+│   ├── favicon.ico / icon-*.png  Generated by `npm run assets`
 │   ├── apple-touch-icon.png      Generated by `npm run assets`
-│   ├── icon-192.png              Generated
-│   ├── icon-512.png              Generated
 │   ├── og-default.png            Generated 1200x630 OG image
-│   └── robots.txt
+│   ├── site.webmanifest          PWA manifest
+│   ├── robots.txt
+│   └── images/
+│       ├── hero/                 Homepage hero photography
+│       ├── packages/             Package card + detail-page imagery
+│       ├── installations/        Portfolio case-study photography
+│       └── products/             Sub-product imagery (e.g. solar irrigation)
 ├── src/
-│   ├── assets/                   Any future image sources processed by Astro
+│   ├── assets/                   Image sources processed by Astro (if any)
 │   ├── components/               Reusable Astro components
-│   ├── data/                     Canonical data sources (single source of truth)
-│   │   ├── packages.ts           Four packages + 5 Commercial Plus archetypes
+│   ├── data/                     Canonical data (single source of truth)
+│   │   ├── packages.ts           Four packages + Commercial Plus archetypes
 │   │   ├── cities.ts             Six operating cities
-│   │   └── company.ts            Company facts, team, beliefs, deployment steps
+│   │   └── company.ts            Company facts, beliefs, deployment steps, portfolio
 │   ├── layouts/
 │   │   └── BaseLayout.astro      Wraps every page (head, meta, header, footer)
 │   ├── pages/
@@ -105,16 +112,19 @@ Build budget: total `dist/` should stay under ~1 MB. Largest single HTML page un
 │   │   ├── sitemap.xml.ts        Static endpoint generating /sitemap.xml
 │   │   ├── about/
 │   │   ├── blog/
+│   │   ├── careers/              Hiring page with role list and mailto Apply
 │   │   ├── cities/
 │   │   │   ├── index.astro       Cities overview
 │   │   │   └── [slug].astro      Per-city dynamic route (6 pages)
-│   │   ├── contact/
+│   │   ├── contact/              Quote enquiry form + direct contact strip
 │   │   ├── financing/
 │   │   ├── how-we-work/
 │   │   ├── privacy/
 │   │   ├── products/
 │   │   │   ├── index.astro       Products overview + comparison table
-│   │   │   └── [slug].astro      Per-package dynamic route (4 pages)
+│   │   │   ├── [slug].astro      Per-package dynamic route (4 pages)
+│   │   │   └── solar-irrigation/ Dedicated page for the solar irrigation sub-product
+│   │   ├── training/             EPRA T1/T2/T3 technician training + registration form
 │   │   └── terms/
 │   └── styles/
 │       └── global.css            CSS custom properties + Tailwind layers
@@ -122,17 +132,169 @@ Build budget: total `dist/` should stay under ~1 MB. Largest single HTML page un
 
 ---
 
+## Routes
+
+| Route                              | Source                                              | Notes                                                                |
+| ---------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------- |
+| `/`                                | [src/pages/index.astro](./src/pages/index.astro)    | Homepage; portfolio articles addressable via `#kitui-secondary-school` etc. |
+| `/products/`                       | `src/pages/products/index.astro`                    | Overview + comparison table                                          |
+| `/products/[slug]/`                | `src/pages/products/[slug].astro`                   | Generated for each package in `packages.ts` (4 routes)               |
+| `/products/solar-irrigation/`      | `src/pages/products/solar-irrigation/index.astro`   | Dedicated sub-product page                                           |
+| `/cities/`                         | `src/pages/cities/index.astro`                      | Overview + map                                                       |
+| `/cities/[slug]/`                  | `src/pages/cities/[slug].astro`                     | Generated for each city in `cities.ts` (6 routes)                    |
+| `/how-we-work/`                    | `src/pages/how-we-work/index.astro`                 | Deployment process                                                   |
+| `/financing/`                      | `src/pages/financing/index.astro`                   | Lipa Pole Pole + partner banks                                       |
+| `/about/`                          | `src/pages/about/index.astro`                       | Company, beliefs, three-pillar thesis                                |
+| `/training/`                       | `src/pages/training/index.astro`                    | EPRA T1/T2/T3 technician training + registration form                |
+| `/careers/`                        | `src/pages/careers/index.astro`                     | Hiring page, mailto Apply links                                      |
+| `/contact/`                        | `src/pages/contact/index.astro`                     | Quote enquiry form                                                   |
+| `/blog/`                           | `src/pages/blog/index.astro`                        | Index page; posts not yet wired                                      |
+| `/privacy/`, `/terms/`             | `src/pages/privacy|terms/index.astro`               | Aligned to Kenya Data Protection Act 2019                            |
+| `/sitemap.xml`                     | `src/pages/sitemap.xml.ts`                          | Static endpoint, regenerated at build                                |
+| `/robots.txt`                      | `public/robots.txt`                                 | Served verbatim                                                      |
+| `/404`                             | `src/pages/404.astro`                               | Custom 404                                                           |
+
+Total: 24 generated pages.
+
+---
+
 ## Content model
 
 All page content reads from three TypeScript data files. **Edit these to change what shows up on the site.**
 
-- **[src/data/packages.ts](./src/data/packages.ts)** — the four packages (Starter, Family, Commercial, Commercial Plus) with capacity, hardware, pricing, financing, service tier, what-you-get list, and FAQs. Commercial Plus has the five-archetype deployment list as a separate exported array.
+- **[src/data/packages.ts](./src/data/packages.ts)** — the four packages (Starter, Family, Commercial, Commercial Plus) with capacity, hardware, pricing, financing, service tier, what-you-get list, FAQs, and image references (`image` for the detail-page hero, `cardImage` for the four-up grid card). Commercial Plus has the five-archetype deployment list as a separate exported array. Helper functions `getStartingPriceDisplay`, `getCashPriceDisplay`, and `isQuoteOnly` resolve the "On quotation basis" treatment for Commercial / Commercial Plus.
 - **[src/data/cities.ts](./src/data/cities.ts)** — the six operating cities (Nairobi HQ + 5 field hubs) with region, role, capabilities, local-capability prose, and customer segments.
-- **[src/data/company.ts](./src/data/company.ts)** — company facts (name, email, phone, WhatsApp, copyright), founding team, beliefs, deployment steps, example installation copy, audience segments.
+- **[src/data/company.ts](./src/data/company.ts)** — company facts (name, email, phone, WhatsApp, copyright), beliefs, deployment steps, audience segments, trust badges, and the `exampleInstallations` portfolio array (slug, customer, editorial title, package, region, capacity, load profile, description, image, alt text).
 
-Changing a price, adding a city capability, or updating a co-founder bio means editing the relevant data file. The page templates re-render automatically.
+Changing a price, adding a city capability, or updating a portfolio entry means editing the relevant data file. The page templates re-render automatically.
 
 The blog (`/blog/`) is structurally ready but empty for v1. Posts will land as `.mdx` files in `src/content/blog/` (or similar) once content-collection wiring is added.
+
+---
+
+## Forms
+
+Two forms collect lead data, both wired through Netlify Forms with no backend code on our side.
+
+### Forms in the build
+
+| Form name               | File                                                              | Action redirect                  |
+| ----------------------- | ----------------------------------------------------------------- | -------------------------------- |
+| `contact`               | [src/components/ContactForm.astro](./src/components/ContactForm.astro) | `/contact/?success=true`         |
+| `training-registration` | [src/pages/training/index.astro](./src/pages/training/index.astro)    | `/training/?success=true`        |
+
+### Required wiring
+
+For Netlify's bot to detect a form at deploy time, every form must include all of:
+
+- `data-netlify="true"` attribute on the `<form>` tag
+- A unique `name=""` attribute
+- A hidden `<input type="hidden" name="form-name" value="<form-name>">` matching the form's `name`
+- The form must be present in the build's static HTML (verify with `grep` on `dist/<path>/index.html`)
+
+Both forms also use a honeypot field: `netlify-honeypot="company-website"` paired with a hidden `<input name="company-website">`.
+
+### Fields captured
+
+Beyond the user-facing inputs, each form captures three hidden derived fields populated by a small inline script on submit:
+
+| Field          | Source                                                                                   | Example                               |
+| -------------- | ---------------------------------------------------------------------------------------- | ------------------------------------- |
+| `phone_e164`   | Normalised E.164 of the raw `phone` input. Strips non-digits, drops leading `0` and `254`, prepends `+254`. | `+254794702768`                       |
+| `page_path`    | `window.location.pathname` (training form also captures `.search`) at submit time.       | `/contact/` or `/training/?ref=email` |
+| `submitted_at` | `new Date().toISOString()` at submit time.                                               | `2026-05-23T20:48:00.000Z`            |
+
+The raw `phone` field is also submitted unchanged, so if JavaScript is blocked the team still receives the user-typed digits.
+
+### Consent
+
+Both forms include a required opt-in consent checkbox (`name="consent"`, value `yes`) above the submit button. The label states the specific purpose and links to [/privacy/](./src/pages/privacy/index.astro). Submissions cannot proceed without it. Designed for Kenya Data Protection Act 2019 compliance: freely given, specific, informed, unambiguous.
+
+### Notifications
+
+After deploy, configure form notifications in **Netlify dashboard → Site → Forms → Form notifications**. By default submissions only appear in the dashboard. The most useful notification is an email to `sales@precifarm.com` triggered on every submission of `contact` and `training-registration`.
+
+### Adding a new form
+
+1. Add the `<form>` to a page or component with the required wiring above (unique `name`, hidden `form-name`, `data-netlify="true"`, honeypot).
+2. Run `npm run build` and grep `dist/<route>/index.html` to confirm Netlify will see it.
+3. Deploy. Netlify auto-detects on the next deploy.
+4. Add the new form to the table above.
+
+---
+
+## Image asset workflow
+
+Two patterns, depending on what the image is for.
+
+### Photographs (hero, portfolio, cities)
+
+Place pre-optimised JPGs directly under `public/images/<category>/`. The Astro build copies them through unmodified. For source PNGs from artwork tools, convert with sharp first:
+
+```bash
+node -e "const sharp = require('sharp'); sharp('C:/path/to/source.png')
+  .resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
+  .jpeg({ quality: 86, mozjpeg: true })
+  .toFile('public/images/hero/your-image.jpg')
+  .then(i => console.log('OK', i.size, 'bytes'))"
+```
+
+### Package card images (the four-up grid)
+
+Card images render inside a `16:10` (`aspect-[16/10]`) frame with `object-cover`. A portrait-shaped source image will be cropped top and bottom. For portrait or near-square product shots that need to show in full:
+
+1. Pre-pad the source to exactly 1600×1000 with the brand paper colour `#FAFAF7` as background.
+2. Save to `public/images/packages/<slug>-card.jpg`.
+3. Reference it via the `cardImage` field on the package in [src/data/packages.ts](./src/data/packages.ts).
+
+The padding command (used for both Starter and Family card images):
+
+```bash
+node -e "const sharp = require('sharp');
+const src = 'C:/path/to/source.png';
+const dst = 'public/images/packages/<slug>-card.jpg';
+const targetW = 1600, targetH = 1000;
+sharp(src)
+  .resize({ height: targetH, withoutEnlargement: false })
+  .toBuffer({ resolveWithObject: true })
+  .then(({ data, info }) => {
+    const leftPad = Math.floor((targetW - info.width) / 2);
+    const rightPad = targetW - info.width - leftPad;
+    return sharp(data)
+      .extend({ top: 0, bottom: 0, left: leftPad, right: rightPad,
+                background: { r: 250, g: 250, b: 247 } })
+      .jpeg({ quality: 86, mozjpeg: true })
+      .toFile(dst);
+  })
+  .then(i => console.log('OK', JSON.stringify(i)))"
+```
+
+The result: `object-cover` shows the full product image without cropping, and the card frame stays aligned with the other three packages in the grid.
+
+### Alt text
+
+Alt text describes what the photograph shows, not what the company sells. AI-render artefact text in source images (garbled labels, misspellings) must not be transcribed into alt text or schema fields, since screen readers and search engines would ingest the errors. The current Starter and Family card images contain such artefacts in the source PNGs; the alt text deliberately omits them.
+
+---
+
+## SEO and structured data
+
+JSON-LD is emitted by [src/components/StructuredData.astro](./src/components/StructuredData.astro). Available schema variants:
+
+| `schema` prop   | What it emits                                                              | Used on                                  |
+| --------------- | -------------------------------------------------------------------------- | ---------------------------------------- |
+| `organization`  | `Organization` with name, logo, address, contact, sameAs, knowsAbout       | Homepage                                 |
+| `localBusiness` | Array of `LocalBusiness` entities, one per city                            | Homepage                                 |
+| `product`       | `Product` with offers, additionalProperty (capacity, inverter, panels)     | Per-package detail pages                 |
+| `faqPage`       | `FAQPage` with `mainEntity` array of `Question`/`Answer` pairs             | Financing, training, solar irrigation, package details |
+| `service`       | `Service` with serviceType and areaServed                                  | Training, solar irrigation               |
+| `itemList`      | `ItemList` of installations (`CreativeWork` items with image, contentLocation, keywords) | Homepage portfolio                       |
+
+`BreadcrumbList` is emitted from [src/layouts/BaseLayout.astro](./src/layouts/BaseLayout.astro) when a page passes a `breadcrumbs` prop.
+
+`<meta name="keywords">`, geo meta, OG, Twitter card, theme-color, mask-icon, and the webmanifest link are all centralised in `BaseLayout.astro`. Add per-page keywords by passing `keywords={[...]}` to `BaseLayout`.
+
+The sitemap is generated by [src/pages/sitemap.xml.ts](./src/pages/sitemap.xml.ts) on each build. When adding a new route, append it to the `staticEntries` array.
 
 ---
 
@@ -143,14 +305,36 @@ The brand palette and type ramp are defined in two places (kept in sync):
 - **CSS custom properties** in [src/styles/global.css](./src/styles/global.css) under `:root`
 - **Tailwind theme** in [tailwind.config.mjs](./tailwind.config.mjs) referencing those custom properties
 
-Editorial rules enforced through the brief and the codebase:
+Key tokens:
 
-- **British English** spelling throughout copy (organisation, optimise, behaviour, centred).
-- **No em dashes (—) or en dashes (–)** in any user-facing copy.
-- **No forbidden terms**: PreciSense, Neura app, Neura AI, Neura Smart Energy Manager, Neura monitoring, Neura Business Dashboard, "telemetry" in customer-facing prose, "self-diagnosing", "predictive monitoring", and a list of development-sector clichés ("disrupt", "synergy", "innovative", "empower", "leverage" meaning "use", "best-in-class", "world-class", and similar).
+| Token         | Hex       | Use                                          |
+| ------------- | --------- | -------------------------------------------- |
+| `navy`        | `#1F4E5F` | Primary brand navy                           |
+| `navy-dark`   | `#0F2832` | Heading text, dark CTAs                      |
+| `green`       | `#1F6F4A` | Accent green (WhatsApp, eyebrows)            |
+| `amber`       | `#C99800` | Highlight amber (EV-ready badge, CTAs)       |
+| `flame-orange`| `#E37E32` | Accent orange (icons, callouts)              |
+| `paper`       | `#FAFAF7` | Page background, image card backdrop         |
+| `ink`         | (text)    | Primary body text                            |
+| `text-mid`    | (text)    | Secondary body text                          |
+| `text-muted`  | (text)    | Tertiary/caption text                        |
+| `hairline`    | (border)  | Hairline dividers                            |
+
+---
+
+## Voice rules
+
+These rules are enforced through the brief and the codebase. Every content edit must comply.
+
+- **British English** spelling: organisation, optimise, behaviour, centred, programme.
+- **No em dashes (—) or en dashes (–)** in any user-facing copy, alt text, or structured-data fields. Use colons, commas, semicolons, or full stops.
+- **No forbidden terms**: PreciSense, Neura app, Neura AI, Neura Smart Energy Manager, Neura monitoring, Neura Business Dashboard, "telemetry" in customer-facing prose, "self-diagnosing", "predictive monitoring".
+- **No development-sector clichés**: "disrupt", "synergy", "innovative", "empower", "leverage" meaning "use", "best-in-class", "world-class", "game-changer", "next-generation" (when used as a content filler), "solutions provider", and the like.
+- **No "canopy"**: use "solar system", "solar PV system", "overhead PV array", or "solar PV and storage system" instead. Lead with what the system *does*, not what it physically resembles.
 - **Neura Pod** is the only allowed "Neura" reference, used exclusively for the physical hardware enclosure.
-- **No invented installation counts.** Never claim "100+ installations", "850+ installs", "38 counties" or any similar cumulative figure not in the brief.
-- **No specific named customer references** with fabricated specs. Customer-type illustrations only (e.g., "a school in Kitui").
+- **No invented installation counts**: never claim "100+ installations", "850+ installs", "38 counties" or similar cumulative figures not in the brief.
+- **No named customer references with fabricated specs**: customer-type illustrations only ("a school in Kitui"). Where a real customer name is used (Eldo Shine Salon, Kitui Secondary School, Mombasa Boda System), the specs and load profile must be accurate.
+- **"Kenyan team" is not a credential**: sell on EPRA licensing, EPC + O&M scope, the five-year service commitment, no subcontractors, regional hubs, and hardware spec. Nationality is not a feature.
 
 ---
 
@@ -161,7 +345,7 @@ The site has minimal configuration. Everything is in [.env.example](./.env.examp
 | Variable               | Status   | Notes                                                              |
 | ---------------------- | -------- | ------------------------------------------------------------------ |
 | (Plausible analytics)  | Inline   | Wired live for `precifarm.com` in [BaseLayout.astro](./src/layouts/BaseLayout.astro). For a self-hosted Plausible instance, edit the script `src=` directly. |
-| (Form endpoint)        | None     | Contact form uses Netlify Forms (`data-netlify="true"`). No env var needed; the form is auto-detected by Netlify at deploy time. |
+| (Form endpoint)        | None     | Both forms use Netlify Forms (`data-netlify="true"`). No env var needed; forms are auto-detected by Netlify at deploy time. |
 
 ---
 
@@ -172,12 +356,13 @@ The site has minimal configuration. Everything is in [.env.example](./.env.examp
 The project ships with [netlify.toml](./netlify.toml) configured. To deploy:
 
 1. Create a new site on Netlify and connect this repository.
-2. Netlify will detect the `netlify.toml` and use `npm run build` with publish directory `dist/`.
+2. Netlify detects the `netlify.toml` and uses `npm run build` with publish directory `dist/`.
 3. Add the production domain (`precifarm.com`) under the site's domain settings and let Netlify provision the TLS certificate.
-4. Enable Netlify Forms (it's on by default) — the contact form will start collecting submissions immediately.
-5. Optionally configure form notifications in **Site settings → Forms → Form notifications**.
+4. Netlify Forms is on by default. Both forms will be detected at deploy time and submissions will appear in the Forms tab.
+5. Configure form notifications in **Site settings → Forms → Form notifications**. Recommended: email both `contact` and `training-registration` submissions to `sales@precifarm.com`.
 
 The `netlify.toml` includes:
+
 - Build command and publish dir
 - `NODE_VERSION = "20"` for the build runtime
 - Security headers: `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `Strict-Transport-Security`
@@ -186,39 +371,53 @@ The `netlify.toml` includes:
 
 ### Any other static host
 
-The build output in `dist/` is plain static HTML/CSS/JS plus PNGs and SVGs. It will run on any static host: Vercel, Cloudflare Pages, GitHub Pages, S3 + CloudFront, Nginx, etc. If you change hosts away from Netlify, replace the contact form's `data-netlify="true"` wiring in [src/components/ContactForm.astro](./src/components/ContactForm.astro) with a third-party endpoint (Formspree, Web3Forms, or a Lambda).
+The build output in `dist/` is plain static HTML/CSS/JS plus PNGs and SVGs. It will run on any static host: Vercel, Cloudflare Pages, GitHub Pages, S3 + CloudFront, Nginx. If you change hosts away from Netlify, replace the two forms' `data-netlify="true"` wiring with a third-party endpoint (Formspree, Web3Forms, or your own function).
 
 ---
 
 ## Updating content
 
-| Change                                | Where                                         |
-| ------------------------------------- | --------------------------------------------- |
-| Package price, capacity, hardware     | [src/data/packages.ts](./src/data/packages.ts) |
-| Add or remove a FAQ on a package      | [src/data/packages.ts](./src/data/packages.ts) `faqs` array on that package |
-| Edit Commercial Plus archetype        | [src/data/packages.ts](./src/data/packages.ts) `commercialPlusArchetypes` |
-| Change a city description             | [src/data/cities.ts](./src/data/cities.ts)    |
-| Update phone, email, WhatsApp, address | [src/data/company.ts](./src/data/company.ts) |
-| Founding team bios                    | [src/data/company.ts](./src/data/company.ts) `team` |
-| Add a new top-level page              | Create a `.astro` file under [src/pages/](./src/pages/) |
-| Replace the homepage hero illustration with real photography | Drop a `.webp` into `public/images/hero/`, edit [src/components/HeroIllustration.astro](./src/components/HeroIllustration.astro) or swap it for `<Image>` in [src/components/Hero.astro](./src/components/Hero.astro) |
-| Swap the text-logo placeholder for a real wordmark | Put the SVG in `public/images/brand/` and replace the rendered span in [src/components/Logo.astro](./src/components/Logo.astro) |
-| Add a sitemap entry                   | Add the route to the `staticEntries` array in [src/pages/sitemap.xml.ts](./src/pages/sitemap.xml.ts) |
+| Change                                                  | Where                                                                                              |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Package price, capacity, hardware, FAQs                 | [src/data/packages.ts](./src/data/packages.ts) on the relevant package                             |
+| Commercial Plus archetype list                          | [src/data/packages.ts](./src/data/packages.ts) `commercialPlusArchetypes`                          |
+| Change a city description                               | [src/data/cities.ts](./src/data/cities.ts)                                                         |
+| Update phone, email, WhatsApp, address, copyright       | [src/data/company.ts](./src/data/company.ts)                                                       |
+| Add or edit a portfolio installation (homepage)         | [src/data/company.ts](./src/data/company.ts) `exampleInstallations`                                |
+| Add a new top-level page                                | Create a `.astro` file under [src/pages/](./src/pages/) and add a route to `sitemap.xml.ts`        |
+| Add a sitemap entry                                     | [src/pages/sitemap.xml.ts](./src/pages/sitemap.xml.ts) `staticEntries` array                       |
+| Add a Products dropdown item                            | [src/components/Header.astro](./src/components/Header.astro) `productLinks`                        |
+| Add a footer link                                       | [src/components/Footer.astro](./src/components/Footer.astro) `columns`                             |
+| Add a new training cohort tier or change registration field | [src/pages/training/index.astro](./src/pages/training/index.astro)                              |
+| Swap a package card image                               | Replace `public/images/packages/<slug>-card.jpg` (pre-pad to 1600×1000 if portrait, see "Image asset workflow") |
+| Swap the homepage hero image                            | Drop a JPG into `public/images/hero/` and update [src/components/HeroIllustration.astro](./src/components/HeroIllustration.astro) |
 
 After any data edit, run `npm run build` locally to verify the build is still clean before pushing.
 
 ---
 
-## Items pending verification
+## Memory and agent context
 
-Inline `[VERIFY]` comments mark places where the brief left specifics open. Search the codebase for `[VERIFY]` to find them. Current items pending David:
-
-- Wycliffe Wabaye full co-founder bio (placeholder bio in place; see [src/data/company.ts](./src/data/company.ts))
-- Amon Kipchirchir full co-founder bio (placeholder bio in place; see [src/data/company.ts](./src/data/company.ts))
-- Legal review of Privacy and Terms pages (see [src/pages/privacy/index.astro](./src/pages/privacy/index.astro) and [src/pages/terms/index.astro](./src/pages/terms/index.astro))
+This repository works alongside a per-user memory directory at `C:\Users\DAVID\.claude\projects\c--Users-DAVID-Desktop-precifarm\memory\` (not in version control) that records voice rules, project decisions, and user-profile context for AI-assisted edits. The voice rules in this README are the authoritative ones; the memory is a working notebook that may go stale and should be refreshed against this file when in doubt.
 
 ---
 
-## License
+## Fund-raising and grant documentation
+
+A YC-format investor and grant memo lives at [docs/investor-and-grant-memo.md](./docs/investor-and-grant-memo.md). It covers the full company, founder, product, market, traction, business model, competition, theory of change, impact metrics, and ask, with a ten-slide pitch deck outline and a data-room inventory in the appendices. Every quantitative claim that requires founder confirmation is marked `[VERIFY: ...]` and must be resolved before any external send.
+
+---
+
+## Items pending verification
+
+Inline `[VERIFY]` comments mark places where specifics are open. Search the codebase for `[VERIFY]` to find them. Current items:
+
+- **Privacy and Terms** ([src/pages/privacy/index.astro](./src/pages/privacy/index.astro), [src/pages/terms/index.astro](./src/pages/terms/index.astro)) — drafted to a Kenya Data Protection Act 2019 frame, pending legal review.
+- **Training programme** ([src/pages/training/index.astro](./src/pages/training/index.astro)) — published fees, NITA accreditation partner, and exact cohort schedule are stated as "confirmed on registration" pending the operational arrangements. The page references SERC reference pricing for context only.
+- **Source-image overlays** — the Starter and Family card images contain garbled AI-render text labels in the source PNG ("INTEORATED MODULAR SOLAR TILES - 6kWp (Scalaabls)" and a fake "BATTERY IDEWA" label). The alt text deliberately does not transcribe them. A clean re-render or a manual edit would remove the credibility risk on close inspection.
+
+---
+
+## Licence
 
 All rights reserved. Precifarm AI Ltd.
