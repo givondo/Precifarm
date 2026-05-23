@@ -35,6 +35,8 @@ export default {
         ],
       },
       fontSize: {
+        'display-xl': ['4.5rem', { lineHeight: '0.98', letterSpacing: '-0.03em', fontWeight: '700' }],
+        'display-lg': ['3.75rem', { lineHeight: '1.02', letterSpacing: '-0.03em', fontWeight: '700' }],
         display: ['3rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }],
         'display-sm': ['2rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }],
         h1: ['2.25rem', { lineHeight: '1.15', fontWeight: '700' }],
