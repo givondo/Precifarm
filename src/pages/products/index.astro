@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
 import PackageCard from '../../components/PackageCard.astro';
+import NarrativeSection from '../../components/NarrativeSection.astro';
 import CTASection from '../../components/CTASection.astro';
 import { packages } from '../../data/packages';
 ---
@@ -22,23 +23,29 @@ import { packages } from '../../data/packages';
     ]}
   />
 
-  <section class="bg-white">
-    <div class="container-page section">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
-        {packages.map((pkg) => (
-          <PackageCard pkg={pkg} layout="detailed" />
-        ))}
-      </div>
+  <!-- THE FOUR PACKAGES — open canvas, 2-column detailed grid (kept; this is the core navigation surface) -->
+  <NarrativeSection
+    background="white"
+    eyebrow="The four packages"
+    headline="From a single wall-mounted Pod to a sub-megawatt mini-grid."
+    lede="Starter and Family ship at firm cash prices for the standard residential configuration. Commercial and Commercial Plus are sized to the site after a written engineering assessment. The same regional crew designs, installs, and services every system, whatever its scale."
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+      {packages.map((pkg) => (
+        <PackageCard pkg={pkg} layout="detailed" />
+      ))}
     </div>
-  </section>
+  </NarrativeSection>
 
-  <!-- EV-readiness positioning -->
+  <!-- EV-READINESS — full-bleed navy editorial -->
   <section class="bg-navy-dark text-white">
-    <div class="container-page section">
+    <div class="container-page py-20 md:py-28">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
         <div class="lg:col-span-5">
           <p class="text-xs uppercase tracking-[0.18em] font-semibold text-amber mb-4">EV-readiness</p>
-          <h2 class="text-h2-sm md:text-h1 text-white leading-[1.1]">The same Pod that powers a building today charges a vehicle tomorrow.</h2>
+          <h2 class="text-h2-sm md:text-h1 text-white leading-[1.1]">
+            The same Pod that powers a building today charges a vehicle tomorrow.
+          </h2>
         </div>
         <div class="lg:col-span-7 space-y-5 text-lg text-white/85 leading-relaxed">
           <p>
@@ -47,89 +54,92 @@ import { packages } from '../../data/packages';
           <p>
             Precifarm's Neura Pod architecture is EV-ready from day one. The same Pod that powers a home, an SME, or a clinic today is the Pod that charges a vehicle tomorrow. Capacity upgrades happen by swapping the Pod, not by tearing up the installation.
           </p>
-          <p>
-            Distributed solar, distributed storage, and distributed charging form the operating thesis. The grid does not need to deliver the charge. The Pod stores it.
+          <p class="font-semibold text-white">
+            The grid does not need to deliver the charge. The Pod stores it.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- BESS consultancy and EPC -->
-  <section class="bg-white">
-    <div class="container-page section">
-      <div class="max-w-3xl mb-10 md:mb-12">
-        <p class="eyebrow mb-3">Battery storage capability</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1]">Battery energy storage consultancy and EPC, sized up to approximately 10 MWh.</h2>
+  <!-- BESS — editorial split with figured metadata, no card chrome -->
+  <NarrativeSection
+    background="white"
+    eyebrow="Battery storage capability"
+    headline="Battery energy storage consultancy and EPC, sized up to approximately 10 MWh."
+    lede="Battery storage is becoming a separate utility asset class. Precifarm operates a consultancy and EPC line for commercial and industrial sites deploying battery energy storage systems for peak shaving, backup, or solar-grid integration."
+  >
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+      <div class="lg:col-span-7 space-y-5 text-lg text-text-mid leading-relaxed">
+        <p>
+          The scope covers feasibility analysis, system sizing, hardware specification, EPRA-licensed installation, commissioning, and operations and maintenance under the same engineering team that designed the system.
+        </p>
+        <p class="text-navy-dark font-semibold">
+          Storage is treated as infrastructure. The unit of attention is uptime and dispatch behaviour against the customer's load profile, not headline kilowatt-hour figures.
+        </p>
+        <p>
+          <a href="/contact/" class="inline-flex items-center gap-1.5 font-semibold text-navy hover:underline">
+            Brief an engineer on the BESS scope
+            <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 16 16" fill="none">
+              <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </p>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-        <div class="lg:col-span-2 space-y-5 text-text-mid leading-relaxed">
-          <p>
-            Battery storage is becoming a separate utility asset class. Commercial and industrial sites in Kenya are deploying battery energy storage systems for peak shaving, backup, and integration of on-site solar with the grid.
-          </p>
-          <p>
-            Precifarm operates a battery energy storage system consultancy and EPC line, sized from a few hundred kilowatt-hours up to approximately 10 MWh of installed capacity. The scope covers feasibility analysis, system sizing, hardware specification, EPRA-licensed installation, commissioning, and operations and maintenance under the same engineering team that designed the system.
-          </p>
-          <p>
-            Storage is treated as infrastructure. The unit of attention is uptime and dispatch behaviour against the customer's load profile, not headline kilowatt-hour figures.
-          </p>
-        </div>
-        <aside class="rounded-card border border-hairline bg-paper p-6 md:p-7 self-start">
-          <p class="eyebrow text-text-muted mb-4">BESS scope</p>
-          <dl class="space-y-4 text-sm">
-            <div>
-              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Sizing</dt>
-              <dd class="mt-1 text-ink font-semibold">A few hundred kWh up to ~10 MWh installed</dd>
-            </div>
-            <div>
-              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Use cases</dt>
-              <dd class="mt-1 text-ink">Peak shaving, backup, solar-grid integration</dd>
-            </div>
-            <div>
-              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Delivery</dt>
-              <dd class="mt-1 text-ink">Feasibility, sizing, EPC, commissioning, O&amp;M</dd>
-            </div>
-            <div>
-              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Engagement</dt>
-              <dd class="mt-1 text-ink">
-                <a href="/contact/" class="text-navy font-semibold hover:underline">Brief an engineer</a>
-              </dd>
-            </div>
-          </dl>
-        </aside>
-      </div>
-    </div>
-  </section>
 
+      <dl class="lg:col-span-5 space-y-6 lg:border-l lg:border-hairline lg:pl-10">
+        <div>
+          <dt class="text-xs uppercase tracking-wider text-text-muted font-semibold">Sizing range</dt>
+          <dd class="mt-1 text-navy-dark font-semibold text-lg">A few hundred kWh up to ~10 MWh</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-wider text-text-muted font-semibold">Use cases</dt>
+          <dd class="mt-1 text-navy-dark font-semibold text-lg">Peak shaving, backup, solar-grid integration</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-wider text-text-muted font-semibold">Delivery</dt>
+          <dd class="mt-1 text-navy-dark font-semibold text-lg">Feasibility, sizing, EPC, commissioning, O&amp;M</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-wider text-text-muted font-semibold">Engagement</dt>
+          <dd class="mt-1 text-navy-dark font-semibold text-lg">EPRA-licensed; single engineering team</dd>
+        </div>
+      </dl>
+    </div>
+  </NarrativeSection>
+
+  <!-- PRICING METHODOLOGY — open three-column band, hairline dividers, no card boxes -->
   <section class="bg-paper">
-    <div class="container-page section">
-      <div class="max-w-3xl mb-10 md:mb-12">
-        <p class="eyebrow mb-3">How we price</p>
-        <h2 class="text-h2-sm md:text-h1 text-navy-dark">A firm starting price, then a written quote after the site survey.</h2>
-        <p class="mt-4 text-lg text-text-mid leading-relaxed">
+    <div class="container-page py-20 md:py-28">
+      <div class="max-w-3xl mb-12 md:mb-16">
+        <p class="text-xs uppercase tracking-[0.14em] font-semibold text-green mb-4">How we price</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1]">
+          A firm starting price, then a written quote after the site survey.
+        </h2>
+        <p class="mt-5 text-lg text-text-mid leading-relaxed">
           The side-by-side specification table lives on the homepage. Below is how Precifarm pricing is structured and what every starting price actually covers.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-5xl">
-        <div class="rounded-card bg-white border border-hairline p-6">
-          <p class="eyebrow text-navy mb-3">How we price</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-hairline">
+        <div class="py-6 md:py-0 md:px-8 first:md:pl-0">
+          <p class="text-xs uppercase tracking-wider text-amber font-semibold mb-3">01 · Structure</p>
           <h3 class="text-h3 text-navy-dark mb-3">A firm starting price up front.</h3>
-          <p class="text-sm text-text-mid leading-relaxed">
+          <p class="text-text-mid leading-relaxed">
             Starter and Family carry firm starting prices because the standard configuration covers most homes. Commercial and Commercial Plus carry a "from" price, with a written quote issued after the site survey.
           </p>
         </div>
-        <div class="rounded-card bg-white border border-hairline p-6">
-          <p class="eyebrow text-navy mb-3">What is included</p>
+        <div class="py-6 md:py-0 md:px-8">
+          <p class="text-xs uppercase tracking-wider text-amber font-semibold mb-3">02 · Scope</p>
           <h3 class="text-h3 text-navy-dark mb-3">Hardware, installation, and five years of service.</h3>
-          <p class="text-sm text-text-mid leading-relaxed">
+          <p class="text-text-mid leading-relaxed">
             Every starting price covers tier-1 hardware, EPRA-licensed installation, the one-year workmanship warranty, and the five-year service commitment from the same regional engineering team.
           </p>
         </div>
-        <div class="rounded-card bg-callout-green border border-green p-6">
-          <p class="eyebrow text-green mb-3">Compare like for like</p>
+        <div class="py-6 md:py-0 md:px-8 last:md:pr-0">
+          <p class="text-xs uppercase tracking-wider text-green font-semibold mb-3">03 · Comparison</p>
           <h3 class="text-h3 text-navy-dark mb-3">Hardware-only quotes look cheaper than ours.</h3>
-          <p class="text-sm text-text-mid leading-relaxed">
+          <p class="text-text-mid leading-relaxed">
             A hardware-only quote will typically come in below ours at the install. Most of that saving is the absent five-year service. Ask any installer whether the price they quote includes the engineer that returns in year three.
           </p>
         </div>
