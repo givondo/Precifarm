@@ -97,7 +97,7 @@ export const packages: Package[] = [
     startingPrice: 'KSh 290,000 cash',
     image: {
       src: '/images/packages/family-rooftop.jpg',
-      alt: 'A single-bay solar carport with PV panels mounted overhead, sheltering a parked sedan — illustrating an off-grid 2-to-3 bedroom Family setup paired with everyday vehicle use.',
+      alt: 'A Precifarm installer in an orange safety vest walking on a red corrugated metal roof beside a freshly-installed array of solar panels, illustrating a Family-tier residential installation on a typical Kenyan home.',
     },
     whatYouGet: [
       'Two 450 W solar panels, mounted on roof or ground frame',
@@ -211,7 +211,7 @@ export const packages: Package[] = [
     isHighlighted: true,
     image: {
       src: '/images/packages/commercial-plus-array.jpg',
-      alt: 'A wooden-framed solar carport mounted with PV panels, an EV charging station alongside, and an electric vehicle plugged in beneath — illustrating the EV-ready Commercial Plus archetype combining on-site solar generation with vehicle charging.',
+      alt: 'An aerial view of an extensive solar PV array covering an industrial warehouse rooftop, illustrating the megawatt-scale Commercial Plus deployment Precifarm delivers for industrial and SEZ tenant sites.',
     },
     whatYouGet: [
       'Solar array sized 50 kWp to 1 MWp against site demand',
