@@ -11,7 +11,7 @@ import { exampleInstallations, trustBadges } from '../data/company';
 ---
 <BaseLayout
   title="Reliable solar power for every Kenyan home and business"
-  description="Precifarm designs, installs, and services distributed solar and EV-ready charging across Kenya. The same engineering team stays with every system for the five years that follow."
+  description="Precifarm builds distributed solar and battery storage infrastructure across Kenya. The Neura Pod is a modular system: inverter, router, and battery storage in a single replaceable unit. EV-ready from day one."
   canonicalPath="/"
 >
   <StructuredData slot="head" schema="organization" />
@@ -21,7 +21,7 @@ import { exampleInstallations, trustBadges } from '../data/company';
   <Hero
     eyebrow="Solar built for Kenya"
     headline="Reliable solar power for every Kenyan home and business."
-    subhead="Precifarm designs, installs, and services distributed solar and EV-ready charging across Kenya, on a single hardware platform that scales from a 1.5 kilowatt-hour residential pack to a one-megawatt industrial mini-grid. The same regional engineering team that commissions your system stays with it for the next five years of operation."
+    subhead="Africa's electricity demand is growing faster than its grids can stabilise. Precifarm builds distributed solar and battery storage infrastructure across Kenya, headquartered in Nairobi with operations in Mombasa, Kisumu, Eldoret, Kitui, and Nakuru. The Neura Pod is a modular system carrying inverter, router, and battery storage in a single replaceable unit, with capacity upgrades happening by swapping the Pod rather than rewiring the property. The architecture is EV-ready from day one."
     primaryCta={{ href: '/products/', label: 'See the packages' }}
     secondaryCta={{ href: '/contact/', label: 'Talk to us' }}
     badges={[...trustBadges]}
@@ -154,7 +154,40 @@ import { exampleInstallations, trustBadges } from '../data/company';
     </div>
   </section>
 
-  <!-- 05 — Closing CTA -->
+  <!-- 05 — Three-pillar identity block -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-12 md:mb-16">
+        <p class="eyebrow mb-3">What Precifarm is</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1]">Three principles. One distributed-infrastructure thesis.</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-hairline border border-hairline rounded-card overflow-hidden">
+        <article class="bg-white p-8 md:p-10">
+          <p class="eyebrow text-navy mb-3">01</p>
+          <h3 class="text-h3 text-navy-dark mb-4">Modular by design.</h3>
+          <p class="text-text-mid leading-relaxed">
+            The Neura Pod is a single replaceable unit. Upgrades happen by swapping the Pod, not by rewiring the property.
+          </p>
+        </article>
+        <article class="bg-white p-8 md:p-10">
+          <p class="eyebrow text-navy mb-3">02</p>
+          <h3 class="text-h3 text-navy-dark mb-4">EV-ready from day one.</h3>
+          <p class="text-text-mid leading-relaxed">
+            The same Pod that powers a home or SME today can charge a vehicle tomorrow. Distributed storage feeds distributed charging.
+          </p>
+        </article>
+        <article class="bg-white p-8 md:p-10">
+          <p class="eyebrow text-navy mb-3">03</p>
+          <h3 class="text-h3 text-navy-dark mb-4">Built for Africa's grid.</h3>
+          <p class="text-text-mid leading-relaxed">
+            Designed for unstable supply, rising electric demand, and decentralising load. Continuous operation through outage cycles, not in spite of them.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 — Closing CTA -->
   <CTASection
     variant="dark"
     headline="Reliable solar power, supported by an engineering team that answers."

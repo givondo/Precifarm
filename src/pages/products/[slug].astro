@@ -74,9 +74,17 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
           <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5">{pkg.bestFor}.</h2>
           <div class="prose-precifarm">
             <p>{pkg.targetCustomer}</p>
-            <p><strong class="text-navy-dark">Daily load:</strong> {pkg.dailyLoad}</p>
-            <p><strong class="text-navy-dark">Hardware:</strong> {pkg.hardware}</p>
           </div>
+          <dl class="mt-6 grid grid-cols-1 gap-3 border-t border-hairline pt-5 text-sm">
+            <div class="flex flex-col sm:flex-row sm:gap-4">
+              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-28 shrink-0 mt-0.5">Daily load</dt>
+              <dd class="text-ink">{pkg.dailyLoad}</dd>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:gap-4">
+              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold sm:w-28 shrink-0 mt-0.5">Hardware</dt>
+              <dd class="text-ink">{pkg.hardware}</dd>
+            </div>
+          </dl>
         </div>
 
         <aside class="rounded-card border border-hairline bg-paper p-6 md:p-7 self-start">

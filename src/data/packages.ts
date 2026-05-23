@@ -37,7 +37,7 @@ export const packages: Package[] = [
     tagline: 'Independence from blackouts.',
     capacity: '550 W · 1.5 kWh',
     targetCustomer:
-      'Single rooms, kibandas, small dwellings, boda riders, and renters who need reliable power without rewiring a whole house. The Starter package fits on a single wall and pays for itself by removing a KPLC bill or replacing nightly kerosene and candle costs.',
+      'Most Kenyan households start small. The Starter Neura Pod is the entry into Precifarm\'s distributed-storage architecture. 550 W of solar, 1.5 kWh of battery storage, in a single wall-mounted enclosure. Lights, Wi-Fi, fans, charging, basic appliances. Available on Lipa Pole Pole PAYG. Upgrades happen by swapping the Pod, not by rewiring the property.',
     dailyLoad: 'Approximately 0.6 kWh per day. Lights, Wi-Fi, TV, fans, phone charging.',
     hardware: 'One 550 W panel, a Neura Pod 1 (1.5 kWh), a 1.5 kW hybrid inverter.',
     inverter: '1.5 kW hybrid',
@@ -92,7 +92,7 @@ export const packages: Package[] = [
     tagline: 'Off-grid 2 to 3 bedroom homes. Zero KPLC bills.',
     capacity: '2.2 kWp · 5 kWh',
     targetCustomer:
-      'Off-grid 2 to 3 bedroom homes seeking independence from the grid. Family runs a fridge, full lighting, entertainment, and Wi-Fi day in and day out, with enough generation headroom and storage to ride through evening peaks and cloudy days.',
+      'Two-to-three bedroom households want independence from KPLC outage cycles. The Family Neura Pod delivers it. 2.2 kWp of solar, 5 kWh of battery storage, in one replaceable enclosure. Fridge, full lighting, entertainment, Wi-Fi, fans, daily routine carried through grid interruptions. Bank facilities with Equity, KCB, Co-op, and SACCOs. EV-ready when vehicle charging is added.',
     dailyLoad: 'Approximately 5 to 6 kWh per day. Fridge, full LED lighting, entertainment, Wi-Fi, fans, and small appliances.',
     hardware: 'Four 550 W panels (2.2 kWp expandable), Neura Pod 5 (5 kWh, expandable), 5 kW hybrid inverter.',
     inverter: '5 kW hybrid',
@@ -144,7 +144,7 @@ export const packages: Package[] = [
     tagline: 'Solar that runs your operation.',
     capacity: 'From 2.75 kWp · 15 kWh',
     targetCustomer:
-      'Schools, clinics, SMEs, cooperatives, and farms running borehole irrigation. Commercial is sized to keep an operation running, not just keep the lights on. Cold storage, milling, lodges, clinic loads, and irrigation across 5 to 45 acres are typical use cases.',
+      'Schools, clinics, SMEs, cooperatives, and farms with borehole irrigation require continuous power, not intermittent. The Commercial Neura Pod runs them. From 2.75 kWp up to 13.2 kWp of solar, 15 kWh of battery storage, 12 kW hybrid inverter, borehole capability to 3 km. Cold storage, milling, lodges, clinic loads, irrigation across 5 to 45 acres. Bank facilities through KCB Clean Energy and Stanbic Solar PV.',
     dailyLoad:
       'Approximately 28 kWh per day typical. Cold storage, milling, lodges, clinic loads, irrigation across 5 to 45 acres with pumps up to 3 km from source.',
     hardware:

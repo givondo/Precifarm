@@ -6,14 +6,14 @@ import CTASection from '../../components/CTASection.astro';
 import { packages } from '../../data/packages';
 ---
 <BaseLayout
-  title="Four packages, one platform"
-  description="Compare Precifarm Starter, Family, Commercial, and Commercial Plus. Same engineers, same operating discipline, same five-year service commitment."
+  title="Four packages, one Neura Pod platform"
+  description="The Neura Pod is a modular battery and inverter unit. Four configurations ship today: Starter, Family, Commercial, and Commercial Plus. EV-ready from day one."
   canonicalPath="/products/"
 >
   <Hero
     eyebrow="Products"
     headline="Four systems built on one Neura Pod platform."
-    subhead="Same engineers, same operating discipline, same five-year service commitment. Pick the size that fits."
+    subhead="Kenya's grid is becoming more distributed. Precifarm's operating answer is the Neura Pod, a modular battery and inverter unit carrying inverter, router, and battery storage in a single replaceable enclosure. EV-ready from day one. Capacity upgrades happen by swapping the Pod, not by rewiring the property."
     badges={[
       'EPRA-licensed installation',
       'Five-year service commitment',
@@ -28,6 +28,75 @@ import { packages } from '../../data/packages';
         {packages.map((pkg) => (
           <PackageCard pkg={pkg} layout="detailed" />
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EV-readiness positioning -->
+  <section class="bg-navy-dark text-white">
+    <div class="container-page section">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="lg:col-span-5">
+          <p class="text-xs uppercase tracking-[0.18em] font-semibold text-amber mb-4">EV-readiness</p>
+          <h2 class="text-h2-sm md:text-h1 text-white leading-[1.1]">The same Pod that powers a building today charges a vehicle tomorrow.</h2>
+        </div>
+        <div class="lg:col-span-7 space-y-5 text-lg text-white/85 leading-relaxed">
+          <p>
+            Africa's vehicle fleet is electrifying. Two-wheeler operators, light commercial fleets, and institutional vehicles are moving to battery propulsion. The charging infrastructure is not yet there to match.
+          </p>
+          <p>
+            Precifarm's Neura Pod architecture is EV-ready from day one. The same Pod that powers a home, an SME, or a clinic today is the Pod that charges a vehicle tomorrow. Capacity upgrades happen by swapping the Pod, not by tearing up the installation.
+          </p>
+          <p>
+            Distributed solar, distributed storage, and distributed charging form the operating thesis. The grid does not need to deliver the charge. The Pod stores it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BESS consultancy and EPC -->
+  <section class="bg-white">
+    <div class="container-page section">
+      <div class="max-w-3xl mb-10 md:mb-12">
+        <p class="eyebrow mb-3">Battery storage capability</p>
+        <h2 class="text-h2-sm md:text-h1 text-navy-dark leading-[1.1]">Battery energy storage consultancy and EPC, sized up to approximately 10 MWh.</h2>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+        <div class="lg:col-span-2 space-y-5 text-text-mid leading-relaxed">
+          <p>
+            Battery storage is becoming a separate utility asset class. Commercial and industrial sites in Kenya are deploying battery energy storage systems for peak shaving, backup, and integration of on-site solar with the grid.
+          </p>
+          <p>
+            Precifarm operates a battery energy storage system consultancy and EPC line, sized from a few hundred kilowatt-hours up to approximately 10 MWh of installed capacity. The scope covers feasibility analysis, system sizing, hardware specification, EPRA-licensed installation, commissioning, and operations and maintenance under the same engineering team that designed the system.
+          </p>
+          <p>
+            Storage is treated as infrastructure. The unit of attention is uptime and dispatch behaviour against the customer's load profile, not headline kilowatt-hour figures.
+          </p>
+        </div>
+        <aside class="rounded-card border border-hairline bg-paper p-6 md:p-7 self-start">
+          <p class="eyebrow text-text-muted mb-4">BESS scope</p>
+          <dl class="space-y-4 text-sm">
+            <div>
+              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Sizing</dt>
+              <dd class="mt-1 text-ink font-semibold">A few hundred kWh up to ~10 MWh installed</dd>
+            </div>
+            <div>
+              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Use cases</dt>
+              <dd class="mt-1 text-ink">Peak shaving, backup, solar-grid integration</dd>
+            </div>
+            <div>
+              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Delivery</dt>
+              <dd class="mt-1 text-ink">Feasibility, sizing, EPC, commissioning, O&amp;M</dd>
+            </div>
+            <div>
+              <dt class="text-text-muted text-xs uppercase tracking-wider font-semibold">Engagement</dt>
+              <dd class="mt-1 text-ink">
+                <a href="/contact/" class="text-navy font-semibold hover:underline">Brief an engineer</a>
+              </dd>
+            </div>
+          </dl>
+        </aside>
       </div>
     </div>
   </section>
