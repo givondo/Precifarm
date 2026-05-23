@@ -15,7 +15,7 @@ export const company = {
   whatsappMessage:
     'Hello Precifarm, I would like to discuss a solar installation.',
   website: 'https://precifarm.com',
-  copyright: `© ${new Date().getFullYear()} Precifarm AI Ltd. Built and operated in Kenya.`,
+  copyright: `© ${new Date().getFullYear()} Precifarm AI Ltd. Headquartered in Nairobi.`,
   socials: {
     linkedin: 'https://www.linkedin.com/company/precifarm',
     // Add other platforms only after the accounts are confirmed live.
