@@ -199,14 +199,14 @@ export const packages: Package[] = [
     slug: 'commercial-plus',
     name: 'Precifarm Commercial Plus',
     shortName: 'Commercial Plus',
-    tagline: 'Solar + storage + EV charging, under 1 MW.',
+    tagline: 'Sub-megawatt solar, lithium storage, and EV charging delivered as one integrated EPC and O&M contract.',
     capacity: '50 kWp to 1 MWp · 100 kWh to 2 MWh storage',
     targetCustomer:
-      'Schools and clinics with EV charging needs, motorbike-fleet hubs, hospitality and fuel retail, industrial and SEZ tenants, multi-tenant residential. Commercial Plus is for sites that need on-site solar generation plus charging infrastructure sized to their fleet or visitor profile.',
+      'Commercial Plus is the contractor engagement for sites that need on-site solar generation, lithium storage, and EV charging delivered as a single integrated installation under one engineering contract. The five recurring deployment archetypes are peri-urban institutional anchor sites (schools, clinics, and agricultural cooperatives) with on-site charging needs; electric-motorbike fleet and battery-swap operators such as Roam, Spiro, Ampersand, and ARC Ride; hospitality and fuel-retail sites adding charging amenities; industrial and special economic zone tenants electrifying logistics fleets and forklifts; and multi-tenant residential property managers serving resident vehicles from a shared array and storage spine.',
     dailyLoad:
-      '50 kWp to 1 MWp solar capacity, 100 kWh to 2 MWh storage, charging infrastructure sized to deployment archetype.',
+      'Highly variable by deployment archetype: institutional anchor sites typically run classroom, clinic, and cooperative loads plus 2-4 AC charging points; fleet hubs run continuous DC fast-charge or battery-swap rotations; industrial sites smooth peak draw against grid limits while charging delivery vehicles overnight.',
     hardware:
-      'Solar array sized 50 kWp to 1 MWp. Storage 100 kWh to 2 MWh. AC and DC charging points configured to the customer\'s deployment archetype.',
+      'Tier-1 mono PV (from approximately 90 panels at the entry tier up to roughly 1,800 panels at the 1 MWp ceiling); hybrid three-phase inverter sized per deployment; lithium iron phosphate (LFP) battery storage in modular cabinets; AC charging stations from 7 kW to 22 kW; DC fast chargers from 30 kW to 180 kW; grid-interactive controls where utility interconnection and net-metering are available.',
     inverter: 'Sized per deployment, hybrid configuration',
     panels: 'From 90 × 550 W up to ~1,800 × 550 W',
     cashPrice: 'From KSh 4 million (bespoke; up to KSh 80 million depending on configuration)',

@@ -109,7 +109,7 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
     <div class="container-page section">
       <div class="max-w-3xl mb-8 md:mb-10">
         <p class="eyebrow mb-3">What you get</p>
-        <h2 class="text-h2-sm md:text-h2 text-navy-dark">Every {pkg.shortName} install includes.</h2>
+        <h2 class="text-h2-sm md:text-h2 text-navy-dark">What every {pkg.shortName} deployment delivers on site.</h2>
       </div>
       <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 max-w-4xl">
         {pkg.whatYouGet.map((item) => (
@@ -132,9 +132,9 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
       <div class="container-page section">
         <div class="max-w-3xl mb-10 md:mb-12">
           <p class="eyebrow mb-3">Deployment archetypes</p>
-          <h2 class="text-h2-sm md:text-h1 text-navy-dark">Five ways Commercial Plus shows up.</h2>
+          <h2 class="text-h2-sm md:text-h1 text-navy-dark">Five deployment archetypes Precifarm sizes and builds to template.</h2>
           <p class="mt-4 text-lg text-text-mid leading-relaxed">
-            Each archetype is sized against site demand, charging profile, and the customer’s grid relationship. We confirm the right configuration during the site assessment.
+            Each archetype below is a starting configuration template. The final solar, storage, and charging specification is set during the engineering site assessment, against measured site demand, the customer's charging profile, and the available grid interconnection.
           </p>
         </div>
         <div class="space-y-4">
@@ -176,16 +176,22 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
           <p class="eyebrow mb-3">Pricing</p>
           <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5">{pkg.cashPrice}</h2>
           <p class="text-text-mid leading-relaxed">
-            Cash, M-Pesa, or bank transfer. {pkg.slug === 'commercial' || isCommercialPlus
-              ? 'Pricing is bespoke after the site survey and depends on your measured load, site conditions, and any borehole or charging integration.'
-              : 'Pricing is firm once the site survey confirms hardware and labour.'}
+            {isCommercialPlus
+              ? 'Commercial Plus pricing is bespoke and is finalised in writing after the engineering site assessment. The principal variables are measured site load, charging infrastructure scope, storage sizing, the deployment archetype, and any grid-interconnection or net-metering requirements. Payment is accepted by bank transfer, M-Pesa enterprise, or via the partner-bank facility used for financing.'
+              : pkg.slug === 'commercial'
+                ? 'Cash, M-Pesa, or bank transfer. Pricing is bespoke after the site survey and depends on your measured load, site conditions, and any borehole integration.'
+                : 'Cash, M-Pesa, or bank transfer. Pricing is firm once the site survey confirms hardware and labour.'}
           </p>
         </div>
         <div>
           <p class="eyebrow mb-3">Financing</p>
-          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5">Pay your way.</h2>
+          <h2 class="text-h2-sm md:text-h2 text-navy-dark mb-5">
+            {isCommercialPlus ? 'Partner-bank financing, or a five-year operating lease.' : 'Pay your way.'}
+          </h2>
           <p class="text-text-mid leading-relaxed">
-            {pkg.financing}
+            {isCommercialPlus
+              ? 'Commercial Plus deployments are typically financed through the partner-bank facilities we work with on solar-PV asset finance (KCB Clean Energy, Stanbic Solar PV, Co-op Bank). For institutional anchor sites (schools, clinics, and agricultural cooperatives), the deployment can also be structured as a five-year operating lease, where Precifarm owns and operates the system for an agreed monthly fee and the customer pays for delivered energy on a tariff basis.'
+              : pkg.financing}
           </p>
           <a href="/financing/" class="mt-4 inline-flex items-center gap-1.5 text-navy font-semibold hover:underline">
             See all financing options
@@ -199,9 +205,15 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
       <!-- What your price covers -->
       <div class="mt-12 md:mt-16">
         <p class="eyebrow mb-3">What your price covers</p>
-        <h3 class="text-h3 md:text-h2-sm text-navy-dark mb-6">More than the box on the wall.</h3>
+        <h3 class="text-h3 md:text-h2-sm text-navy-dark mb-6">
+          {isCommercialPlus
+            ? 'A single integrated contract, not a stack of hardware invoices.'
+            : 'More than the box on the wall.'}
+        </h3>
         <p class="text-text-mid leading-relaxed max-w-prose mb-8">
-          A {pkg.shortName} quote from a hardware-only installer will look cheaper on paper. It buys you the box. Our price buys you the box plus the team that designed it, installed it, and will service it for the next five years.
+          {isCommercialPlus
+            ? 'A Commercial Plus quote from Precifarm covers the engineering design, the EPRA-licensed installation, the commissioning records, and the five-year operations and maintenance contract as a single integrated engagement. The customer signs one engineering contract, not five separate purchase orders to a panel supplier, an inverter vendor, a storage vendor, an installation crew, and a maintenance retainer.'
+            : `A ${pkg.shortName} quote from a hardware-only installer will look cheaper on paper. It buys you the box. Our price buys you the box plus the team that designed it, installed it, and will service it for the next five years.`}
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="rounded-card bg-white border border-hairline p-5">
@@ -238,7 +250,9 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
           </div>
         </div>
         <p class="mt-6 text-sm text-text-muted max-w-prose">
-          Hardware-only quotes typically come in below ours at the install. Most fail to recover that saving past year four, because there is no service to call when something fails. We price the five years up front so the cost of owning the system is the price you saw.
+          {isCommercialPlus
+            ? 'On industrial-scale deployments, the standard five-year contract extends to ten years on request. For institutional anchor sites, the operating-lease structure converts the full lifecycle into a single monthly fee with no upfront capital outlay.'
+            : 'Hardware-only quotes typically come in below ours at the install. Most fail to recover that saving past year four, because there is no service to call when something fails. We price the five years up front so the cost of owning the system is the price you saw.'}
         </p>
       </div>
     </div>
@@ -309,9 +323,13 @@ const isCommercialPlus = pkg.slug === 'commercial-plus';
   <!-- Block 7: Closing CTA -->
   <CTASection
     variant="dark"
-    headline={`Ready to size a ${pkg.shortName} for your site?`}
-    body="A free site assessment, a written design and quote within two business days, and a five-year service commitment from the same engineering team."
-    primaryCta={{ href: '/contact/', label: 'Get a quote' }}
+    headline={isCommercialPlus
+      ? 'Brief us on the site and we will return a sized Commercial Plus engineering design.'
+      : `Ready to size a ${pkg.shortName} for your site?`}
+    body={isCommercialPlus
+      ? 'An on-site engineering assessment, a written design and bill of quantities within two business days of the assessment, and a financing path through our partner banks or via the operating-lease structure. No commitment required to commission the assessment.'
+      : 'A free site assessment, a written design and quote within two business days, and a five-year service commitment from the same engineering team.'}
+    primaryCta={{ href: '/contact/', label: isCommercialPlus ? 'Brief an engineer' : 'Get a quote' }}
     secondaryCta={{ href: '/financing/', label: 'See financing' }}
   />
 </BaseLayout>
