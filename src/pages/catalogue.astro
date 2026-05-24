@@ -11,7 +11,8 @@ const order: Array<{ slug: string; tier: string; profile: string; uses: string; 
     uses: 'Lights, Wi-Fi, TV, phone charging, 1 fan (8–12 hrs/day)',
     system: '550 W solar · 1.5 kWh storage',
     why: 'Independence from blackouts, on a single panel',
-    financing: 'or KSh 5,472/mo (Lipa Pole Pole, 24 months)',
+    // No financing footnote: Starter pricing already includes the
+    // KSh 5,472/month Lipa Pole Pole rate inline.
   },
   {
     slug: 'family',
@@ -111,12 +112,12 @@ const rows = order.map((r) => {
     .brand-band {
       background: var(--navy-dark);
       color: white;
-      padding: 9mm 14mm 8mm;
+      padding: 7mm 14mm 6mm;
       display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 4pt solid var(--amber);
+      border-bottom: 3pt solid var(--amber);
     }
     .brand-mark {
-      font-size: 22pt; font-weight: 900; letter-spacing: -0.025em;
+      font-size: 20pt; font-weight: 900; letter-spacing: -0.025em;
       color: white; line-height: 1;
     }
     .brand-mark span { color: var(--amber); }
@@ -132,25 +133,25 @@ const rows = order.map((r) => {
 
     /* ==== HEADLINE ==== */
     .hero {
-      padding: 8mm 14mm 6mm;
+      padding: 6mm 14mm 4mm;
       background: white;
     }
     .hero h1 {
       margin: 0;
-      font-size: 26pt; font-weight: 800; line-height: 1.05;
+      font-size: 22pt; font-weight: 800; line-height: 1.08;
       letter-spacing: -0.02em; color: var(--navy-dark);
       max-width: 165mm;
     }
     .hero h1 span { color: var(--amber); }
     .hero .sub {
-      margin: 3mm 0 0; font-size: 10.5pt; line-height: 1.45;
+      margin: 2.5mm 0 0; font-size: 10pt; line-height: 1.4;
       color: var(--text-mid); max-width: 170mm;
     }
 
     /* ==== TRUST STRIP ==== */
     .trust {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 0; padding: 0 14mm; margin: 4mm 0 5mm;
+      gap: 0; padding: 0 14mm; margin: 3mm 0 4mm;
     }
     .trust > div {
       border-left: 3pt solid var(--amber);
@@ -171,21 +172,21 @@ const rows = order.map((r) => {
       padding: 0 14mm; flex: 1; display: flex; flex-direction: column;
     }
     .table-eyebrow {
-      font-size: 8pt; text-transform: uppercase; letter-spacing: 0.18em;
-      font-weight: 700; color: var(--green); margin: 0 0 2mm 0;
+      font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.18em;
+      font-weight: 700; color: var(--green); margin: 0 0 1.5mm 0;
     }
     .table-title {
-      font-size: 13pt; font-weight: 700; color: var(--navy-dark);
-      margin: 0 0 4mm; line-height: 1.2;
+      font-size: 11.5pt; font-weight: 700; color: var(--navy-dark);
+      margin: 0 0 3mm; line-height: 1.2;
     }
     table.cat {
-      width: 100%; border-collapse: collapse; font-size: 8.2pt;
+      width: 100%; border-collapse: collapse; font-size: 7.8pt;
       table-layout: fixed;
     }
     table.cat thead th {
       background: var(--navy-dark);
       color: white;
-      padding: 4mm 3mm 3mm;
+      padding: 3mm 3mm 2.5mm;
       text-align: left;
       vertical-align: top;
       border-right: 1pt solid rgba(255,255,255,0.1);
@@ -212,18 +213,18 @@ const rows = order.map((r) => {
 
     table.cat tbody th.row-label {
       background: var(--paper);
-      padding: 4mm 3mm; vertical-align: top; text-align: left;
-      font-size: 7pt; text-transform: uppercase; letter-spacing: 0.14em;
+      padding: 3mm 3mm; vertical-align: top; text-align: left;
+      font-size: 6.8pt; text-transform: uppercase; letter-spacing: 0.14em;
       font-weight: 700; color: var(--text-muted);
       border-right: 1pt solid var(--hairline);
       border-bottom: 1pt solid var(--hairline);
       width: 22mm;
     }
     table.cat tbody td {
-      padding: 4mm 3mm; vertical-align: top;
+      padding: 3mm 3mm; vertical-align: top;
       border-right: 1pt solid var(--hairline);
       border-bottom: 1pt solid var(--hairline);
-      font-size: 8pt; color: var(--text-mid); line-height: 1.4;
+      font-size: 7.8pt; color: var(--text-mid); line-height: 1.4;
     }
     table.cat tbody td:last-child { border-right: none; }
     table.cat tbody tr:nth-child(odd) td { background: white; }
@@ -231,10 +232,10 @@ const rows = order.map((r) => {
     table.cat tbody tr:nth-child(odd) td.highlight { background: rgba(244, 229, 183, 0.45); }
     table.cat tbody tr:nth-child(even) td.highlight { background: rgba(244, 229, 183, 0.85); }
     table.cat tbody tr.pricing-row td {
-      font-size: 9pt; font-weight: 700; color: var(--navy-dark); padding-top: 5mm; padding-bottom: 5mm;
+      font-size: 8.5pt; font-weight: 700; color: var(--navy-dark); padding-top: 3.5mm; padding-bottom: 3.5mm;
     }
     table.cat tbody tr.pricing-row td .financing {
-      display: block; font-size: 7pt; font-weight: 500; color: var(--text-muted);
+      display: block; font-size: 6.8pt; font-weight: 500; color: var(--text-muted);
       margin-top: 1mm; line-height: 1.3;
     }
     table.cat tbody tr.pricing-row td.highlight {
@@ -266,8 +267,8 @@ const rows = order.map((r) => {
 
     /* ==== ALSO FROM PRECIFARM ==== */
     .also {
-      margin: 5mm 14mm 0;
-      padding: 5mm 6mm;
+      margin: 4mm 14mm 0;
+      padding: 4mm 6mm;
       background: var(--paper);
       border-left: 4pt solid var(--green);
       display: grid; grid-template-columns: 1fr 1fr; gap: 6mm;
@@ -289,10 +290,10 @@ const rows = order.map((r) => {
       margin-top: auto;
       background: var(--amber);
       color: var(--navy-dark);
-      padding: 6mm 14mm 5mm;
+      padding: 5mm 14mm 4mm;
       display: grid; grid-template-columns: 1.4fr 1fr; gap: 8mm;
       align-items: center;
-      border-top: 4pt solid var(--navy-dark);
+      border-top: 3pt solid var(--navy-dark);
     }
     .cta-band .pitch {
       font-size: 11pt; font-weight: 700; line-height: 1.25;
@@ -316,7 +317,7 @@ const rows = order.map((r) => {
     .micro {
       background: var(--navy-dark);
       color: rgba(255,255,255,0.6);
-      padding: 3mm 14mm;
+      padding: 2.5mm 14mm;
       font-size: 6.5pt; letter-spacing: 0.04em;
       display: flex; justify-content: space-between; align-items: center;
     }
