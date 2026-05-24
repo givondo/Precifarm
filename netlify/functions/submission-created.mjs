@@ -33,8 +33,21 @@ function escapeHtml(s) {
   }[c]));
 }
 
-function brandedShell({ headline, intro, body, ctaUrl, ctaLabel, name }) {
-  const greeting = name ? `Hello ${escapeHtml(name.split(' ')[0])},` : 'Hello,';
+function brandedShell({ preheader, headline, greeting, opening, steps, attachmentLine, ctaUrl, ctaLabel, signoff }) {
+  const stepsHtml = steps.map((s) => `
+    <tr>
+      <td style="padding:0 0 14px 0;vertical-align:top;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td style="padding-right:14px;vertical-align:top;font-size:13px;font-weight:800;color:#C99800;letter-spacing:0.04em;width:24px;">${escapeHtml(String(s.n))}</td>
+            <td style="font-size:14px;line-height:1.55;color:#2A2F35;">
+              <strong style="color:#0F2832;font-weight:700;">${escapeHtml(s.title)}</strong>
+              <span style="color:#4A5158;"> &mdash; ${escapeHtml(s.body)}</span>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>`).join('');
   return `<!DOCTYPE html>
 <html lang="en-GB">
 <head>
@@ -42,35 +55,74 @@ function brandedShell({ headline, intro, body, ctaUrl, ctaLabel, name }) {
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${escapeHtml(headline)}</title>
 </head>
-<body style="margin:0;padding:0;background:#FAFAF7;font-family:Helvetica,Arial,sans-serif;color:#1C1F22;line-height:1.6;">
+<body style="margin:0;padding:0;background:#FAFAF7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#0F2832;line-height:1.55;">
+  <!-- Preheader (hidden, shows in inbox preview) -->
+  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#FAFAF7;">${escapeHtml(preheader)}</div>
   <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#FAFAF7;padding:32px 16px;">
     <tr>
       <td align="center">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:white;border-top:4px solid #C99800;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:white;">
+          <!-- Top brand strip -->
           <tr>
-            <td style="padding:32px 40px 8px;">
-              <p style="margin:0;font-size:18px;font-weight:800;letter-spacing:-0.02em;color:#0F2832;">PRECI<span style="color:#C99800;">FARM</span></p>
-              <p style="margin:4px 0 0;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:#6A7079;">EPRA-licensed solar EPC + O&amp;M</p>
+            <td style="padding:24px 36px 18px;border-top:3px solid #0F2832;border-bottom:1px solid #E2E2DD;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td style="font-size:16px;font-weight:800;letter-spacing:-0.02em;color:#0F2832;">PRECIFARM</td>
+                  <td align="right" style="font-size:9px;text-transform:uppercase;letter-spacing:0.14em;color:#6A7079;font-weight:600;">EPRA-licensed · EPC + O&amp;M</td>
+                </tr>
+              </table>
             </td>
           </tr>
+          <!-- Headline + greeting -->
           <tr>
-            <td style="padding:24px 40px 8px;">
-              <h1 style="margin:0 0 16px;font-size:24px;font-weight:700;color:#0F2832;line-height:1.2;">${escapeHtml(headline)}</h1>
-              <p style="margin:0 0 16px;font-size:15px;color:#1C1F22;">${greeting}</p>
-              <p style="margin:0 0 16px;font-size:15px;color:#4A5158;">${escapeHtml(intro)}</p>
-              ${body}
-              ${ctaUrl ? `
-              <p style="margin:32px 0 8px;">
-                <a href="${escapeHtml(ctaUrl)}" style="background:#C99800;color:#0F2832;text-decoration:none;padding:12px 24px;font-weight:700;display:inline-block;font-size:14px;">${escapeHtml(ctaLabel)}</a>
-              </p>` : ''}
+            <td style="padding:28px 36px 4px;">
+              <h1 style="margin:0 0 14px;font-size:22px;font-weight:700;color:#0F2832;line-height:1.2;letter-spacing:-0.01em;">${escapeHtml(headline)}</h1>
+              <p style="margin:0 0 14px;font-size:15px;color:#0F2832;">${escapeHtml(greeting)}</p>
+              <p style="margin:0;font-size:15px;color:#2A2F35;line-height:1.55;">${escapeHtml(opening)}</p>
             </td>
           </tr>
+          <!-- Steps -->
           <tr>
-            <td style="padding:24px 40px;border-top:1px solid #E2E2DD;background:#FAFAF7;">
-              <p style="margin:0 0 8px;font-size:12px;color:#6A7079;">Attached: <strong>Precifarm Product Catalogue 2026</strong> — the full four-package line-up, solar irrigation, EPRA T1/T2/T3 training, and the five-year EPC and O&amp;M commitment.</p>
-              <p style="margin:8px 0 0;font-size:11px;color:#6A7079;line-height:1.5;">
-                Precifarm AI Ltd · Headquartered in Nairobi · Operating hubs in Mombasa, Kisumu, Eldoret, Nakuru, Nyeri<br>
-                <a href="mailto:sales@precifarm.com" style="color:#0F2832;">sales@precifarm.com</a> · <a href="tel:+254794702768" style="color:#0F2832;">+254 794 702 768</a> · <a href="https://precifarm.com" style="color:#0F2832;">precifarm.com</a>
+            <td style="padding:20px 36px 0;">
+              <p style="margin:0 0 14px;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#1F6F4A;font-weight:700;">How this works</p>
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">${stepsHtml}</table>
+            </td>
+          </tr>
+          ${ctaUrl ? `
+          <!-- CTA -->
+          <tr>
+            <td style="padding:8px 36px 4px;">
+              <a href="${escapeHtml(ctaUrl)}" style="background:#0F2832;color:white;text-decoration:none;padding:12px 22px;font-weight:700;display:inline-block;font-size:13px;letter-spacing:0.02em;">${escapeHtml(ctaLabel)} &rarr;</a>
+            </td>
+          </tr>` : ''}
+          <!-- Attachment call-out -->
+          <tr>
+            <td style="padding:24px 36px 0;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#F4F1E8;border-left:3px solid #C99800;">
+                <tr>
+                  <td style="padding:14px 16px;font-size:13px;color:#2A2F35;line-height:1.5;">
+                    <strong style="color:#0F2832;display:block;margin-bottom:3px;text-transform:uppercase;font-size:10px;letter-spacing:0.14em;font-weight:700;">Attached</strong>
+                    ${escapeHtml(attachmentLine)}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- Sign-off -->
+          <tr>
+            <td style="padding:28px 36px 8px;">
+              <p style="margin:0;font-size:14px;color:#0F2832;line-height:1.5;">${escapeHtml(signoff)}</p>
+              <p style="margin:8px 0 0;font-size:12px;color:#6A7079;">If you have questions before our call, just reply to this email &mdash; it goes directly to the engineering team.</p>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="padding:18px 36px 28px;border-top:1px solid #E2E2DD;background:#FAFAF7;">
+              <p style="margin:0;font-size:11px;color:#6A7079;line-height:1.55;">
+                <a href="mailto:sales@precifarm.com" style="color:#0F2832;text-decoration:none;font-weight:600;">sales@precifarm.com</a> &nbsp;·&nbsp;
+                <a href="tel:+254794702768" style="color:#0F2832;text-decoration:none;font-weight:600;">+254 794 702 768</a> &nbsp;·&nbsp;
+                <a href="https://precifarm.com" style="color:#0F2832;text-decoration:none;font-weight:600;">precifarm.com</a><br>
+                <span style="color:#6A7079;">Precifarm AI Ltd &nbsp;·&nbsp; Nairobi HQ &nbsp;·&nbsp; Mombasa, Kisumu, Eldoret, Nakuru, Nyeri</span>
               </p>
             </td>
           </tr>
@@ -83,42 +135,42 @@ function brandedShell({ headline, intro, body, ctaUrl, ctaLabel, name }) {
 }
 
 function contactReply(name) {
+  const first = name ? name.split(' ')[0] : null;
   return brandedShell({
-    name,
-    headline: 'Your quote enquiry was received.',
-    intro: 'Thanks for getting in touch with Precifarm. Your enquiry has been logged against the regional engineering hub responsible for your area, and the engineer covering your region will be in touch within one business day to acknowledge it and schedule the site assessment.',
-    body: `
-      <p style="margin:0 0 16px;font-size:15px;color:#4A5158;">What happens next:</p>
-      <ol style="margin:0 0 16px 0;padding-left:20px;font-size:14px;color:#4A5158;">
-        <li style="margin-bottom:8px;"><strong style="color:#0F2832;">We acknowledge within one business day</strong>, by email or phone.</li>
-        <li style="margin-bottom:8px;"><strong style="color:#0F2832;">An engineer is assigned by city</strong>, and becomes your single point of contact through to commissioning.</li>
-        <li style="margin-bottom:8px;"><strong style="color:#0F2832;">A free site assessment is scheduled</strong>. The engineer maps your loads, operating hours, and structural details.</li>
-        <li style="margin-bottom:8px;"><strong style="color:#0F2832;">A written design and quote arrives within two business days</strong> of the assessment. From there, decide on payment path and we book the install.</li>
-      </ol>
-      <p style="margin:0;font-size:15px;color:#4A5158;">In the meantime, the attached catalogue covers our full four-package line-up and what each one is sized for.</p>
-    `,
+    preheader: 'Your Precifarm quote enquiry has been received. An engineer responds within one business day.',
+    headline: 'Your quote enquiry is in.',
+    greeting: first ? `Hello ${first},` : 'Hello,',
+    opening: 'Thanks for reaching out. Your enquiry is logged against the regional engineering hub responsible for your area, and the engineer covering your region will be in touch within one business day to schedule the site assessment.',
+    steps: [
+      { n: 1, title: 'Engineer assigned', body: 'Routed to whichever of our six regional hubs covers your site.' },
+      { n: 2, title: 'Free site assessment', body: 'We visit, measure your loads, and map the design against your actual operating routine.' },
+      { n: 3, title: 'Written quote within two business days', body: 'A sized recommendation, bill of quantities, and a firm price.' },
+      { n: 4, title: 'Install and five-year service', body: 'The same engineer who commissioned the system services it for five years. No subcontractors, no handoffs.' },
+    ],
     ctaUrl: 'https://precifarm.com/products/',
-    ctaLabel: 'See the packages',
+    ctaLabel: 'See the four packages',
+    attachmentLine: 'Precifarm Product Catalogue 2026 — the four-package line-up at a glance, plus solar irrigation and EPRA training. Worth opening side-by-side with our reply so you can flag which tier looks closest to your loads.',
+    signoff: '— The Precifarm Engineering Team',
   });
 }
 
 function trainingReply(name) {
+  const first = name ? name.split(' ')[0] : null;
   return brandedShell({
-    name,
-    headline: 'Your training registration was received.',
-    intro: 'Thanks for registering interest in a Precifarm EPRA T1, T2, or T3 cohort. We will contact you within two business days to confirm the next available cohort matching your tier and hub, share the published fee, and walk you through the EPRA application document pack you should start preparing.',
-    body: `
-      <p style="margin:0 0 16px;font-size:15px;color:#4A5158;">What happens next:</p>
-      <ol style="margin:0 0 16px 0;padding-left:20px;font-size:14px;color:#4A5158;">
-        <li style="margin-bottom:8px;"><strong style="color:#0F2832;">Acknowledgement within two business days</strong>, with the prerequisite checklist for your target tier.</li>
-        <li style="margin-bottom:8px;"><strong style="color:#0F2832;">A short qualification call</strong> to confirm prior training, documented experience, and the right tier for your background.</li>
-        <li style="margin-bottom:8px;"><strong style="color:#0F2832;">Cohort offer with dates, venue, and published fee.</strong></li>
-        <li style="margin-bottom:8px;"><strong style="color:#0F2832;">On confirmation, enrolment and pre-cohort onboarding</strong>, with eLearning access and the EPRA application document pack.</li>
-      </ol>
-      <p style="margin:0;font-size:15px;color:#4A5158;">Registration does not commit you to enrolment. The attached catalogue covers our full product line and the training programme structure.</p>
-    `,
+    preheader: 'Your Precifarm EPRA T1/T2/T3 training registration has been received. We respond within two business days.',
+    headline: 'Your training registration is in.',
+    greeting: first ? `Hello ${first},` : 'Hello,',
+    opening: 'Thanks for registering interest in a Precifarm EPRA T1, T2, or T3 cohort. We will contact you within two business days to confirm the next available cohort matching your tier and hub, share the published fee, and walk you through the EPRA application document pack you should start preparing.',
+    steps: [
+      { n: 1, title: 'Qualification call', body: 'A short conversation to confirm your prior training, documented experience, and the right tier for your background.' },
+      { n: 2, title: 'Cohort offer', body: 'Published fee, dates, venue, and the prerequisite document pack you should prepare.' },
+      { n: 3, title: 'Enrolment and pre-cohort onboarding', body: 'eLearning access and the EPRA application checklist.' },
+      { n: 4, title: 'Cohort delivery + EPRA application support', body: 'Lecture, laboratory, supervised site work; on completion we support your T1, T2, or T3 application submission.' },
+    ],
     ctaUrl: 'https://precifarm.com/training/',
     ctaLabel: 'Review the training page',
+    attachmentLine: 'Precifarm Product Catalogue 2026 — covers the full product line and the training programme structure. Worth a read before our qualification call.',
+    signoff: '— The Precifarm Engineering Team',
   });
 }
 

@@ -1,26 +1,13 @@
 ---
-import { packages, getStartingPriceDisplay } from '../data/packages';
+import { packages, getStartingPriceDisplay, isQuoteOnly } from '../data/packages';
 import { company } from '../data/company';
 
-type Row = {
-  label: string;
-  resolve: (pkg: typeof packages[number]) => string;
-  emphasis?: boolean;
-};
-
-const rows: Row[] = [
-  { label: 'Capacity (PV + storage)', resolve: (p) => p.capacity, emphasis: true },
-  { label: 'Best for', resolve: (p) => p.bestFor },
-  { label: 'Powers', resolve: (p) => p.powers ?? '—' },
-  { label: 'Irrigation support', resolve: (p) => p.irrigationSupport ?? p.designedFor ?? '—' },
-  { label: 'Daily load', resolve: (p) => p.dailyLoad },
-  { label: 'Inverter', resolve: (p) => p.inverter },
-  { label: 'Panels', resolve: (p) => p.panels },
-  { label: 'Service tier', resolve: (p) => p.serviceTier },
-  { label: 'Starting price', resolve: (p) => getStartingPriceDisplay(p), emphasis: true },
-];
-
-const hasAnyIrrigationNote = packages.some((p) => p.irrigationNote);
+const cards = packages.map((pkg) => ({
+  pkg,
+  image: (pkg.cardImage ?? pkg.image).src,
+  price: getStartingPriceDisplay(pkg),
+  quoteOnly: isQuoteOnly(pkg),
+}));
 ---
 <!DOCTYPE html>
 <html lang="en-GB">
@@ -38,8 +25,9 @@ const hasAnyIrrigationNote = packages.some((p) => p.irrigationNote);
       --text: #2A2F35;
       --muted: #6A7079;
       --hairline: #D6D2C4;
+      --paper: #FAFAF7;
       --row-alt: #F7F5EF;
-      --paper: #FFFFFF;
+      --amber: #C99800;
     }
 
     @page { size: A4 landscape; margin: 0; }
@@ -63,137 +51,109 @@ const hasAnyIrrigationNote = packages.some((p) => p.irrigationNote);
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--text);
-      margin: 0;
-      line-height: 1.35;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+      margin: 0; line-height: 1.4;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
     .page {
       width: 297mm; height: 210mm;
-      padding: 12mm 14mm 10mm;
+      padding: 11mm 12mm 9mm;
       display: flex; flex-direction: column;
     }
 
-    /* === Top brand row === */
+    /* === Header === */
     .top {
       display: flex; justify-content: space-between; align-items: baseline;
-      padding-bottom: 4mm;
-      border-bottom: 1pt solid var(--hairline);
+      padding-bottom: 4mm; border-bottom: 1pt solid var(--hairline);
     }
-    .brand-mark {
-      font-size: 12pt; font-weight: 800; letter-spacing: -0.02em;
-      color: var(--ink); line-height: 1;
-    }
-    .top .meta {
-      font-size: 7pt; text-transform: uppercase; letter-spacing: 0.16em;
-      color: var(--muted); font-weight: 600;
-    }
+    .brand-mark { font-size: 12pt; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); line-height: 1; }
+    .top .meta { font-size: 7pt; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); font-weight: 600; }
 
-    /* === Title === */
     .title-block {
-      margin-top: 4mm;
-      margin-bottom: 4mm;
-      display: flex; justify-content: space-between; align-items: flex-start;
-      gap: 16mm;
+      margin-top: 4mm; margin-bottom: 5mm;
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 16mm;
     }
-    h1 {
-      margin: 0;
-      font-size: 16pt; font-weight: 700; line-height: 1.15;
-      color: var(--ink); letter-spacing: -0.01em;
-      flex-shrink: 0;
-    }
-    .lede {
-      margin: 0;
-      font-size: 8.5pt; line-height: 1.4;
-      color: var(--text); max-width: 180mm;
-    }
+    h1 { margin: 0; font-size: 16pt; font-weight: 700; line-height: 1.15; color: var(--ink); letter-spacing: -0.01em; flex-shrink: 0; }
+    .lede { margin: 0; font-size: 8.5pt; line-height: 1.4; color: var(--text); max-width: 180mm; }
 
-    /* === Table === */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 6.8pt;
-      table-layout: fixed;
-    }
-    table thead th {
-      text-align: left;
-      padding: 2.5mm 2mm;
-      vertical-align: bottom;
-      border-bottom: 1.5pt solid var(--ink);
-      font-weight: 700;
-      color: var(--ink);
-      font-size: 9pt;
-    }
-    table thead th.spec {
-      font-size: 6pt; text-transform: uppercase; letter-spacing: 0.14em;
-      color: var(--muted); font-weight: 600;
-      width: 28mm;
-    }
-    table thead th .ev-mark {
-      display: block;
-      margin-top: 0.8mm;
-      font-size: 6pt; text-transform: uppercase; letter-spacing: 0.14em;
-      color: var(--muted); font-weight: 600;
-    }
-    table tbody th.row-label {
-      text-align: left;
-      padding: 2.2mm 2mm;
-      vertical-align: top;
-      font-weight: 600;
-      color: var(--ink);
-      font-size: 7pt;
-      border-bottom: 1pt solid var(--hairline);
-      width: 28mm;
-    }
-    table tbody td {
-      padding: 2.2mm 2mm;
-      vertical-align: top;
-      font-size: 6.8pt;
-      color: var(--text);
-      border-bottom: 1pt solid var(--hairline);
-      line-height: 1.35;
-    }
-    table tbody tr.alt th.row-label,
-    table tbody tr.alt td {
-      background: var(--row-alt);
-    }
-    table tbody td.emphasis {
-      font-weight: 700;
-      color: var(--ink);
-    }
-    table tbody tr.caveat td {
-      font-style: italic;
-      font-size: 6.2pt;
-      color: var(--muted);
-    }
-    table tfoot td {
-      padding: 3mm 2.5mm 0;
-      border-top: 1.5pt solid var(--ink);
-      font-size: 7.5pt;
-    }
-    /* Subtle column marker for the EV-ready (highlighted) tier */
-    .col-mark th, .col-mark td {
-      box-shadow: inset 2pt 0 0 var(--ink), inset -2pt 0 0 var(--ink);
-    }
-
-    /* === Below-table notes === */
-    .notes {
-      margin-top: 4mm;
+    /* === Cards row === */
+    .cards {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8mm;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4mm;
     }
-    .note h3 {
+    .card {
+      display: flex; flex-direction: column;
+      border: 1pt solid var(--hairline);
+      overflow: hidden;
+    }
+    .card .img-wrap {
+      width: 100%; aspect-ratio: 16 / 10;
+      background: var(--paper);
+      overflow: hidden;
+    }
+    .card .img-wrap img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .card .img-wrap.contain img { object-fit: contain; }
+    .card .name-row {
+      padding: 3mm 4mm 1mm;
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 3mm;
+    }
+    .card .name { font-size: 11pt; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1; }
+    .card .ev {
+      font-size: 6pt; font-weight: 700; color: var(--ink);
+      border: 1pt solid var(--ink); padding: 1pt 4pt;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+    .card .tagline {
+      padding: 0 4mm 3mm;
+      font-size: 7.5pt; color: var(--muted); font-style: italic;
+      line-height: 1.35;
+      border-bottom: 1pt solid var(--hairline);
+    }
+    .card dl {
+      margin: 0; padding: 3mm 4mm;
+      display: flex; flex-direction: column; gap: 2mm;
+      flex: 1;
+    }
+    .card dl > div {
+      display: flex; flex-direction: column; gap: 0.5mm;
+    }
+    .card dt {
+      font-size: 6pt; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--muted); font-weight: 700;
+    }
+    .card dd {
+      margin: 0; font-size: 7.5pt; color: var(--text); line-height: 1.35;
+    }
+    .card dd.bold { color: var(--ink); font-weight: 700; }
+    .card .price {
+      padding: 3mm 4mm; margin-top: auto;
+      background: var(--ink); color: white;
+      font-size: 8.5pt; font-weight: 700; line-height: 1.3;
+      border-top: 1pt solid var(--ink);
+    }
+    .card .price .label {
+      display: block; font-size: 6pt; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--amber); margin-bottom: 1mm;
+      font-weight: 700;
+    }
+
+    /* === Below cards: also-from + contact === */
+    .below {
+      margin-top: 4mm;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8mm;
+      padding-top: 3mm; border-top: 1pt solid var(--hairline);
+    }
+    .below h3 {
       margin: 0 0 1mm;
       font-size: 7pt; font-weight: 700; color: var(--ink);
-      text-transform: uppercase; letter-spacing: 0.1em;
+      text-transform: uppercase; letter-spacing: 0.12em;
     }
-    .note p {
-      margin: 0;
-      font-size: 7pt; line-height: 1.4; color: var(--text);
-    }
+    .below p { margin: 0; font-size: 7pt; line-height: 1.4; color: var(--text); }
 
-    /* === Footer === */
     .foot {
       margin-top: auto;
       padding-top: 3mm;
@@ -201,74 +161,73 @@ const hasAnyIrrigationNote = packages.some((p) => p.irrigationNote);
       display: flex; justify-content: space-between; align-items: baseline;
       font-size: 7pt; color: var(--muted);
     }
-    .foot .contact {
-      color: var(--ink); font-weight: 600;
-    }
-    .foot .contact a {
-      color: var(--ink); text-decoration: none;
-      margin-right: 6mm;
-    }
+    .foot .contact { color: var(--ink); font-weight: 600; }
+    .foot .contact a { color: var(--ink); text-decoration: none; margin-right: 6mm; }
     .foot .contact a:last-child { margin-right: 0; }
-    .foot .legal { font-size: 7pt; }
+    .foot .legal { font-size: 6.5pt; }
   </style>
 </head>
 <body>
 <section class="page">
-  <!-- Top -->
+  <!-- Header -->
   <div class="top">
     <div class="brand-mark">PRECIFARM</div>
     <div class="meta">Product Catalogue · 2026</div>
   </div>
 
-  <!-- Title -->
+  <!-- Title + lede -->
   <div class="title-block">
     <h1>Precifarm product line.</h1>
     <p class="lede">EPRA-licensed solar PV and storage, sized for households, SMEs, schools, and institutional sites across Kenya. Every package includes the same five-year EPC and O&amp;M commitment, delivered by the regional engineering team responsible for your area.</p>
   </div>
 
-  <!-- Table (matches the home-page PackageComparisonTable structure) -->
-  <table>
-    <caption style="position:absolute;left:-9999px;">Side-by-side comparison of the four Precifarm packages</caption>
-    <thead>
-      <tr>
-        <th scope="col" class="spec">Spec</th>
-        {packages.map((pkg) => (
-          <th scope="col" class={pkg.isHighlighted ? 'highlighted' : ''}>
-            {pkg.shortName}
-            {pkg.isHighlighted && <span class="ev-mark">EV-ready</span>}
-          </th>
-        ))}
-      </tr>
-    </thead>
-    <tbody>
-      {rows.map((row, i) => (
-        <tr class={i % 2 === 0 ? 'alt' : ''}>
-          <th scope="row" class="row-label">{row.label}</th>
-          {packages.map((pkg) => (
-            <td class={row.emphasis ? 'emphasis' : ''}>
-              {row.resolve(pkg)}
-            </td>
-          ))}
-        </tr>
-      ))}
-      {hasAnyIrrigationNote && (
-        <tr class="caveat">
-          <th scope="row" class="row-label">Pump caveat</th>
-          {packages.map((pkg) => (
-            <td>{pkg.irrigationNote ?? '—'}</td>
-          ))}
-        </tr>
-      )}
-    </tbody>
-  </table>
+  <!-- Cards: 4 packages, left to right -->
+  <div class="cards">
+    {cards.map(({ pkg, image, price, quoteOnly }) => (
+      <article class="card">
+        <div class={`img-wrap ${pkg.slug === 'starter' || pkg.slug === 'family' ? 'contain' : ''}`}>
+          <img src={image} alt="" />
+        </div>
+        <div class="name-row">
+          <div class="name">{pkg.shortName}</div>
+          {pkg.isHighlighted && <div class="ev">EV-ready</div>}
+        </div>
+        <p class="tagline">{pkg.tagline}</p>
+        <dl>
+          <div>
+            <dt>Capacity</dt>
+            <dd class="bold">{pkg.capacity}</dd>
+          </div>
+          <div>
+            <dt>Best for</dt>
+            <dd>{pkg.bestFor}</dd>
+          </div>
+          <div>
+            <dt>System</dt>
+            <dd>{pkg.panels} · {pkg.inverter}</dd>
+          </div>
+          {pkg.serviceTier && (
+            <div>
+              <dt>Service tier</dt>
+              <dd>{pkg.serviceTier}</dd>
+            </div>
+          )}
+        </dl>
+        <div class="price">
+          <span class="label">{quoteOnly ? 'Pricing' : 'Starting'}</span>
+          {price}
+        </div>
+      </article>
+    ))}
+  </div>
 
   <!-- Sub-product + Training notes -->
-  <div class="notes">
-    <div class="note">
+  <div class="below">
+    <div>
       <h3>Also: Solar Irrigation Systems</h3>
       <p>Submersible borehole pumps, surface pumps, and solar pump controllers. Sized from 1-acre smallholder to 100+ acre commercial farms on a site-assessment basis.</p>
     </div>
-    <div class="note">
+    <div>
       <h3>Also: EPRA T1 / T2 / T3 Training</h3>
       <p>Practitioner-led short-cohort programmes that prepare technicians and engineers for the EPRA solar PV licence application. Mapped to the NITA competency framework.</p>
     </div>
