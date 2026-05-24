@@ -1,55 +1,26 @@
 ---
-import { packages, getStartingPriceDisplay, isQuoteOnly } from '../data/packages';
+import { packages, getStartingPriceDisplay } from '../data/packages';
 import { company } from '../data/company';
 
-const packageMap = Object.fromEntries(packages.map((p) => [p.slug, p]));
-const order: Array<{ slug: string; tier: string; profile: string; uses: string; system: string; why: string; financing?: string }> = [
-  {
-    slug: 'starter',
-    tier: 'Starter',
-    profile: 'Renters, single-room households, boda riders, kiosks',
-    uses: 'Lights, Wi-Fi, TV, phone charging, 1 fan (8–12 hrs/day)',
-    system: '550 W solar · 1.5 kWh storage',
-    why: 'Independence from blackouts, on a single panel',
-    // No financing footnote: Starter pricing already includes the
-    // KSh 5,472/month Lipa Pole Pole rate inline.
-  },
-  {
-    slug: 'family',
-    tier: 'Family',
-    profile: 'Two-to-three bedroom off-grid homes',
-    uses: 'Full-house lighting, fridge, TV, fans, Wi-Fi, small appliances',
-    system: '2.2 kWp solar · 5 kWh storage',
-    why: 'Zero KPLC bills, full-house comfort',
-    financing: 'or partner-bank financing (Equity, KCB, Co-op, SACCO)',
-  },
-  {
-    slug: 'commercial',
-    tier: 'Commercial',
-    profile: 'Schools, clinics, SMEs, cooperatives',
-    uses: 'Classrooms, refrigeration, pumps, full business operations',
-    system: 'Sized to site after written assessment',
-    why: 'Operational continuity, designed for your loads',
-  },
-  {
-    slug: 'commercial-plus',
-    tier: 'Commercial Plus',
-    profile: 'Multi-site institutional, industrial, hospitality, EV fleet ops',
-    uses: 'Whole-site loads + EV charging, across multiple buildings',
-    system: 'Sized to site, EV-ready architecture, BESS-coupled',
-    why: 'Coordinated multi-site rollout with anchor-grade service',
-  },
+type Row = {
+  label: string;
+  resolve: (pkg: typeof packages[number]) => string;
+  emphasis?: boolean;
+};
+
+const rows: Row[] = [
+  { label: 'Capacity (PV + storage)', resolve: (p) => p.capacity, emphasis: true },
+  { label: 'Best for', resolve: (p) => p.bestFor },
+  { label: 'Powers', resolve: (p) => p.powers ?? '—' },
+  { label: 'Irrigation support', resolve: (p) => p.irrigationSupport ?? p.designedFor ?? '—' },
+  { label: 'Daily load', resolve: (p) => p.dailyLoad },
+  { label: 'Inverter', resolve: (p) => p.inverter },
+  { label: 'Panels', resolve: (p) => p.panels },
+  { label: 'Service tier', resolve: (p) => p.serviceTier },
+  { label: 'Starting price', resolve: (p) => getStartingPriceDisplay(p), emphasis: true },
 ];
 
-const rows = order.map((r) => {
-  const pkg = packageMap[r.slug];
-  return {
-    ...r,
-    pricing: getStartingPriceDisplay(pkg),
-    quoteOnly: isQuoteOnly(pkg),
-    highlighted: pkg?.isHighlighted ?? false,
-  };
-});
+const hasAnyIrrigationNote = packages.some((p) => p.irrigationNote);
 ---
 <!DOCTYPE html>
 <html lang="en-GB">
@@ -60,390 +31,257 @@ const rows = order.map((r) => {
   <meta name="robots" content="noindex" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --navy: #1F4E5F;
-      --navy-dark: #0F2832;
-      --amber: #C99800;
-      --amber-light: #F4E5B7;
-      --green: #1F6F4A;
-      --paper: #FAFAF7;
-      --row-alt: #F4F1E8;
-      --hairline: #D6D2C4;
       --ink: #0F2832;
-      --text-mid: #3A4147;
-      --text-muted: #5E646B;
+      --text: #2A2F35;
+      --muted: #6A7079;
+      --hairline: #D6D2C4;
+      --row-alt: #F7F5EF;
+      --paper: #FFFFFF;
     }
 
-    @page { size: A4; margin: 0; }
+    @page { size: A4 landscape; margin: 0; }
 
     @media print {
       body { background: white; }
       .page { box-shadow: none; }
-      .screen-only { display: none !important; }
     }
 
     @media screen {
       body { background: #d8d8d0; padding: 20px 0; }
       .page {
-        width: 210mm;
-        height: 297mm;
+        width: 297mm; height: 210mm;
         margin: 0 auto;
         background: white;
-        box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 30px rgba(0,0,0,0.12);
       }
     }
 
     * { box-sizing: border-box; }
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      color: var(--ink); margin: 0; line-height: 1.4;
-      -webkit-print-color-adjust: exact; print-color-adjust: exact;
-      font-feature-settings: 'ss01' on, 'cv11' on;
+      color: var(--text);
+      margin: 0;
+      line-height: 1.35;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
     .page {
-      width: 210mm; height: 297mm;
+      width: 297mm; height: 210mm;
+      padding: 12mm 14mm 10mm;
       display: flex; flex-direction: column;
-      overflow: hidden;
     }
 
-    /* ==== TOP BRAND BAND ==== */
-    .brand-band {
-      background: var(--navy-dark);
-      color: white;
-      padding: 7mm 14mm 6mm;
-      display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 3pt solid var(--amber);
+    /* === Top brand row === */
+    .top {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding-bottom: 4mm;
+      border-bottom: 1pt solid var(--hairline);
     }
     .brand-mark {
-      font-size: 20pt; font-weight: 900; letter-spacing: -0.025em;
-      color: white; line-height: 1;
+      font-size: 12pt; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--ink); line-height: 1;
     }
-    .brand-mark span { color: var(--amber); }
-    .brand-tag {
-      text-align: right;
-      font-size: 8pt; text-transform: uppercase; letter-spacing: 0.18em;
-      font-weight: 700; color: var(--amber);
-    }
-    .brand-tag .year {
-      display: block; font-size: 9pt; color: rgba(255,255,255,0.6);
-      margin-top: 2pt; letter-spacing: 0.14em;
-    }
-
-    /* ==== HEADLINE ==== */
-    .hero {
-      padding: 6mm 14mm 4mm;
-      background: white;
-    }
-    .hero h1 {
-      margin: 0;
-      font-size: 22pt; font-weight: 800; line-height: 1.08;
-      letter-spacing: -0.02em; color: var(--navy-dark);
-      max-width: 165mm;
-    }
-    .hero h1 span { color: var(--amber); }
-    .hero .sub {
-      margin: 2.5mm 0 0; font-size: 10pt; line-height: 1.4;
-      color: var(--text-mid); max-width: 170mm;
-    }
-
-    /* ==== TRUST STRIP ==== */
-    .trust {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 0; padding: 0 14mm; margin: 3mm 0 4mm;
-    }
-    .trust > div {
-      border-left: 3pt solid var(--amber);
-      padding: 0 5mm;
-    }
-    .trust > div:first-child { padding-left: 4mm; }
-    .trust .label {
+    .top .meta {
       font-size: 7pt; text-transform: uppercase; letter-spacing: 0.16em;
-      font-weight: 700; color: var(--green); margin: 0 0 1mm 0;
-    }
-    .trust .value {
-      font-size: 10pt; font-weight: 700; color: var(--navy-dark);
-      margin: 0; line-height: 1.3;
+      color: var(--muted); font-weight: 600;
     }
 
-    /* ==== TABLE ==== */
-    .table-wrap {
-      padding: 0 14mm; flex: 1; display: flex; flex-direction: column;
+    /* === Title === */
+    .title-block {
+      margin-top: 4mm;
+      margin-bottom: 4mm;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 16mm;
     }
-    .table-eyebrow {
-      font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.18em;
-      font-weight: 700; color: var(--green); margin: 0 0 1.5mm 0;
+    h1 {
+      margin: 0;
+      font-size: 16pt; font-weight: 700; line-height: 1.15;
+      color: var(--ink); letter-spacing: -0.01em;
+      flex-shrink: 0;
     }
-    .table-title {
-      font-size: 11.5pt; font-weight: 700; color: var(--navy-dark);
-      margin: 0 0 3mm; line-height: 1.2;
+    .lede {
+      margin: 0;
+      font-size: 8.5pt; line-height: 1.4;
+      color: var(--text); max-width: 180mm;
     }
-    table.cat {
-      width: 100%; border-collapse: collapse; font-size: 7.8pt;
+
+    /* === Table === */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 6.8pt;
       table-layout: fixed;
     }
-    table.cat thead th {
-      background: var(--navy-dark);
-      color: white;
-      padding: 3mm 3mm 2.5mm;
+    table thead th {
       text-align: left;
-      vertical-align: top;
-      border-right: 1pt solid rgba(255,255,255,0.1);
+      padding: 2.5mm 2mm;
+      vertical-align: bottom;
+      border-bottom: 1.5pt solid var(--ink);
       font-weight: 700;
+      color: var(--ink);
+      font-size: 9pt;
     }
-    table.cat thead th:last-child { border-right: none; }
-    table.cat thead th.highlight {
-      background: var(--amber);
-      color: var(--navy-dark);
+    table thead th.spec {
+      font-size: 6pt; text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--muted); font-weight: 600;
+      width: 28mm;
     }
-    table.cat thead th .pkg-name {
-      font-size: 11pt; font-weight: 800; line-height: 1; display: block;
-      letter-spacing: -0.01em;
+    table thead th .ev-mark {
+      display: block;
+      margin-top: 0.8mm;
+      font-size: 6pt; text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--muted); font-weight: 600;
     }
-    table.cat thead th .pkg-sub {
-      font-size: 7pt; text-transform: uppercase; letter-spacing: 0.14em;
-      font-weight: 700; margin-top: 2pt; opacity: 0.7; display: block;
-    }
-    table.cat thead th.highlight .pkg-sub { opacity: 0.9; }
-    table.cat thead th.spec-col {
-      background: var(--navy);
-      width: 22mm;
-    }
-
-    table.cat tbody th.row-label {
-      background: var(--paper);
-      padding: 3mm 3mm; vertical-align: top; text-align: left;
-      font-size: 6.8pt; text-transform: uppercase; letter-spacing: 0.14em;
-      font-weight: 700; color: var(--text-muted);
-      border-right: 1pt solid var(--hairline);
+    table tbody th.row-label {
+      text-align: left;
+      padding: 2.2mm 2mm;
+      vertical-align: top;
+      font-weight: 600;
+      color: var(--ink);
+      font-size: 7pt;
       border-bottom: 1pt solid var(--hairline);
-      width: 22mm;
+      width: 28mm;
     }
-    table.cat tbody td {
-      padding: 3mm 3mm; vertical-align: top;
-      border-right: 1pt solid var(--hairline);
+    table tbody td {
+      padding: 2.2mm 2mm;
+      vertical-align: top;
+      font-size: 6.8pt;
+      color: var(--text);
       border-bottom: 1pt solid var(--hairline);
-      font-size: 7.8pt; color: var(--text-mid); line-height: 1.4;
+      line-height: 1.35;
     }
-    table.cat tbody td:last-child { border-right: none; }
-    table.cat tbody tr:nth-child(odd) td { background: white; }
-    table.cat tbody tr:nth-child(even) td { background: var(--row-alt); }
-    table.cat tbody tr:nth-child(odd) td.highlight { background: rgba(244, 229, 183, 0.45); }
-    table.cat tbody tr:nth-child(even) td.highlight { background: rgba(244, 229, 183, 0.85); }
-    table.cat tbody tr.pricing-row td {
-      font-size: 8.5pt; font-weight: 700; color: var(--navy-dark); padding-top: 3.5mm; padding-bottom: 3.5mm;
+    table tbody tr.alt th.row-label,
+    table tbody tr.alt td {
+      background: var(--row-alt);
     }
-    table.cat tbody tr.pricing-row td .financing {
-      display: block; font-size: 6.8pt; font-weight: 500; color: var(--text-muted);
-      margin-top: 1mm; line-height: 1.3;
+    table tbody td.emphasis {
+      font-weight: 700;
+      color: var(--ink);
     }
-    table.cat tbody tr.pricing-row td.highlight {
-      color: var(--navy-dark);
+    table tbody tr.caveat td {
+      font-style: italic;
+      font-size: 6.2pt;
+      color: var(--muted);
     }
-    table.cat tbody tr.why-row {
-      background: var(--navy-dark);
+    table tfoot td {
+      padding: 3mm 2.5mm 0;
+      border-top: 1.5pt solid var(--ink);
+      font-size: 7.5pt;
     }
-    table.cat tbody tr.why-row th.row-label {
-      background: var(--navy-dark); color: var(--amber);
-      border-bottom: none;
-    }
-    table.cat tbody tr.why-row td {
-      background: var(--navy-dark); color: white;
-      font-size: 8.5pt; font-weight: 600; border-bottom: none;
-      border-right: 1pt solid rgba(255,255,255,0.1);
-    }
-    table.cat tbody tr.why-row td:last-child { border-right: none; }
-    table.cat tbody tr.why-row td.highlight {
-      background: var(--amber); color: var(--navy-dark);
+    /* Subtle column marker for the EV-ready (highlighted) tier */
+    .col-mark th, .col-mark td {
+      box-shadow: inset 2pt 0 0 var(--ink), inset -2pt 0 0 var(--ink);
     }
 
-    .ev-badge {
-      display: inline-block; background: var(--amber); color: var(--navy-dark);
-      font-size: 6pt; font-weight: 800; padding: 1pt 4pt; border-radius: 1pt;
-      text-transform: uppercase; letter-spacing: 0.1em; vertical-align: middle;
-      margin-left: 3pt;
+    /* === Below-table notes === */
+    .notes {
+      margin-top: 4mm;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8mm;
+    }
+    .note h3 {
+      margin: 0 0 1mm;
+      font-size: 7pt; font-weight: 700; color: var(--ink);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .note p {
+      margin: 0;
+      font-size: 7pt; line-height: 1.4; color: var(--text);
     }
 
-    /* ==== ALSO FROM PRECIFARM ==== */
-    .also {
-      margin: 4mm 14mm 0;
-      padding: 4mm 6mm;
-      background: var(--paper);
-      border-left: 4pt solid var(--green);
-      display: grid; grid-template-columns: 1fr 1fr; gap: 6mm;
-    }
-    .also-item .lbl {
-      font-size: 7pt; text-transform: uppercase; letter-spacing: 0.16em;
-      font-weight: 700; color: var(--green); margin: 0 0 1mm 0;
-    }
-    .also-item .ttl {
-      font-size: 9.5pt; font-weight: 700; color: var(--navy-dark);
-      margin: 0 0 1mm 0; line-height: 1.2;
-    }
-    .also-item .desc {
-      font-size: 7.5pt; color: var(--text-mid); margin: 0; line-height: 1.4;
-    }
-
-    /* ==== BOTTOM CTA BAND ==== */
-    .cta-band {
+    /* === Footer === */
+    .foot {
       margin-top: auto;
-      background: var(--amber);
-      color: var(--navy-dark);
-      padding: 5mm 14mm 4mm;
-      display: grid; grid-template-columns: 1.4fr 1fr; gap: 8mm;
-      align-items: center;
-      border-top: 3pt solid var(--navy-dark);
+      padding-top: 3mm;
+      border-top: 1pt solid var(--hairline);
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 7pt; color: var(--muted);
     }
-    .cta-band .pitch {
-      font-size: 11pt; font-weight: 700; line-height: 1.25;
-      margin: 0; letter-spacing: -0.01em;
+    .foot .contact {
+      color: var(--ink); font-weight: 600;
     }
-    .cta-band .pitch .em {
-      display: block; font-size: 8pt; font-weight: 600;
-      color: var(--navy); text-transform: uppercase; letter-spacing: 0.12em;
-      margin-bottom: 1.5mm;
+    .foot .contact a {
+      color: var(--ink); text-decoration: none;
+      margin-right: 6mm;
     }
-    .cta-band .channels {
-      font-size: 8pt; color: var(--navy-dark); text-align: right;
-      line-height: 1.5;
-    }
-    .cta-band .channels a {
-      color: var(--navy-dark); text-decoration: none; font-weight: 700;
-    }
-    .cta-band .channels strong { display: block; font-size: 9pt; font-weight: 800; }
-
-    /* ==== FOOTER MICROCOPY ==== */
-    .micro {
-      background: var(--navy-dark);
-      color: rgba(255,255,255,0.6);
-      padding: 2.5mm 14mm;
-      font-size: 6.5pt; letter-spacing: 0.04em;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .micro .brand-mark { font-size: 9pt; color: rgba(255,255,255,0.85); }
-    .micro .brand-mark span { color: var(--amber); }
+    .foot .contact a:last-child { margin-right: 0; }
+    .foot .legal { font-size: 7pt; }
   </style>
 </head>
 <body>
 <section class="page">
-  <!-- BRAND BAND -->
-  <div class="brand-band">
-    <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div class="brand-tag">
-      Product Catalogue
-      <span class="year">2026 · Issue 01</span>
-    </div>
+  <!-- Top -->
+  <div class="top">
+    <div class="brand-mark">PRECIFARM</div>
+    <div class="meta">Product Catalogue · 2026</div>
   </div>
 
-  <!-- HEADLINE -->
-  <div class="hero">
-    <h1>Power that <span>doesn't quit</span>, built for the way Kenya actually uses it.</h1>
-    <p class="sub">Four standardised solar + storage packages on one modular platform. Designed, installed, and maintained by the same regional engineering team for five years. Pick the tier your loads need, not the tier the brochure pushes.</p>
+  <!-- Title -->
+  <div class="title-block">
+    <h1>Precifarm product line.</h1>
+    <p class="lede">EPRA-licensed solar PV and storage, sized for households, SMEs, schools, and institutional sites across Kenya. Every package includes the same five-year EPC and O&amp;M commitment, delivered by the regional engineering team responsible for your area.</p>
   </div>
 
-  <!-- TRUST STRIP -->
-  <div class="trust">
-    <div>
-      <p class="label">Licensed</p>
-      <p class="value">EPRA EPC + O&amp;M contractor</p>
-    </div>
-    <div>
-      <p class="label">On the ground</p>
-      <p class="value">Engineering hubs in six cities</p>
-    </div>
-    <div>
-      <p class="label">Commitment</p>
-      <p class="value">Five-year service on every install</p>
-    </div>
-  </div>
-
-  <!-- TABLE -->
-  <div class="table-wrap">
-    <p class="table-eyebrow">The line-up</p>
-    <p class="table-title">Find your package by who you are and what you run.</p>
-
-    <table class="cat">
-      <thead>
-        <tr>
-          <th class="spec-col"></th>
-          {rows.map((r) => (
-            <th class={r.highlighted ? 'highlight' : ''}>
-              <span class="pkg-name">{r.tier}{r.highlighted && <span class="ev-badge">EV</span>}</span>
-              <span class="pkg-sub">{r.tier === 'Commercial Plus' ? 'Anchor-grade' : r.tier === 'Commercial' ? 'Sized to site' : r.tier === 'Family' ? 'Whole-house' : 'Entry'}</span>
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th class="row-label">If you are</th>
-          {rows.map((r) => (
-            <td class={r.highlighted ? 'highlight' : ''}>{r.profile}</td>
-          ))}
-        </tr>
-        <tr>
-          <th class="row-label">You can run</th>
-          {rows.map((r) => (
-            <td class={r.highlighted ? 'highlight' : ''}>{r.uses}</td>
-          ))}
-        </tr>
-        <tr>
-          <th class="row-label">The system</th>
-          {rows.map((r) => (
-            <td class={r.highlighted ? 'highlight' : ''}>{r.system}</td>
-          ))}
-        </tr>
-        <tr class="pricing-row">
-          <th class="row-label">Investment</th>
-          {rows.map((r) => (
-            <td class={r.highlighted ? 'highlight' : ''}>
-              {r.pricing}
-              {r.financing && <span class="financing">{r.financing}</span>}
+  <!-- Table (matches the home-page PackageComparisonTable structure) -->
+  <table>
+    <caption style="position:absolute;left:-9999px;">Side-by-side comparison of the four Precifarm packages</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="spec">Spec</th>
+        {packages.map((pkg) => (
+          <th scope="col" class={pkg.isHighlighted ? 'highlighted' : ''}>
+            {pkg.shortName}
+            {pkg.isHighlighted && <span class="ev-mark">EV-ready</span>}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row, i) => (
+        <tr class={i % 2 === 0 ? 'alt' : ''}>
+          <th scope="row" class="row-label">{row.label}</th>
+          {packages.map((pkg) => (
+            <td class={row.emphasis ? 'emphasis' : ''}>
+              {row.resolve(pkg)}
             </td>
           ))}
         </tr>
-        <tr class="why-row">
-          <th class="row-label">Why this tier</th>
-          {rows.map((r) => (
-            <td class={r.highlighted ? 'highlight' : ''}>{r.why}</td>
+      ))}
+      {hasAnyIrrigationNote && (
+        <tr class="caveat">
+          <th scope="row" class="row-label">Pump caveat</th>
+          {packages.map((pkg) => (
+            <td>{pkg.irrigationNote ?? '—'}</td>
           ))}
         </tr>
-      </tbody>
-    </table>
-  </div>
+      )}
+    </tbody>
+  </table>
 
-  <!-- ALSO FROM PRECIFARM -->
-  <div class="also">
-    <div class="also-item">
-      <p class="lbl">Sub-product</p>
-      <p class="ttl">Solar Irrigation Systems</p>
-      <p class="desc">Submersible borehole pumps, surface pumps, and solar controllers. Sized from 1-acre smallholder to 100+ acre commercial farms on a site-assessment basis.</p>
+  <!-- Sub-product + Training notes -->
+  <div class="notes">
+    <div class="note">
+      <h3>Also: Solar Irrigation Systems</h3>
+      <p>Submersible borehole pumps, surface pumps, and solar pump controllers. Sized from 1-acre smallholder to 100+ acre commercial farms on a site-assessment basis.</p>
     </div>
-    <div class="also-item">
-      <p class="lbl">Training</p>
-      <p class="ttl">EPRA T1, T2, T3 Technician Cohorts</p>
-      <p class="desc">Practitioner-led short-cohort programmes that prepare technicians and engineers for the EPRA solar PV licence application. Mapped to the NITA competency framework.</p>
+    <div class="note">
+      <h3>Also: EPRA T1 / T2 / T3 Training</h3>
+      <p>Practitioner-led short-cohort programmes that prepare technicians and engineers for the EPRA solar PV licence application. Mapped to the NITA competency framework.</p>
     </div>
   </div>
 
-  <!-- CTA BAND -->
-  <div class="cta-band">
-    <p class="pitch">
-      <span class="em">The next step</span>
-      Send us your site. Receive a written design and quote within two business days.
-    </p>
-    <div class="channels">
-      <strong>{company.email}</strong>
-      <a href={`tel:${company.phoneE164}`}>{company.phone}</a><br/>
+  <!-- Footer -->
+  <div class="foot">
+    <div class="contact">
+      <a href={`mailto:${company.email}`}>{company.email}</a>
+      <a href={`tel:${company.phoneE164}`}>{company.phone}</a>
       <a href={company.website}>precifarm.com</a>
     </div>
-  </div>
-
-  <!-- MICRO -->
-  <div class="micro">
-    <div class="brand-mark">PRECI<span>FARM</span></div>
-    <div>Precifarm AI Ltd · Nairobi HQ · Mombasa · Kisumu · Eldoret · Nakuru · Nyeri · EPRA-licensed</div>
+    <div class="legal">Precifarm AI Ltd · Nairobi HQ · Mombasa · Kisumu · Eldoret · Nakuru · Nyeri</div>
   </div>
 </section>
 </body>
