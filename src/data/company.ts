@@ -18,7 +18,11 @@ export const company = {
   copyright: `© ${new Date().getFullYear()} Precifarm AI Ltd. Headquartered in Nairobi.`,
   socials: {
     linkedin: 'https://www.linkedin.com/company/precifarm',
-    // Add other platforms only after the accounts are confirmed live.
+    // Fill these in with the live URLs once the accounts are confirmed.
+    // Icons in the Header render conditionally on a truthy value, so an
+    // empty string keeps the icon hidden until you paste the real URL.
+    x: '', // e.g. 'https://x.com/precifarm'
+    tiktok: '', // e.g. 'https://www.tiktok.com/@precifarm'
   },
 } as const;
 
