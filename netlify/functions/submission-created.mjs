@@ -130,11 +130,17 @@ export async function handler(event) {
     }
 
     const body = JSON.parse(event.body || '{}');
-    const payload = body.payload || {};
-    const data = payload.data || {};
-    const formName = payload.form_name || data['form-name'] || '';
+    // Netlify delivers submission events in two shapes depending on how the
+    // function is invoked:
+    //   - "submission-created" auto-trigger:   { payload: { form_name, data } }
+    //   - Outgoing webhook notification:       { form_name, data, ... } at top level
+    // Handle both so the function works regardless of which mechanism delivers.
+    const payload = body.payload || body;
+    const data = payload.data || payload || {};
+    const formName = payload.form_name || data.form_name || data['form-name'] || '';
     const recipientEmail = (data.email || '').trim();
     const recipientName = (data.name || '').trim();
+    console.log(`[submission-created] Received submission: form="${formName}", email="${recipientEmail}", name="${recipientName}"`);
 
     if (!recipientEmail) {
       console.log(`[submission-created] Form "${formName}" submission has no email; skipping.`);
